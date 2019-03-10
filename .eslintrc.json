@@ -4,7 +4,7 @@
         "es6": true,
         "node": true
     },
-    "extends": "google",
+    "extends": ["google", "standard-preact"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -16,8 +16,10 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": ["standard-preact"],
     "rules": {
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "max-len": ["error", 120],
+        "react/jsx-indent": ["error", 4],
+        "require-jsdoc": "off"
     }
 }

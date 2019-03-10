@@ -11,17 +11,17 @@ module.exports = function(webpackEnv, argv) {
         entry: './src/index.js',
         output: {
             path: path.resolve(__dirname, 'build'),
-            filename: 'bundle.js'
+            filename: 'bundle.js',
         },
         devServer: {
             hot: true,
-            port: 3000
+            port: 3000,
         },
         devtool: isEnvProduction ? 'source-map' : 'cheap-module-source-map',
         mode: isEnvProduction ? 'production' : 'development',
         resolve: {
             modules: ['./src', 'node_modules'],
-            extensions: ['.js', '.jsx']
+            extensions: ['.js', '.jsx'],
         },
         optimization: {
             minimize: isEnvProduction,
@@ -34,7 +34,7 @@ module.exports = function(webpackEnv, argv) {
                             // into invalid ecma 5 code. This is why the 'compress' and 'output'
                             // sections only apply transformations that are ecma 5 safe
                             // https://github.com/facebook/create-react-app/pull/4234
-                            ecma: 8
+                            ecma: 8,
                         },
                         compress: {
                             ecma: 5,
@@ -48,28 +48,28 @@ module.exports = function(webpackEnv, argv) {
                             // https://github.com/facebook/create-react-app/issues/5250
                             // Pending futher investigation:
                             // https://github.com/terser-js/terser/issues/120
-                            inline: 2
+                            inline: 2,
                         },
                         mangle: {
-                            safari10: true
+                            safari10: true,
                         },
                         output: {
                             ecma: 5,
                             comments: false,
                             // Turned on because emoji and regex is not minified properly using default
                             // https://github.com/facebook/create-react-app/issues/2488
-                            ascii_only: true
-                        }
+                            ascii_only: true,
+                        },
                     },
                     // Use multi-process parallel running to improve the build speed
                     // Default number of concurrent runs: os.cpus().length - 1
                     parallel: true,
                     // Enable file caching
                     cache: true,
-                    sourceMap: true
+                    sourceMap: true,
                 }),
-                new OptimizeCSSAssetsPlugin({})
-            ]
+                new OptimizeCSSAssetsPlugin({}),
+            ],
         },
         module: {
             rules: [
@@ -81,13 +81,13 @@ module.exports = function(webpackEnv, argv) {
                         options: {
                             presets: [
                                 '@babel/preset-env',
-                                '@babel/preset-react'
+                                '@babel/preset-react',
                             ],
                             plugins: [
-                                '@babel/plugin-proposal-object-rest-spread'
-                            ]
-                        }
-                    }
+                                '@babel/plugin-proposal-object-rest-spread',
+                            ],
+                        },
+                    },
                 },
                 {
                     test: /\.scss$/,
@@ -95,9 +95,9 @@ module.exports = function(webpackEnv, argv) {
                         isEnvProduction
                             ? MiniCssExtractPlugin.loader
                             : {
-                                  loader: 'style-loader',
-                                  options: { sourceMap: true, hmr: true }
-                              },
+                                loader: 'style-loader',
+                                options: {sourceMap: true, hmr: true},
+                            },
                         {
                             loader: 'css-loader',
                             options: {
@@ -105,24 +105,24 @@ module.exports = function(webpackEnv, argv) {
                                 sourceMap: true,
                                 localIdentName: isEnvProduction
                                     ? '[hash:base64]'
-                                    : '[local]--[hash:base64:5]'
-                            }
+                                    : '[local]--[hash:base64:5]',
+                            },
                         },
                         {
-                            loader: 'postcss-loader'
+                            loader: 'postcss-loader',
                         },
-                        { loader: 'sass-loader', options: { sourceMap: true } }
-                    ]
-                }
-            ]
+                        {loader: 'sass-loader', options: {sourceMap: true}},
+                    ],
+                },
+            ],
         },
         plugins: [
             new HtmlWebpackPlugin({
-                template: './src/index.html'
+                template: './src/index.html',
             }),
             new MiniCssExtractPlugin({
-                filename: isEnvProduction ? '[name].[hash].css' : '[name].css'
-            })
-        ]
+                filename: isEnvProduction ? '[name].[hash].css' : '[name].css',
+            }),
+        ],
     };
 };
