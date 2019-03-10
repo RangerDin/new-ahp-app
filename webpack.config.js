@@ -98,7 +98,8 @@ module.exports = function(webpackEnv, argv) {
                             loader: 'css-loader',
                             options: {
                                 modules: true,
-                                sourceMap: true
+                                sourceMap: true,
+                                localIdentName: isEnvProduction ? '[hash:base64]' : '[local]--[hash:base64:5]'
                             }
                         },
                         {
