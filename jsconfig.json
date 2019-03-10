@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "module": "esnext",
+        "rootDir": "src",
+        "allowSyntheticDefaultImports": true,
+        "jsx": "react",
+        "moduleResolution": "node"
+    },
+    "include": ["src"],
+    "exclude": ["./node_modules", "./design"]
+}

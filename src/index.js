@@ -1,6 +1,6 @@
 import { h, render } from 'preact';
 
-import Application from "./components/Application";
+import Application from 'components/Application';
 
 let root;
 

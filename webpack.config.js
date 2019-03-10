@@ -19,6 +19,10 @@ module.exports = function(webpackEnv, argv) {
         },
         devtool: isEnvProduction ? 'source-map' : 'cheap-module-source-map',
         mode: isEnvProduction ? 'production' : 'development',
+        resolve: {
+            modules: ['./src', 'node_modules'],
+            extensions: ['.js', '.jsx']
+        },
         optimization: {
             minimize: isEnvProduction,
             minimizer: [
@@ -99,7 +103,9 @@ module.exports = function(webpackEnv, argv) {
                             options: {
                                 modules: true,
                                 sourceMap: true,
-                                localIdentName: isEnvProduction ? '[hash:base64]' : '[local]--[hash:base64:5]'
+                                localIdentName: isEnvProduction
+                                    ? '[hash:base64]'
+                                    : '[local]--[hash:base64:5]'
                             }
                         },
                         {

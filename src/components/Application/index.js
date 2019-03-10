@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import style from "./style.scss";
+import style from './style.scss';
 
 export default class Clock extends Component {
     constructor() {
@@ -14,6 +14,10 @@ export default class Clock extends Component {
     }
 
     render() {
-        return <span className={style.application}>Time: {this.state.date.toLocaleTimeString()}</span>;
+        return (
+            <span className={style.application}>
+                Time: {this.state.date.toLocaleTimeString()}
+            </span>
+        );
     }
 }
