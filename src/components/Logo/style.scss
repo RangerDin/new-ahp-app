@@ -1,0 +1,9 @@
+@import 'constants/colors.scss';
+@import 'constants/font.scss';
+
+.logo {
+    color: $color-logo;
+    font-size: $font-xxl;
+    height: 60px;
+    line-height: 60px;
+}

@@ -2,6 +2,6 @@ module.exports = {
     parser: false,
     map: true,
     plugins: [
-        require('postcss-preset-env')
-    ]
-}
+        require('postcss-preset-env'),
+    ],
+};

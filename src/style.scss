@@ -1,0 +1,12 @@
+@import 'constants/colors.scss';
+@import 'constants/font.scss';
+
+html,
+body {
+    background: $color-main-background;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: $font-m;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
