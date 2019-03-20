@@ -1,14 +1,15 @@
 import {h} from 'preact';
+import {Link} from 'preact-router/match';
 
 import Button from 'components/Button';
 import cn from 'utils/classnames';
 
 import style from './style.scss';
 
-const MenuMainLink = ({children}) => (
-    <a href='#' className={cn(style['menu__link'], style['menu__link_main'])}>
+const MenuMainLink = ({href, children}) => (
+    <Link href={href} className={cn(style['menu__link'], style['menu__link_main'])}>
         {children}
-    </a>
+    </Link>
 );
 
 const Menu = () => (
@@ -17,9 +18,9 @@ const Menu = () => (
             Menu
         </Button>
         <div className={style['menu__container']}>
-            <MenuMainLink>New solution</MenuMainLink>
-            <MenuMainLink>My solutions</MenuMainLink>
-            <MenuMainLink>About method</MenuMainLink>
+            <MenuMainLink href='/'>New solution</MenuMainLink>
+            <MenuMainLink href='/solutions/my'>My solutions</MenuMainLink>
+            <MenuMainLink href='/about'>About method</MenuMainLink>
             <Button
                 className={cn(style.menu__button, style.menu__button_action)}
             >
