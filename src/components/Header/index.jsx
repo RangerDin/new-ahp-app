@@ -1,16 +1,18 @@
 import {h} from 'preact';
 
 import Logo from 'components/Logo';
+import MenuToggler from 'components/MenuToggler';
 import Menu from 'components/Menu';
 
 import styles from './style.scss';
 
 const Header = () => {
     return (
-        <div className={styles.header}>
+        <header className={styles.header}>
             <Logo />
+            <MenuToggler />
             <Menu />
-        </div>
+        </header>
     );
 };
 

@@ -1,78 +1,38 @@
 @import 'constants/colors.scss';
-@import 'constants/font.scss';
+@import 'constants/fonts.scss';
 
 .menu {
-    float: right;
-    width: 50%;
+    background: $color-dark-purple;
+    text-align: center;
 
-    &__button {
-        background: inherit;
-        color: $color-active;
-        display: block;
+    &__item {
+        line-height: 30px;
+        margin-top: 15px;
 
-        &_main {
-            float: right;
-            font-size: $font-xxl;
-            line-height: 60px;
+        &:nth-child(4),
+        &:nth-child(6) {
+            margin-top: 30px;
         }
-
-        &_action {
-            font-size: $font-m;
-            line-height: 30px;
-            text-align: left;
-            width: 100%;
-
-            &:nth-child(4) {
-                margin-top: 45px;
-            }
-        }
-    }
-
-    &__container {
-        background: $color-dark-purple;
-        box-sizing: border-box;
-        clear: both;
-        display: block;
-        left: 0;
-        padding: 0 30px 15px;
-        position: absolute;
-        top: 60px;
-        width: 100%;
-    }
-
-    &__links {
-        list-style-type: none;
-        margin: 0 0 45px;
-        overflow: hidden;
-        padding: 0;
     }
 
     &__link {
         display: block;
-        line-height: 30px;
-        margin-top: 15px;
         text-decoration: none;
 
-        &_main {
+        &_page {
             color: $color-active;
             font-size: $font-xl;
-            width: 100%;
         }
 
         &_legal {
             color: $color-legal;
         }
-
-        &_author {
-            float: left;
-        }
-
-        &_icons8 {
-            float: right;
-        }
     }
 
-    &__legal {
-        margin-top: 45px;
+    &__button {
+        color: $color-active;
+        display: block;
+        font-size: $font-m;
+        width: 100%;
     }
 }

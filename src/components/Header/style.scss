@@ -1,7 +1,8 @@
 @import 'constants/colors.scss';
+@import 'utils/styleHelpers.scss';
 
 .header {
+    @include clearfix();
+
     background: $color-dark-purple;
-    height: 60px;
-    padding: 0 30px;
 }
