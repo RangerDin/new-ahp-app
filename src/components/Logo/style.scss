@@ -3,7 +3,9 @@
 
 .logo {
     color: $color-logo;
-    font-size: $font-xxl;
+    float: left;
+    font-size: $font-xl;
     line-height: 60px;
     text-align: center;
+    width: 50%;
 }
