@@ -1,7 +1,7 @@
 import {h} from 'preact';
 
 import cn from 'utils/classnames';
-import Button from 'components/Button';
+import Button from 'components/common/Button';
 
 import style from '../style.scss';
 

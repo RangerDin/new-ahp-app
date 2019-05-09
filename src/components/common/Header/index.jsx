@@ -1,17 +1,17 @@
 import {h} from 'preact';
 
-import Logo from 'components/Logo';
-import MenuToggler from 'components/MenuToggler';
-import Menu from 'components/Menu';
+import Logo from 'components/common/Logo';
+import MenuToggler from 'components/common/MenuToggler';
+import Menu from 'components/common/Menu';
 
 import styles from './style.scss';
 
-const Header = () => {
+const Header = ({isMenuOpen}) => {
     return (
         <header className={styles.header}>
             <Logo />
             <MenuToggler />
-            <Menu />
+            <Menu isOpen={isMenuOpen} />
         </header>
     );
 };

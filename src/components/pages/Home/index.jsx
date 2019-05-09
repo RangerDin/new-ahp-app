@@ -1,9 +1,11 @@
 import {h} from 'preact';
 
+import PageContainer from 'components/common/PageContainer';
+
 const Home = () => (
-    <div>
+    <PageContainer>
         <h1>Home</h1>
-    </div>
+    </PageContainer>
 );
 
 export default Home;
