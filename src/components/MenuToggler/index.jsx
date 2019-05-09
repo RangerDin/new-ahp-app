@@ -6,7 +6,7 @@ import style from './style.scss';
 
 const MenuToggle = ({isOpen, onClick}) => (
     <Button onClick={onClick} className={style['menu-toggler']}>
-        {isOpen ? 'Close' : 'Menu' }
+        {isOpen ? 'Close' : 'Menu'}
     </Button>
 );
 

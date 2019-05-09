@@ -27,6 +27,10 @@
             color: $color-active;
         }
 
+        &_current {
+            color: $color-link-current;
+        }
+
         &_legal {
             color: $color-legal;
             font-size: $font-xs;

@@ -1,24 +1,24 @@
 import {h} from 'preact';
 
-import LinkToPage from './components/PageLink';
+import LinkToPage from './components/LinkToPage';
 import ActionButton from './components/ActionButton';
 
 import style from './style.scss';
-import LegalLink from './components/LegalLink';
+import LinkToLegal from './components/LinkToLegal';
 
-const Menu = () => (
-    <div className={style['menu']}>
-        <LinkToPage href='/'>New solution</LinkToPage>
+const Menu = ({isOpen}) => (
+    <div className={style['menu']} hidden={!isOpen}>
+        <LinkToPage href='/' isAlwaysActive>New solution</LinkToPage>
         <LinkToPage href='/solutions/my'>My solutions</LinkToPage>
         <LinkToPage href='/about'>About method</LinkToPage>
-        <ActionButton>Change theme to light</ActionButton>
-        <ActionButton>Изменить язык на русский</ActionButton>
-        <LegalLink className={style.menu__link_author} href='#'>
+        <ActionButton>Light theme</ActionButton>
+        <ActionButton>Русский язык</ActionButton>
+        <LinkToLegal className={style.menu__link_author} href='#'>
             Made by htype
-        </LegalLink>
-        <LegalLink className={style.menu__link_icons8} href='#'>
+        </LinkToLegal>
+        <LinkToLegal className={style.menu__link_icons8} href='#'>
             Icons by Icons8
-        </LegalLink>
+        </LinkToLegal>
     </div>
 );
 

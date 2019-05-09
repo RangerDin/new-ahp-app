@@ -1,21 +1,21 @@
 import {h} from 'preact';
-import {Link} from 'preact-router';
 
 import cn from 'utils/classnames';
 
 import style from '../style.scss';
 
-const PageLink = ({href, children}) => (
-    <Link
-        href={href}
+const LinkToLegal = ({href, className, children}) => (
+    <a
         className={cn(
             style.menu__item,
             style.menu__link,
-            style.menu__link_page
+            style.menu__link_legal,
+            className
         )}
+        href={href}
     >
         {children}
-    </Link>
+    </a>
 );
 
-export default PageLink;
+export default LinkToLegal;
