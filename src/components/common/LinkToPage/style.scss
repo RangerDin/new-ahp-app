@@ -1,0 +1,6 @@
+@import 'constants/colors.scss';
+@import 'components/common/Link/style.scss';
+
+.link-to-page {
+    @extend .link;
+}

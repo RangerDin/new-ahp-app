@@ -1,0 +1,14 @@
+.description {
+    &__label {
+        display: block;
+        margin-top: 25px;
+    }
+
+    &__textarea {
+        box-sizing: border-box;
+        display: block;
+        margin-top: 15px;
+        padding: 8px;
+        width: 100%;
+    }
+}

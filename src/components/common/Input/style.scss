@@ -1,0 +1,15 @@
+@import 'constants/fonts.scss';
+@import 'constants/colors.scss';
+
+.input {
+    background: $color-placeholder-background;
+    border: 1px solid $color-active;
+    color: $color-main-text;
+    font-size: $font-s;
+    line-height: 30px;
+    text-align: center;
+
+    &::placeholder {
+        color: $color-placeholder;
+    }
+}

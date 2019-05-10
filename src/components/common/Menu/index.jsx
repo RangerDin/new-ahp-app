@@ -2,9 +2,8 @@ import {h} from 'preact';
 
 import LinkToPage from './components/LinkToPage';
 import ActionButton from './components/ActionButton';
-
-import style from './style.scss';
 import LinkToLegal from './components/LinkToLegal';
+import style from './style.scss';
 
 const Menu = ({isOpen}) => (
     <div className={style['menu']} hidden={!isOpen}>

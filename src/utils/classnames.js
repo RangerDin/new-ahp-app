@@ -1,5 +1,5 @@
 const cn = (...classNames) => {
-    return classNames.join(' ');
+    return classNames.filter(Boolean).join(' ');
 };
 
 export default cn;

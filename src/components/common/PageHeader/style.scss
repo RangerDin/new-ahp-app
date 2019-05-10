@@ -1,12 +1,10 @@
 @import 'constants/colors.scss';
 @import 'constants/fonts.scss';
 
-html,
-body {
-    background: $color-main-background;
-    font-family: $font-sans-serif;
+.page-header {
+    color: $color-page-header;
     font-size: $font-s;
-    height: 100%;
     margin: 0;
     padding: 0;
+    text-align: center;
 }

@@ -1,22 +1,21 @@
 import {h} from 'preact';
-import {Link} from 'preact-router/match';
 
+import BaseLinkToPage from 'components/common/LinkToPage';
 import cn from 'utils/classnames';
 
 import style from '../style.scss';
 
 const LinkToPage = ({href, isAlwaysActive, children}) => (
-    <Link
+    <BaseLinkToPage
         activeClassName={!isAlwaysActive && style.menu__link_current}
         href={href}
         className={cn(
             style.menu__item,
             style.menu__link,
-            style.menu__link_page
         )}
     >
         {children}
-    </Link>
+    </BaseLinkToPage>
 );
 
 export default LinkToPage;

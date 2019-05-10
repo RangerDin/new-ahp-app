@@ -11,7 +11,7 @@ const Header = ({isMenuOpen}) => {
         <header className={styles.header}>
             <Logo />
             <MenuToggler />
-            <Menu isOpen={isMenuOpen} />
+            <Menu isOpen />
         </header>
     );
 };
