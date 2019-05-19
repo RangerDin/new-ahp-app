@@ -1,0 +1,21 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.input {
+    margin-top: 15px;
+}
+
+.error {
+    color: $color-error;
+    font-size: $font-xxs;
+    line-height: 20px;
+    text-align: center;
+}
+
+.delete-button {
+    color: $color-active;
+    display: block;
+    line-height: 20px;
+    text-align: center;
+    width: 100%;
+}
