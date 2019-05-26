@@ -9,7 +9,6 @@ const NameInputs = ({labelText, inputPlaceholder, addButtonText}) => (
     <Fragment>
         <Label className={style['object-names__label']}>
             {labelText}
-            Enter the names of the objects you want to compare.
         </Label>
         <NameInput placeholder={inputPlaceholder} error="Name can't be empty" />
         <NameInput placeholder={inputPlaceholder} />

@@ -6,6 +6,7 @@ import MethodDescription from './components/MethodDescription';
 import Question from './components/Question';
 import Description from './components/Description';
 import NameInputs from './components/NameInputs';
+import Comparisons from './components/Comparisons';
 
 const Home = () => (
     <PageContainer>
@@ -23,6 +24,8 @@ const Home = () => (
             inputPlaceholder='Name of parameter'
             addButtonText='Add parameter'
         />
+        <Comparisons label='Compare parameters' />
+        <Comparisons label='Compare objects' />
     </PageContainer>
 );
 
