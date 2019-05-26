@@ -7,6 +7,8 @@ import Question from './components/Question';
 import Description from './components/Description';
 import NameInputs from './components/NameInputs';
 import Comparisons from './components/Comparisons';
+import ResultPriorityTable from './components/ResultPriorityTable';
+import ConsistencyTable from './components/ConsistencyTable';
 
 const Home = () => (
     <PageContainer>
@@ -26,6 +28,8 @@ const Home = () => (
         />
         <Comparisons label='Compare parameters' />
         <Comparisons label='Compare objects' />
+        <ResultPriorityTable />
+        <ConsistencyTable />
     </PageContainer>
 );
 

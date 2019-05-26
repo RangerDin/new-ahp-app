@@ -1,0 +1,26 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.result {
+    &__header {
+        display: block;
+        margin-top: 25px;
+    }
+
+    &__table {
+        border-collapse: collapse;
+        color: $color-main-text;
+        font-size: $font-xs;
+        margin-top: 15px;
+        text-align: center;
+        width: 100%;
+
+        tr {
+            height: 30px;
+        }
+
+        td {
+            border: 1px solid #102027;
+        }
+    }
+}
