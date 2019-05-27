@@ -2,7 +2,7 @@ import {h, Fragment} from 'preact';
 
 import Label from 'components/common/Label';
 import NameInput from '../NameInput';
-import AddButton from '../AddButton';
+import Button from '../Button';
 import style from './style.scss';
 
 const NameInputs = ({labelText, inputPlaceholder, addButtonText}) => (
@@ -12,9 +12,9 @@ const NameInputs = ({labelText, inputPlaceholder, addButtonText}) => (
         </Label>
         <NameInput placeholder={inputPlaceholder} error="Name can't be empty" />
         <NameInput placeholder={inputPlaceholder} />
-        <AddButton className={style['object-names__button']}>
+        <Button className={style['object-names__button']}>
             {addButtonText}
-        </AddButton>
+        </Button>
     </Fragment>
 );
 

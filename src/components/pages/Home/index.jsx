@@ -9,6 +9,7 @@ import NameInputs from './components/NameInputs';
 import Comparisons from './components/Comparisons';
 import ResultPriorityTable from './components/ResultPriorityTable';
 import ConsistencyTable from './components/ConsistencyTable';
+import SaveButton from './components/SaveButton';
 
 const Home = () => (
     <PageContainer>
@@ -30,6 +31,7 @@ const Home = () => (
         <Comparisons label='Compare objects' />
         <ResultPriorityTable />
         <ConsistencyTable />
+        <SaveButton />
     </PageContainer>
 );
 
