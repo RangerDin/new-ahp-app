@@ -3,6 +3,7 @@ import {h, Fragment} from 'preact';
 import Button from 'components/common/Button';
 import cn from 'utils/classnames';
 import Input from '../Input';
+import Error from '../Error';
 import style from './style.scss';
 
 const NameInput = ({className, value, error, placeholder, onChange}) => (
@@ -13,7 +14,7 @@ const NameInput = ({className, value, error, placeholder, onChange}) => (
             placeholder={placeholder}
             onChange={onChange}
         />
-        {error && <div className={style.error}>{error}</div>}
+        {error && <Error>{error}</Error>}
         <Button className={style['delete-button']}>delete</Button>
     </Fragment>
 );

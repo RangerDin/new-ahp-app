@@ -2,7 +2,10 @@ import {h, Fragment} from 'preact';
 
 import TextArea from 'components/common/TextArea';
 import Label from 'components/common/Label';
+import Error from '../Error';
 import style from './style.scss';
+
+const errorMock = 'Description can\'t be empty';
 
 const Description = () => (
     <Fragment>
@@ -14,6 +17,7 @@ const Description = () => (
             className={style['description__textarea']}
             placeholder='Description of the solution'
         />
+        {errorMock && <Error>{errorMock}</Error>}
     </Fragment>
 );
 
