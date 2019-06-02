@@ -7,11 +7,13 @@ import style from './style.scss';
 
 const NameInputs = ({
     names,
-    setNames,
     labelText,
     inputPlaceholder,
     hasDeleteButton,
     addButtonText,
+    onNameChange,
+    onNameDelete,
+    onNameAdd,
 }) => (
     <Fragment>
         <Label className={style['object-names__label']}>{labelText}</Label>
@@ -19,29 +21,18 @@ const NameInputs = ({
             <NameInput
                 keys={index}
                 value={name}
-                onChange={(event) =>
-                    setNames([
-                        ...names.slice(0, index),
-                        event.target.value,
-                        ...names.slice(index + 1),
-                    ])
-                }
+                onChange={(event) => onNameChange(index, event.target.value)}
                 placeholder={inputPlaceholder}
                 hasDeleteButton={hasDeleteButton}
                 onDelete={() => {
-                    setNames([
-                        ...names.slice(0, index),
-                        ...names.slice(index + 1),
-                    ]);
+                    onNameDelete(index);
                 }}
                 error={!name && 'Name can\'t be empty'}
             />
         ))}
         <Button
             className={style['object-names__button']}
-            onClick={() => {
-                setNames([...names, '']);
-            }}
+            onClick={onNameAdd}
         >
             {addButtonText}
         </Button>
