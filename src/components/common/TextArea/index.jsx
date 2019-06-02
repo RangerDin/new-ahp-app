@@ -8,7 +8,7 @@ const TextArea = ({className, value, placeholder, children, onChange}) => (
         className={cn(className, style.textarea)}
         value={value}
         placeholder={placeholder}
-        onChange={onChange}
+        onInput={onChange}
     >
         {children}
     </textarea>

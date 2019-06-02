@@ -8,7 +8,7 @@ const Input = ({className, value, placeholder, onChange}) => (
         className={cn(className, style.input)}
         value={value}
         placeholder={placeholder}
-        onChange={onChange}
+        onInput={onChange}
     />
 );
 

@@ -9,7 +9,7 @@ const Select = ({className, placeholder, options, value}) => (
         placeholder={placeholder}
         value={value}
     >
-        <option className={style.option} disabled selected value>
+        <option className={style.option} disabled selected value=''>
             -- select at option --
         </option>
         {options.map(({label, value}) => (

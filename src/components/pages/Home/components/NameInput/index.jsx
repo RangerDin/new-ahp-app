@@ -6,7 +6,15 @@ import Input from '../Input';
 import Error from '../Error';
 import style from './style.scss';
 
-const NameInput = ({className, value, error, placeholder, onChange}) => (
+const NameInput = ({
+    className,
+    value,
+    error,
+    placeholder,
+    hasDeleteButton,
+    onChange,
+    onDelete,
+}) => (
     <Fragment>
         <Input
             className={cn(className, style.input)}
@@ -15,7 +23,11 @@ const NameInput = ({className, value, error, placeholder, onChange}) => (
             onChange={onChange}
         />
         {error && <Error>{error}</Error>}
-        <Button className={style['delete-button']}>delete</Button>
+        {hasDeleteButton && (
+            <Button onClick={onDelete} className={style['delete-button']}>
+                delete
+            </Button>
+        )}
     </Fragment>
 );
 

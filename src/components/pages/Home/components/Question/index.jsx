@@ -5,16 +5,19 @@ import Input from 'components/common/Input';
 import Error from '../Error';
 import style from './style.scss';
 
-const errorMock = 'Question can\'t be empty';
-
-const Question = () => (
+const Question = ({value, setValue}) => (
     <Fragment>
         <Label className={style['question__label']}>
             Enter your question. For example: "Which Italian supercar is
             better?"
         </Label>
-        <Input className={style['question__input']} placeholder='Question' />
-        {errorMock && <Error>{errorMock}</Error>}
+        <Input
+            value={value}
+            onChange={(event) => setValue(event.target.value)}
+            className={style['question__input']}
+            placeholder='Question'
+        />
+        {!value && <Error>Question can't be empty</Error>}
     </Fragment>
 );
 

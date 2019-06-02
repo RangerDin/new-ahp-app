@@ -4,8 +4,13 @@ import BaseSelect from 'components/common/Select';
 import cn from 'utils/classnames';
 import style from './style.scss';
 
-const Select = ({className, ...props}) => (
-    <BaseSelect className={cn(className, style.select)} {...props} />
+const Select = ({className, value, options, onChange}) => (
+    <BaseSelect
+        className={cn(className, style.select)}
+        value={value}
+        options={options}
+        onChange={onChange}
+    />
 );
 
 export default Select;
