@@ -1,0 +1,42 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+@import 'components/common/Link/style.scss';
+
+.menu {
+    background: $color-dark-purple;
+    text-align: center;
+
+    &__item {
+        line-height: 30px;
+
+        &:first-child {
+            margin-top: 0;
+        }
+
+        &:nth-child(4),
+        &:nth-child(6) {
+            margin-top: 25px;
+        }
+    }
+
+    &__link {
+        display: block;
+
+        &_current {
+            color: $color-link-current;
+        }
+
+        &_legal {
+            @extend .link;
+
+            color: $color-legal;
+            font-size: $font-xs;
+        }
+    }
+
+    &__button {
+        color: $color-active;
+        display: block;
+        width: 100%;
+    }
+}

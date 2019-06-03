@@ -1,0 +1,17 @@
+@import 'constants/fonts.scss';
+@import 'constants/colors.scss';
+
+.textarea {
+    background: $color-placeholder-background;
+    border: 1px solid $color-active;
+    color: $color-main-text;
+    font-family: $font-sans-serif;
+    font-size: $font-s;
+    padding: 8px;
+    resize: vertical;
+    text-align: center;
+
+    &::placeholder {
+        color: $color-placeholder;
+    }
+}

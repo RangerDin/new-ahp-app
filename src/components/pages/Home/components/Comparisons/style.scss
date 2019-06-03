@@ -1,0 +1,19 @@
+.comparison {
+    &__header {
+        display: block;
+        margin-top: 25px;
+    }
+
+    &__block {
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    &__label {
+        line-height: 20px;
+    }
+
+    &__select {
+        margin-top: 15px;
+    }
+}

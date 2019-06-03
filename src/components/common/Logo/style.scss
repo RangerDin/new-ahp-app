@@ -1,0 +1,11 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.logo {
+    color: $color-logo;
+    float: left;
+    font-size: $font-xl;
+    line-height: 60px;
+    text-align: center;
+    width: 50%;
+}

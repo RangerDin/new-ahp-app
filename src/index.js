@@ -2,6 +2,8 @@ import {h, render} from 'preact';
 
 import Application from 'components/Application';
 
+import './style.scss';
+
 let root;
 
 const initialize = () => {

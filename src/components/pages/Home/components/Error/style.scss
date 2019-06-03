@@ -1,0 +1,9 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.error {
+    color: $color-error;
+    font-size: $font-xxs;
+    padding: 4px 0;
+    text-align: center;
+}

@@ -1,0 +1,8 @@
+@import 'constants/colors.scss';
+@import 'utils/styleHelpers.scss';
+
+.header {
+    @include clearfix();
+
+    background: $color-dark-purple;
+}

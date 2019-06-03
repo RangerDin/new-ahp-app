@@ -1,0 +1,14 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.select {
+    background: $color-placeholder-background;
+    border: 1px solid $color-active;
+    color: $color-main-text;
+    font-size: $font-s;
+    height: 30px;
+}
+
+.option:disabled {
+    display: none;
+}

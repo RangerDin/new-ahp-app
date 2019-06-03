@@ -1,0 +1,10 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.button {
+    color: $color-active;
+    display: block;
+    line-height: 30px;
+    text-align: center;
+    width: 100%;
+}

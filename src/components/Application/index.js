@@ -1,23 +1,22 @@
-import {h, Component} from 'preact';
-import style from './style.scss';
+import {h} from 'preact';
+import Router from 'preact-router';
 
-export default class Clock extends Component {
-    constructor() {
-        super();
-        this.state = {
-            date: new Date(),
-        };
-    }
+import Header from 'components/common/Header';
+import Home from 'components/pages/Home';
+import MySolutions from 'components/pages/MySolutions';
+import AboutMethod from 'components/pages/AboutMethod';
 
-    componentDidMount() {
-        setInterval(() => this.setState({date: new Date()}), 1000);
-    }
+const Application = () => {
+    return (
+        <div>
+            <Header />
+            <Router>
+                <Home path='/' />
+                <MySolutions path='/solutions/my' />
+                <AboutMethod path='/about' />
+            </Router>
+        </div>
+    );
+};
 
-    render() {
-        return (
-            <span className={style.application}>
-                Time: {this.state.date.toLocaleTimeString()}
-            </span>
-        );
-    }
-}
+export default Application;

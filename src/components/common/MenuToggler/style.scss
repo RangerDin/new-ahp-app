@@ -1,0 +1,10 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.menu-toggler {
+    color: $color-active;
+    display: block;
+    font-size: $font-xl;
+    line-height: 60px;
+    width: 50%;
+}

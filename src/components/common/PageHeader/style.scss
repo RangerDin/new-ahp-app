@@ -1,0 +1,10 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.page-header {
+    color: $color-page-header;
+    font-size: $font-s;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}

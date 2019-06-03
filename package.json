@@ -19,7 +19,8 @@
     },
     "homepage": "https://github.com/RangerDin/new-ham-app#readme",
     "dependencies": {
-        "preact": "^8.4.2"
+        "preact": "^10.0.0-beta.2",
+        "preact-router": "^3.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.3.4",
