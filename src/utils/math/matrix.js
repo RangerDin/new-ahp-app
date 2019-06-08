@@ -39,3 +39,7 @@ export const sumOfElements = function(matrix) {
         0
     );
 };
+
+export const size = function(matrix) {
+    return [matrix.length, matrix[0].length];
+};
