@@ -1,4 +1,4 @@
-export const multiply = (matrix1, matrix2) => {
+export const multiply = function(matrix1, matrix2) {
     const result = [];
 
     for (let i = 0; i < matrix1.length; i++) {
@@ -16,4 +16,18 @@ export const multiply = (matrix1, matrix2) => {
     }
 
     return result;
+};
+
+export const pow = function(matrix, exponent) {
+    let resultMatrix = copy(matrix);
+
+    for (let i = 1; i < exponent; i++) {
+        resultMatrix = multiply(resultMatrix, resultMatrix);
+    }
+
+    return resultMatrix;
+};
+
+export const copy = function(matrix) {
+    return matrix.map((row) => [...row]);
 };
