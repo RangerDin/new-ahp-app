@@ -31,3 +31,11 @@ export const pow = function(matrix, exponent) {
 export const copy = function(matrix) {
     return matrix.map((row) => [...row]);
 };
+
+export const sumOfElements = function(matrix) {
+    return matrix.reduce(
+        (sum, row) =>
+            sum + row.reduce((sumOfRow, element) => sumOfRow + element),
+        0
+    );
+};
