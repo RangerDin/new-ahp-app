@@ -1,16 +1,30 @@
+import Big from 'big.js';
+
+export const convertToBig = function(element) {
+    if (typeof element === 'number') {
+        return new Big(element);
+    }
+
+    return element.map((subElement) => (
+        convertToBig(subElement)
+    ));
+};
+
+export const createEmptyMatrix = function(rows, columns) {
+    return new Array(rows).fill().map(() => new Array(columns).fill());
+};
+
 export const multiply = function(matrix1, matrix2) {
-    const result = [];
+    const [row1, column1] = size(matrix1);
+    const [, column2] = size(matrix2);
+    const result = createEmptyMatrix(row1, column2);
 
-    for (let i = 0; i < matrix1.length; i++) {
-        result[i] = new Array(matrix1.length)
-            .fill()
-            .map(() => new Array(matrix2[0].length));
+    for (let i = 0; i < row1; i++) {
+        for (let j = 0; j < column2; j++) {
+            result[i][j] = new Big(0);
 
-        for (let j = 0; j < matrix2[0].length; j++) {
-            result[i][j] = 0;
-
-            for (let k = 0; k < matrix1[0].length; k++) {
-                result[i][j] += matrix1[i][k] * matrix2[k][j];
+            for (let k = 0; k < column1; k++) {
+                result[i][j] = result[i][j].add((matrix1[i][k]).mul(matrix2[k][j]));
             }
         }
     }
@@ -35,8 +49,8 @@ export const copy = function(matrix) {
 export const sumOfElements = function(matrix) {
     return matrix.reduce(
         (sum, row) =>
-            sum + row.reduce((sumOfRow, element) => sumOfRow + element),
-        0
+            sum.add(row.reduce((sumOfRow, element) => sumOfRow.add(element))),
+        new Big(0)
     );
 };
 
@@ -45,11 +59,24 @@ export const size = function(matrix) {
 };
 
 export const divideMatrixToNumber = function(vector, num) {
-    return vector.map((element) => element / num);
+    return vector.map((element) => element.div(num));
 };
 
 export const dotDivide = function(matrix1, matrix2) {
     return matrix1.map((row, i) =>
-        row.map((_, j) => matrix1[i][j] / matrix2[i][j])
+        row.map((_, j) => matrix1[i][j].div(matrix2[i][j]))
     );
+};
+
+export const transponse = function(matrix) {
+    const [rowCount, columnCount] = size(matrix);
+    const transposedMatrix = createEmptyMatrix(columnCount, rowCount);
+
+    for (let i = 0; i < rowCount; i++) {
+        for (let j = 0; j < columnCount; j++) {
+            transposedMatrix[j][i] = matrix[i][j];
+        }
+    }
+
+    return transposedMatrix;
 };
