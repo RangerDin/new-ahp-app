@@ -80,3 +80,11 @@ export const transponse = function(matrix) {
 
     return transposedMatrix;
 };
+
+export const mean = function(vector) {
+    return sumOfElements(vector) / vector.length;
+};
+
+export const vectorToMatrix = function(vector) {
+    return vector.map((element) => [element]);
+};
