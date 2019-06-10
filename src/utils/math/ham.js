@@ -90,3 +90,20 @@ export const getCoherenceRelation = (
         getRandomCoherenceIndex(rank)
     );
 };
+
+export const getObjectCoherenceRelations = (
+    comparisonMatrixes,
+    priorityMatrix
+) => {
+    const objectCoherenceRelations = [];
+    const nMatrixes = comparisonMatrixes.length;
+
+    for (let i = 0; i < nMatrixes; i++) {
+        objectCoherenceRelations[i] = getCoherenceRelation(
+            comparisonMatrixes[i],
+            priorityMatrix.map((row) => row[i])
+        );
+    }
+
+    return objectCoherenceRelations;
+};
