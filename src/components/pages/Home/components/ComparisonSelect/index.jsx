@@ -1,11 +1,11 @@
 import {h} from 'preact';
 
-import {COMPARISON_OPTION_LABELS} from 'constants/comparisons';
+import {COMPARISON_LABELS, COMPARISON_VALUES} from 'constants/comparisons';
 import Select from '../Select';
 
-const options = Object.keys(COMPARISON_OPTION_LABELS).map((key) => ({
-    label: COMPARISON_OPTION_LABELS[key],
-    value: COMPARISON_OPTION_LABELS[key],
+const options = Object.keys(COMPARISON_VALUES).map((key) => ({
+    label: COMPARISON_LABELS[COMPARISON_VALUES[key]],
+    value: COMPARISON_VALUES[key],
 }));
 
 const ComparisonSelect = ({className, value, onChange}) => (
@@ -13,7 +13,11 @@ const ComparisonSelect = ({className, value, onChange}) => (
         className={className}
         value={value}
         options={options}
-        onChange={onChange}
+        onChange={(event) => {
+            const comparisonValue = parseFloat(event.target.value);
+
+            onChange(comparisonValue);
+        }}
     />
 );
 

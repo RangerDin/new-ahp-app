@@ -1,27 +1,40 @@
 import {h, Fragment} from 'preact';
 
 import Label from 'components/common/Label';
+import {getCoherenceRelation, getPriorityVector, getObjectCoherenceRelations, getPriorityMatrix} from 'utils/math/ham';
 import style from './style.scss';
 
-const ConsistencyTable = ({consistencies}) => (
-    <Fragment>
-        <Label className={style.result__header}>Consistency ratio</Label>
-        <table className={style.result__table}>
-            <tr>
-                <th>Matrix</th>
-                <th>Value</th>
-            </tr>
-            {
-                consistencies.map(({name, value}) => (
+const ConsistencyTable = ({parameterComparisons, objectComparisons, parameterNames}) => {
+    const parameterMatrixConsistency = getCoherenceRelation(
+        parameterComparisons,
+        getPriorityVector(parameterComparisons)
+    );
+    const objectMatrixConsistencies = getObjectCoherenceRelations(
+        objectComparisons,
+        getPriorityMatrix(objectComparisons),
+    );
+
+    return (
+        <Fragment>
+            <Label className={style.result__header}>Consistency ratio</Label>
+            <table className={style.result__table}>
+                <tr>
+                    <th>Matrix</th>
+                    <th>Value</th>
+                </tr>
+                <tr>
+                    <td>parameters</td>
+                    <td>{parameterMatrixConsistency}</td>
+                </tr>
+                {objectMatrixConsistencies.map((value, index) => (
                     <tr>
-                        <td>{name}</td>
+                        <td>{`objects by parameter "${parameterNames[index]}"`}</td>
                         <td>{value}</td>
                     </tr>
-                ))
-            }
-        </table>
-    </Fragment>
-);
-
+                ))}
+            </table>
+        </Fragment>
+    );
+};
 
 export default ConsistencyTable;

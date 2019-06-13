@@ -1,11 +1,23 @@
-export const COMPARISON_OPTION_LABELS = {
-    ABSOLUTELY_INFERIOR: 'is absolutely inferior to',
-    CLEARLY_PREFERABLE: 'is clearly preferable to',
-    MUCH_LESS_PREFERABLE: 'is much less preferable to',
-    SLIGHTLY_LESS_PREFERABLE: 'is slightly less preferable to',
-    SAME_DEGREE_OF_PREFERENCE: 'has the same degree of preference as',
-    SLIGHTLY_PREFERABLE: 'is slightly preferable to',
-    MUCH_PREFERABLE: 'is much preferable to',
-    CLEARLY_PREFERABLE: 'is clearly preferable to',
-    ABSOLUTELY_SUPERIOR: 'is absolutely superior to',
+export const COMPARISON_VALUES = {
+    ABSOLUTELY_INFERIOR: 1/9,
+    CLEARLY_LESS_PREFERABLE: 1/7,
+    MUCH_LESS_PREFERABLE: 1/5,
+    SLIGHTLY_LESS_PREFERABLE: 1/3,
+    SAME_DEGREE_OF_PREFERENCE: 1,
+    SLIGHTLY_PREFERABLE: 3,
+    MUCH_PREFERABLE: 5,
+    CLEARLY_PREFERABLE: 7,
+    ABSOLUTELY_SUPERIOR: 9,
+};
+
+export const COMPARISON_LABELS = {
+    [COMPARISON_VALUES.ABSOLUTELY_INFERIOR]: 'is absolutely inferior to',
+    [COMPARISON_VALUES.CLEARLY_LESS_PREFERABLE]: 'is clearly less preferable to',
+    [COMPARISON_VALUES.MUCH_LESS_PREFERABLE]: 'is much less preferable to',
+    [COMPARISON_VALUES.SLIGHTLY_LESS_PREFERABLE]: 'is slightly less preferable to',
+    [COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE]: 'has the same degree of preference as',
+    [COMPARISON_VALUES.SLIGHTLY_PREFERABLE]: 'is slightly preferable to',
+    [COMPARISON_VALUES.MUCH_PREFERABLE]: 'is much preferable to',
+    [COMPARISON_VALUES.CLEARLY_PREFERABLE]: 'is clearly preferable to',
+    [COMPARISON_VALUES.ABSOLUTELY_SUPERIOR]: 'is absolutely superior to',
 };
