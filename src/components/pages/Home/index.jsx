@@ -37,6 +37,8 @@ const Home = () => {
             setObjectComparison,
         },
     } = useNamesAndComparisons();
+    const areObjectNamesFilled = objectNames.every(Boolean);
+    const areParameterNamesFilled = parameterNames.some(Boolean);
 
     return (
         <PageContainer>
@@ -64,38 +66,46 @@ const Home = () => {
                 onNameDelete={deleteParameterName}
                 onNameAdd={addParameterName}
             />
-            <Comparisons
-                names={parameterNames}
-                comparisons={parameterComparisons}
-                setComparisons={setParameterComparison}
-                label='Compare parameters'
-            />
-            {parameterNames.map((parameterName, parameterIndex) => (
+            {areParameterNamesFilled && (
                 <Comparisons
-                    names={objectNames}
-                    comparisons={objectComparisons[parameterIndex]}
-                    setComparisons={(index1, index2, value) =>
-                        setObjectComparison(
-                            parameterIndex,
-                            index1,
-                            index2,
-                            value
-                        )
-                    }
-                    label={`Compare objects by parameter ${parameterName}`}
+                    names={parameterNames}
+                    comparisons={parameterComparisons}
+                    setComparisons={setParameterComparison}
+                    label='Compare parameters'
                 />
-            ))}
-            <ResultPriorityTable
-                parameterComparisons={parameterComparisons}
-                objectComparisons={objectComparisons}
-                objectNames={objectNames}
-            />
-            <ConsistencyTable
-                parameterComparisons={parameterComparisons}
-                objectComparisons={objectComparisons}
-                parameterNames={parameterNames}
-            />
-            <SaveButton />
+            )}
+            {areParameterNamesFilled &&
+                areObjectNamesFilled &&
+                parameterNames.map((parameterName, parameterIndex) => (
+                    <Comparisons
+                        names={objectNames}
+                        comparisons={objectComparisons[parameterIndex]}
+                        setComparisons={(index1, index2, value) =>
+                            setObjectComparison(
+                                parameterIndex,
+                                index1,
+                                index2,
+                                value
+                            )
+                        }
+                        label={`Compare objects by parameter ${parameterName}`}
+                    />
+                ))}
+            {areParameterNamesFilled && areObjectNamesFilled && (
+                <ResultPriorityTable
+                    parameterComparisons={parameterComparisons}
+                    objectComparisons={objectComparisons}
+                    objectNames={objectNames}
+                />
+            )}
+            {areParameterNamesFilled && areObjectNamesFilled && (
+                <ConsistencyTable
+                    parameterComparisons={parameterComparisons}
+                    objectComparisons={objectComparisons}
+                    parameterNames={parameterNames}
+                />
+            )}
+            {areParameterNamesFilled && areObjectNamesFilled && <SaveButton />}
         </PageContainer>
     );
 };
