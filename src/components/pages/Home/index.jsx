@@ -2,6 +2,10 @@ import {h} from 'preact';
 import {useState} from 'preact/hooks';
 
 import PageContainer from 'components/common/PageContainer';
+import {useNamesAndComparisons} from 'utils/hamHook';
+import {
+    saveSolutionToLocalhost,
+} from 'utils/saving/localhost';
 import Header from './components/Header';
 import MethodDescription from './components/MethodDescription';
 import Question from './components/Question';
@@ -11,7 +15,7 @@ import Comparisons from './components/Comparisons';
 import ResultPriorityTable from './components/ResultPriorityTable';
 import ConsistencyTable from './components/ConsistencyTable';
 import SaveButton from './components/SaveButton';
-import {useNamesAndComparisons} from 'utils/hamHook';
+import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
 
 const MIN_OBJECTS_COUNT = 2;
 const MIN_PARAMETERS_COUNT = 1;
@@ -21,6 +25,7 @@ const Home = () => {
     const [description, setDescription] = useState('');
     const {
         state: {
+            isSynchronized,
             parameterNames,
             parameterComparisons,
             objectNames,
@@ -35,10 +40,23 @@ const Home = () => {
             addObjectName,
             setParameterComparison,
             setObjectComparison,
+            setSynchronized,
         },
     } = useNamesAndComparisons();
     const areObjectNamesFilled = objectNames.every(Boolean);
     const areParameterNamesFilled = parameterNames.some(Boolean);
+
+    const onSaveButtonClick = () => {
+        saveSolutionToLocalhost({
+            question,
+            description,
+            parameterNames,
+            parameterComparisons,
+            objectNames,
+            objectComparisons,
+        });
+        setSynchronized();
+    };
 
     return (
         <PageContainer>
@@ -105,7 +123,14 @@ const Home = () => {
                     parameterNames={parameterNames}
                 />
             )}
-            {areParameterNamesFilled && areObjectNamesFilled && <SaveButton />}
+            {areParameterNamesFilled && areObjectNamesFilled && !isSynchronized && (
+                <SaveButton onClick={onSaveButtonClick} />
+            )}
+            {
+                isSynchronized && (
+                    <SolutionIsSavedLabel>Solution is saved</SolutionIsSavedLabel>
+                )
+            }
         </PageContainer>
     );
 };

@@ -4,6 +4,7 @@ import {COMPARISON_VALUES} from 'constants/comparisons';
 import {size, convertToBig} from './math/matrix';
 
 const defaultState = {
+    isSynchronized: false,
     parameterNames: [''],
     objectNames: ['', ''],
     parameterComparisons: convertToBig([[COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE]]),
@@ -114,6 +115,7 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
                 index,
                 newName
             ),
+            isSynchronized: false,
         });
     };
 
@@ -127,6 +129,7 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
             objectComparisons: getObjectComparisonsWithAddedParameterName(
                 state.objectComparisons
             ),
+            isSynchronized: false,
         });
     };
 
@@ -145,6 +148,7 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
                 state.objectComparisons,
                 index
             ),
+            isSynchronized: false,
         });
     };
 
@@ -155,6 +159,7 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
             objectComparisons: state.objectComparisons.map((comparisons) =>
                 getComparisonMatrixWithAddedName(comparisons)
             ),
+            isSynchronized: false,
         });
     };
 
@@ -165,6 +170,7 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
             objectComparisons: state.objectComparisons.map((comparisons) =>
                 getComparisonMatrixWithDeletedName(comparisons, index)
             ),
+            isSynchronized: false,
         });
     };
 
@@ -177,6 +183,7 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
                 index2,
                 convertToBig(value)
             ),
+            isSynchronized: false,
         });
     };
 
@@ -198,6 +205,14 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
                 ),
                 ...state.objectComparisons.slice(parameterIndex + 1),
             ],
+            isSynchronized: false,
+        });
+    };
+
+    const setSynchronized = () => {
+        setState({
+            ...state,
+            isSynchronized: true,
         });
     };
 
@@ -212,6 +227,7 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
             deleteObjectName,
             setParameterComparison,
             setObjectComparison,
+            setSynchronized,
         },
     };
 };
