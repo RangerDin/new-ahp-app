@@ -7,8 +7,8 @@ const defaultState = {
     isSynchronized: false,
     parameterNames: [''],
     objectNames: ['', ''],
-    parameterComparisons: convertToBig([[COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE]]),
-    objectComparisons: convertToBig([
+    parameterComparisons: [[COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE]],
+    objectComparisons: [
         [
             [
                 COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
@@ -19,7 +19,7 @@ const defaultState = {
                 COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
             ],
         ],
-    ]),
+    ],
 };
 
 const getNameListWithAddedName = (list) => [...list, ''];
@@ -43,9 +43,11 @@ const getComparisonMatrixWithAddedName = (comparisons) => {
             ...row,
             convertToBig(COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE),
         ]),
-        convertToBig(new Array(newRowLength).fill(
-            COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE
-        )),
+        convertToBig(
+            new Array(newRowLength).fill(
+                COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE
+            )
+        ),
     ];
 };
 
@@ -60,15 +62,15 @@ const getObjectComparisonsWithAddedParameterName = (comparisons) => {
 
     return [
         ...comparisons,
-        convertToBig(new Array(nRows)
-            .fill()
-            .map(() =>
-                new Array(nColumns)
-                    .fill()
-                    .map(() =>
-                        COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE
-                    )
-            )),
+        convertToBig(
+            new Array(nRows)
+                .fill()
+                .map(() =>
+                    new Array(nColumns)
+                        .fill()
+                        .map(() => COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE)
+                )
+        ),
     ];
 };
 
@@ -104,8 +106,18 @@ const setElementInComparisonMatrix = (
     ];
 };
 
+const convertStateToInnerFormat = (state) => ({
+    ...state,
+    parameterComparisons: convertToBig(state.parameterComparisons),
+    objectComparisons: convertToBig(state.objectComparisons),
+});
+
 export const useNamesAndComparisons = (initialState = defaultState) => {
-    const [state, setState] = useState(initialState);
+    const [state, setState] = useState(convertStateToInnerFormat(initialState));
+
+    const setSolutionState = (newState) => {
+        setState(convertStateToInnerFormat(newState));
+    };
 
     const setName = (nameListProperty) => (index, newName) => {
         setState({
@@ -218,6 +230,7 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
 
     return {
         state,
+        setSolutionState,
         operations: {
             changeParameterName: setName('parameterNames'),
             addParameterName,

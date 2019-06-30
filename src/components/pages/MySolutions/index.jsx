@@ -23,7 +23,7 @@ const MySolutions = () => {
             <PageHeader />
             {solutions.map((solution) => (
                 <Fragment>
-                    <Title href={`/solutions/${solution.question}`} className={style['my-solutions__title']}>
+                    <Title href={`/solutions/my/${solution.question}`} className={style['my-solutions__title']}>
                         {solution.question}
                     </Title>
                     <Paragraph>

@@ -1,10 +1,10 @@
 import {h} from 'preact';
-import {useState} from 'preact/hooks';
+import {useState, useEffect} from 'preact/hooks';
 
 import PageContainer from 'components/common/PageContainer';
 import {useNamesAndComparisons} from 'utils/hamHook';
 import {
-    saveSolutionToLocalhost,
+    saveSolutionToLocalhost, loadSolutionFromLocalhost,
 } from 'utils/saving/localhost';
 import Header from './components/Header';
 import MethodDescription from './components/MethodDescription';
@@ -20,7 +20,7 @@ import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
 const MIN_OBJECTS_COUNT = 2;
 const MIN_PARAMETERS_COUNT = 1;
 
-const Home = () => {
+const Home = (props) => {
     const [question, setQuestion] = useState('');
     const [description, setDescription] = useState('');
     const {
@@ -31,6 +31,7 @@ const Home = () => {
             objectNames,
             objectComparisons,
         },
+        setSolutionState,
         operations: {
             changeParameterName,
             changeObjectName,
@@ -57,6 +58,19 @@ const Home = () => {
         });
         setSynchronized();
     };
+
+    useEffect(() => {
+        const solutionId = props.matches.id;
+
+        if (!solutionId) {
+            return;
+        }
+
+        const loadedSolution = loadSolutionFromLocalhost(solutionId);
+        setQuestion(loadedSolution.question);
+        setDescription(loadedSolution.description);
+        setSolutionState(loadedSolution);
+    }, []);
 
     return (
         <PageContainer>

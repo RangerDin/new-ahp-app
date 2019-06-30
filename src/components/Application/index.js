@@ -12,6 +12,7 @@ const Application = () => {
             <Header />
             <Router>
                 <Home path='/' />
+                <Home path='/solutions/my/:id' />
                 <MySolutions path='/solutions/my' />
                 <AboutMethod path='/about' />
             </Router>

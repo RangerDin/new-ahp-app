@@ -1,7 +1,7 @@
 import Big from 'big.js';
 
 export const convertToBig = function(element) {
-    if (typeof element === 'number') {
+    if (typeof element === 'number' || typeof element === 'string') {
         return new Big(element);
     }
 
