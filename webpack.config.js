@@ -11,10 +11,14 @@ module.exports = function(webpackEnv, argv) {
         entry: './src/index.js',
         output: {
             path: path.resolve(__dirname, 'build'),
+            publicPath: '/',
             filename: 'bundle.js',
         },
         devServer: {
             hot: true,
+            historyApiFallback: {
+                index: '/',
+            },
             port: 3000,
         },
         devtool: isEnvProduction ? 'source-map' : 'cheap-module-source-map',
