@@ -1,8 +1,8 @@
 import {h} from 'preact';
-import {useState, useEffect} from 'preact/hooks';
+import {useEffect} from 'preact/hooks';
 
 import PageContainer from 'components/common/PageContainer';
-import {useNamesAndComparisons} from 'utils/hamHook';
+import {useSolution} from 'utils/useSolution';
 import {
     saveSolutionToLocalhost, loadSolutionFromLocalhost,
 } from 'utils/saving/localhost';
@@ -21,18 +21,19 @@ const MIN_OBJECTS_COUNT = 2;
 const MIN_PARAMETERS_COUNT = 1;
 
 const Home = (props) => {
-    const [question, setQuestion] = useState('');
-    const [description, setDescription] = useState('');
     const {
         state: {
             isSynchronized,
+            question,
+            description,
             parameterNames,
             parameterComparisons,
             objectNames,
             objectComparisons,
         },
-        setSolutionState,
         operations: {
+            setQuestion,
+            setDescription,
             changeParameterName,
             changeObjectName,
             deleteParameterName,
@@ -42,8 +43,9 @@ const Home = (props) => {
             setParameterComparison,
             setObjectComparison,
             setSynchronized,
+            setSolutionState,
         },
-    } = useNamesAndComparisons();
+    } = useSolution();
     const areObjectNamesFilled = objectNames.every(Boolean);
     const areParameterNamesFilled = parameterNames.some(Boolean);
 
@@ -67,10 +69,9 @@ const Home = (props) => {
         }
 
         const loadedSolution = loadSolutionFromLocalhost(solutionId);
-        setQuestion(loadedSolution.question);
-        setDescription(loadedSolution.description);
+
         setSolutionState(loadedSolution);
-    }, []);
+    }, [props.matches.id]);
 
     return (
         <PageContainer>
@@ -93,7 +94,6 @@ const Home = (props) => {
                 inputPlaceholder='Name of parameter'
                 names={parameterNames}
                 hasDeleteButton={parameterNames.length > MIN_PARAMETERS_COUNT}
-                addButtonText='Add parameter'
                 onNameChange={changeParameterName}
                 onNameDelete={deleteParameterName}
                 onNameAdd={addParameterName}

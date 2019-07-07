@@ -5,6 +5,8 @@ import {size, convertToBig} from './math/matrix';
 
 const defaultState = {
     isSynchronized: false,
+    question: '',
+    description: '',
     parameterNames: [''],
     objectNames: ['', ''],
     parameterComparisons: [[COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE]],
@@ -112,12 +114,8 @@ const convertStateToInnerFormat = (state) => ({
     objectComparisons: convertToBig(state.objectComparisons),
 });
 
-export const useNamesAndComparisons = (initialState = defaultState) => {
+export const useSolution = (initialState = defaultState) => {
     const [state, setState] = useState(convertStateToInnerFormat(initialState));
-
-    const setSolutionState = (newState) => {
-        setState(convertStateToInnerFormat(newState));
-    };
 
     const setName = (nameListProperty) => (index, newName) => {
         setState({
@@ -128,6 +126,20 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
                 newName
             ),
             isSynchronized: false,
+        });
+    };
+
+    const setQuestion = (value) => {
+        setState({
+            ...state,
+            question: value,
+        });
+    };
+
+    const setDescription = (value) => {
+        setState({
+            ...state,
+            description: value,
         });
     };
 
@@ -228,19 +240,30 @@ export const useNamesAndComparisons = (initialState = defaultState) => {
         });
     };
 
+    const setSolutionState = (newState) => {
+        setState(convertStateToInnerFormat(newState));
+    };
+
+    const resetSolutionState = () => {
+        setSolutionState(defaultState);
+    };
+
     return {
         state,
-        setSolutionState,
         operations: {
-            changeParameterName: setName('parameterNames'),
+            setQuestion,
+            setDescription,
             addParameterName,
             deleteParameterName,
             changeObjectName: setName('objectNames'),
+            changeParameterName: setName('parameterNames'),
             addObjectName,
             deleteObjectName,
             setParameterComparison,
             setObjectComparison,
             setSynchronized,
+            setSolutionState,
+            resetSolutionState,
         },
     };
 };
