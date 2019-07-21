@@ -94,6 +94,7 @@ const Home = (props) => {
                 inputPlaceholder='Name of parameter'
                 names={parameterNames}
                 hasDeleteButton={parameterNames.length > MIN_PARAMETERS_COUNT}
+                addButtonText='Add parameter'
                 onNameChange={changeParameterName}
                 onNameDelete={deleteParameterName}
                 onNameAdd={addParameterName}

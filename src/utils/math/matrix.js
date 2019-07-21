@@ -1,15 +1,5 @@
 import Big from 'big.js';
 
-export const convertToBig = function(element) {
-    if (typeof element === 'number' || typeof element === 'string') {
-        return new Big(element);
-    }
-
-    return element.map((subElement) => (
-        convertToBig(subElement)
-    ));
-};
-
 export const createEmptyMatrix = function(rows, columns) {
     return new Array(rows).fill().map(() => new Array(columns).fill());
 };

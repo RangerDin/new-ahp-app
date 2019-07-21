@@ -1,7 +1,8 @@
 import {useState} from 'preact/hooks';
 
 import {COMPARISON_VALUES} from 'constants/comparisons';
-import {size, convertToBig} from './math/matrix';
+import convertToBig from 'utils/structures/convertToBig';
+import HAM from 'utils/structures/ham';
 
 const defaultState = {
     isSynchronized: false,
@@ -24,90 +25,6 @@ const defaultState = {
     ],
 };
 
-const getNameListWithAddedName = (list) => [...list, ''];
-
-const getNameListWithChangedName = (list, index, newName) => [
-    ...list.slice(0, index),
-    newName,
-    ...list.slice(index + 1),
-];
-
-const getNameListWithDeletedName = (list, index) => [
-    ...list.slice(0, index),
-    ...list.slice(index + 1),
-];
-
-const getComparisonMatrixWithAddedName = (comparisons) => {
-    const newRowLength = comparisons[0].length + 1;
-
-    return [
-        ...comparisons.map((row) => [
-            ...row,
-            convertToBig(COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE),
-        ]),
-        convertToBig(
-            new Array(newRowLength).fill(
-                COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE
-            )
-        ),
-    ];
-};
-
-const getComparisonMatrixWithDeletedName = (comparisons, index) => {
-    return comparisons
-        .filter((_, rowIndex) => rowIndex !== index)
-        .map((row) => row.filter((_, columnIndex) => columnIndex !== index));
-};
-
-const getObjectComparisonsWithAddedParameterName = (comparisons) => {
-    const [nRows, nColumns] = size(comparisons[0]);
-
-    return [
-        ...comparisons,
-        convertToBig(
-            new Array(nRows)
-                .fill()
-                .map(() =>
-                    new Array(nColumns)
-                        .fill()
-                        .map(() => COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE)
-                )
-        ),
-    ];
-};
-
-const getObjectComparisonsWithDeletedParameterName = (
-    objectComparisons,
-    parameterIndex
-) => {
-    return objectComparisons.filter((_, index) => index !== parameterIndex);
-};
-
-const setElementInComparisonMatrix = (
-    comparisonMatrix,
-    index1,
-    index2,
-    value
-) => {
-    const [min, max] = index1 < index2 ? [index1, index2] : [index2, index1];
-
-    return [
-        ...comparisonMatrix.slice(0, min),
-        [
-            ...comparisonMatrix[min].slice(0, max),
-            value,
-            ...comparisonMatrix[min].slice(max + 1),
-        ],
-        ...comparisonMatrix.slice(min + 1, max),
-        [
-            ...comparisonMatrix[max].slice(0, min),
-            convertToBig(1).div(value),
-            ...comparisonMatrix[max].slice(min + 1),
-        ],
-        ...comparisonMatrix.slice(max + 1),
-    ];
-};
-
 const convertStateToInnerFormat = (state) => ({
     ...state,
     parameterComparisons: convertToBig(state.parameterComparisons),
@@ -120,7 +37,8 @@ export const useSolution = (initialState = defaultState) => {
     const setName = (nameListProperty) => (index, newName) => {
         setState({
             ...state,
-            [nameListProperty]: getNameListWithChangedName(
+            ...HAM.setName(
+                nameListProperty,
                 state[nameListProperty],
                 index,
                 newName
@@ -146,11 +64,9 @@ export const useSolution = (initialState = defaultState) => {
     const addParameterName = () => {
         setState({
             ...state,
-            parameterNames: getNameListWithAddedName(state.parameterNames),
-            parameterComparisons: getComparisonMatrixWithAddedName(
-                state.parameterComparisons
-            ),
-            objectComparisons: getObjectComparisonsWithAddedParameterName(
+            ...HAM.addParameterName(
+                state.parameterNames,
+                state.parameterComparisons,
                 state.objectComparisons
             ),
             isSynchronized: false,
@@ -160,15 +76,9 @@ export const useSolution = (initialState = defaultState) => {
     const deleteParameterName = (index) => {
         setState({
             ...state,
-            parameterNames: getNameListWithDeletedName(
+            ...HAM.deleteParameterName(
                 state.parameterNames,
-                index
-            ),
-            parameterComparisons: getComparisonMatrixWithDeletedName(
                 state.parameterComparisons,
-                index
-            ),
-            objectComparisons: getObjectComparisonsWithDeletedParameterName(
                 state.objectComparisons,
                 index
             ),
@@ -179,10 +89,7 @@ export const useSolution = (initialState = defaultState) => {
     const addObjectName = () => {
         setState({
             ...state,
-            objectNames: getNameListWithAddedName(state.objectNames),
-            objectComparisons: state.objectComparisons.map((comparisons) =>
-                getComparisonMatrixWithAddedName(comparisons)
-            ),
+            ...HAM.addObjectName(state.objectNames, state.objectComparisons),
             isSynchronized: false,
         });
     };
@@ -190,10 +97,7 @@ export const useSolution = (initialState = defaultState) => {
     const deleteObjectName = (index) => {
         setState({
             ...state,
-            objectNames: getNameListWithDeletedName(state.objectNames, index),
-            objectComparisons: state.objectComparisons.map((comparisons) =>
-                getComparisonMatrixWithDeletedName(comparisons, index)
-            ),
+            ...HAM.deleteObjectName(state.objectComparisons, index),
             isSynchronized: false,
         });
     };
@@ -201,11 +105,11 @@ export const useSolution = (initialState = defaultState) => {
     const setParameterComparison = (index1, index2, value) => {
         setState({
             ...state,
-            parameterComparisons: setElementInComparisonMatrix(
+            ...HAM.setParameterComparison(
                 state.parameterComparisons,
                 index1,
                 index2,
-                convertToBig(value)
+                value
             ),
             isSynchronized: false,
         });
@@ -219,16 +123,13 @@ export const useSolution = (initialState = defaultState) => {
     ) => {
         setState({
             ...state,
-            objectComparisons: [
-                ...state.objectComparisons.slice(0, parameterIndex),
-                setElementInComparisonMatrix(
-                    state.objectComparisons[parameterIndex],
-                    objectIndex1,
-                    objectIndex2,
-                    convertToBig(value)
-                ),
-                ...state.objectComparisons.slice(parameterIndex + 1),
-            ],
+            ...HAM.setObjectComparison(
+                state.objectComparisons,
+                parameterIndex,
+                objectIndex1,
+                objectIndex2,
+                value
+            ),
             isSynchronized: false,
         });
     };
