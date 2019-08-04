@@ -3,7 +3,6 @@ import Router from 'preact-router';
 
 import Header from 'components/common/Header';
 import Home from 'components/pages/Home';
-import MySolutions from 'components/pages/MySolutions';
 import AboutMethod from 'components/pages/AboutMethod';
 
 const Application = () => {
@@ -13,7 +12,6 @@ const Application = () => {
             <Router>
                 <Home path='/' />
                 <Home path='/solutions/my/:id' />
-                <MySolutions path='/solutions/my' />
                 <AboutMethod path='/about' />
             </Router>
         </div>

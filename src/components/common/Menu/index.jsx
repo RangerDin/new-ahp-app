@@ -8,7 +8,6 @@ import style from './style.scss';
 const Menu = ({isOpen}) => (
     <div className={style['menu']} hidden={!isOpen}>
         <LinkToPage href='/' isAlwaysActive>New solution</LinkToPage>
-        <LinkToPage href='/solutions/my'>My solutions</LinkToPage>
         <LinkToPage href='/about'>About method</LinkToPage>
         <ActionButton>Light theme</ActionButton>
         <ActionButton>Русский язык</ActionButton>
