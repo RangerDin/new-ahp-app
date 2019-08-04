@@ -1,11 +1,7 @@
 import {h} from 'preact';
-import {useEffect} from 'preact/hooks';
 
 import PageContainer from 'components/common/PageContainer';
 import {useSolution} from 'utils/useSolution';
-import {
-    saveSolutionToLocalhost, loadSolutionFromLocalhost,
-} from 'utils/saving/localhost';
 import Header from './components/Header';
 import MethodDescription from './components/MethodDescription';
 import Question from './components/Question';
@@ -16,6 +12,8 @@ import ResultPriorityTable from './components/ResultPriorityTable';
 import ConsistencyTable from './components/ConsistencyTable';
 import SaveButton from './components/SaveButton';
 import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
+import {saveAsFile} from 'utils/saving/file';
+import beforeUnloadEffect from 'utils/beforeUnloadEffect';
 
 const MIN_OBJECTS_COUNT = 2;
 const MIN_PARAMETERS_COUNT = 1;
@@ -43,14 +41,13 @@ const Home = (props) => {
             setParameterComparison,
             setObjectComparison,
             setSynchronized,
-            setSolutionState,
         },
     } = useSolution();
     const areObjectNamesFilled = objectNames.every(Boolean);
     const areParameterNamesFilled = parameterNames.some(Boolean);
 
     const onSaveButtonClick = () => {
-        saveSolutionToLocalhost({
+        saveAsFile({
             question,
             description,
             parameterNames,
@@ -61,17 +58,13 @@ const Home = (props) => {
         setSynchronized();
     };
 
-    useEffect(() => {
-        const solutionId = props.matches.id;
-
-        if (!solutionId) {
-            return;
+    const onBeforeUnload = (event) => {
+        if (!isSynchronized) {
+            event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
         }
+    };
 
-        const loadedSolution = loadSolutionFromLocalhost(solutionId);
-
-        setSolutionState(loadedSolution);
-    }, [props.matches.id]);
+    beforeUnloadEffect(onBeforeUnload);
 
     return (
         <PageContainer>
