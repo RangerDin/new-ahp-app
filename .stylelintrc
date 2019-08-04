@@ -8,6 +8,8 @@
         "indentation": [
             4,  { "severity": "error" }
         ],
-        "order/properties-alphabetical-order": true
+        "order/properties-alphabetical-order": true,
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": true,
     }
 }
