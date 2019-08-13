@@ -14,9 +14,11 @@ import SaveButton from './components/SaveButton';
 import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
 import {saveAsFile} from 'utils/saving/file';
 import beforeUnloadEffect from 'utils/beforeUnloadEffect';
+import {useEffect} from 'preact/hooks';
 
 const MIN_OBJECTS_COUNT = 2;
 const MIN_PARAMETERS_COUNT = 1;
+let unblock = null;
 
 const Home = (props) => {
     const {
@@ -65,6 +67,17 @@ const Home = (props) => {
     };
 
     beforeUnloadEffect(onBeforeUnload);
+    useEffect(() => {
+        if (isSynchronized && unblock) {
+            unblock();
+        } else {
+            unblock = props.history.block('You have unsaved changes. Are you sure you want to leave?');
+        }
+
+        return () => {
+            unblock();
+        };
+    }, [isSynchronized]);
 
     return (
         <PageContainer>

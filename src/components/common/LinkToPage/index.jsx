@@ -4,11 +4,15 @@ import {Link} from 'preact-router/match';
 import cn from 'utils/classnames';
 import style from './style.scss';
 
-const LinkToPage = ({href, className, children, activeClassName, isAlwaysActive}) => (
+const LinkToPage = ({history, href, className, children, activeClassName, isAlwaysActive}) => (
     <Link
         activeClassName={!isAlwaysActive && activeClassName}
-        href={href}
         className={cn(className, style['link-to-page'])}
+        href='#'
+        onClick={(event) => {
+            event.preventDefault();
+            history.push(href);
+        }}
     >
         {children}
     </Link>
