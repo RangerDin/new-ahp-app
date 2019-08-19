@@ -14,13 +14,13 @@ import SaveButton from './components/SaveButton';
 import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
 import {saveAsFile} from 'utils/saving/file';
 import beforeUnloadEffect from 'utils/beforeUnloadEffect';
-import {useEffect} from 'preact/hooks';
+import {useEffect, useRef} from 'preact/hooks';
 
 const MIN_OBJECTS_COUNT = 2;
 const MIN_PARAMETERS_COUNT = 1;
-let unblock = null;
 
 const Home = (props) => {
+    const ref = useRef();
     const {
         state: {
             isSynchronized,
@@ -43,6 +43,7 @@ const Home = (props) => {
             setParameterComparison,
             setObjectComparison,
             setSynchronized,
+            resetSolutionState,
         },
     } = useSolution();
     const areObjectNamesFilled = objectNames.every(Boolean);
@@ -67,17 +68,26 @@ const Home = (props) => {
     };
 
     beforeUnloadEffect(onBeforeUnload);
+
     useEffect(() => {
-        if (isSynchronized && unblock) {
-            unblock();
+        if (isSynchronized && ref.unblock) {
+            ref.unblock();
         } else {
-            unblock = props.history.block('You have unsaved changes. Are you sure you want to leave?');
+            ref.unblock = props.history.block('You have unsaved changes. Are you sure you want to leave?');
         }
 
         return () => {
-            unblock();
+            ref.unblock();
         };
     }, [isSynchronized]);
+
+    useEffect(() => {
+        if (!ref.started) {
+            ref.started = true;
+        } else {
+            resetSolutionState();
+        }
+    }, [props.matches]);
 
     return (
         <PageContainer>
