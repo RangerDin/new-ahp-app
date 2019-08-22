@@ -63,23 +63,31 @@ const Home = (props) => {
 
     const onBeforeUnload = (event) => {
         if (!isSynchronized) {
-            event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+            event.returnValue =
+                'You have unsaved changes. Are you sure you want to leave?';
         }
     };
 
     beforeUnloadEffect(onBeforeUnload);
 
     useEffect(() => {
-        if (isSynchronized && ref.unblock) {
+        if (!isSynchronized) {
+            ref.unblock = props.history.block(
+                'You have unsaved changes. Are you sure you want to leave?'
+            );
+        } else if (ref.unblock) {
             ref.unblock();
-        } else {
-            ref.unblock = props.history.block('You have unsaved changes. Are you sure you want to leave?');
         }
-
-        return () => {
-            ref.unblock();
-        };
     }, [isSynchronized]);
+
+    useEffect(
+        () => () => {
+            if (ref.unblock) {
+                ref.unblock();
+            }
+        },
+        []
+    );
 
     useEffect(() => {
         if (!ref.started) {
@@ -154,14 +162,12 @@ const Home = (props) => {
                     parameterNames={parameterNames}
                 />
             )}
-            {areParameterNamesFilled && areObjectNamesFilled && !isSynchronized && (
-                <SaveButton onClick={onSaveButtonClick} />
+            {areParameterNamesFilled &&
+                areObjectNamesFilled &&
+                !isSynchronized && <SaveButton onClick={onSaveButtonClick} />}
+            {isSynchronized && (
+                <SolutionIsSavedLabel>Solution is saved</SolutionIsSavedLabel>
             )}
-            {
-                isSynchronized && (
-                    <SolutionIsSavedLabel>Solution is saved</SolutionIsSavedLabel>
-                )
-            }
         </PageContainer>
     );
 };

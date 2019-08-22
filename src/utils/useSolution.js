@@ -5,7 +5,7 @@ import convertToBig from 'utils/structures/convertToBig';
 import HAM from 'utils/structures/ham';
 
 const defaultState = {
-    isSynchronized: false,
+    isSynchronized: true,
     question: '',
     description: '',
     parameterNames: [''],
@@ -51,6 +51,7 @@ export const useSolution = (initialState = defaultState) => {
         setState({
             ...state,
             question: value,
+            isSynchronized: false,
         });
     };
 
@@ -58,6 +59,7 @@ export const useSolution = (initialState = defaultState) => {
         setState({
             ...state,
             description: value,
+            isSynchronized: false,
         });
     };
 
