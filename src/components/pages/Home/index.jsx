@@ -100,6 +100,7 @@ const Home = (props) => {
         const loadedSolution = locationState.solution;
 
         setSolutionState(loadedSolution);
+        setSynchronized();
         props.history.location.state = null;
     }, [props.history.location.state]);
 
@@ -184,7 +185,7 @@ const Home = (props) => {
             {areParameterNamesFilled &&
                 areObjectNamesFilled &&
                 !isSynchronized && <SaveButton onClick={onSaveButtonClick} />}
-            {isSynchronized && (
+            {areParameterNamesFilled && areObjectNamesFilled && isSynchronized && (
                 <SolutionIsSavedLabel>Solution is saved</SolutionIsSavedLabel>
             )}
         </PageContainer>
