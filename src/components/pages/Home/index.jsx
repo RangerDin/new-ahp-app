@@ -44,6 +44,7 @@ const Home = (props) => {
             setObjectComparison,
             setSynchronized,
             resetSolutionState,
+            setSolutionState,
         },
     } = useSolution();
     const areObjectNamesFilled = objectNames.every(Boolean);
@@ -88,6 +89,19 @@ const Home = (props) => {
         },
         []
     );
+
+    useEffect(() => {
+        const locationState = props.history.location.state;
+
+        if (!locationState || locationState.action !== 'load') {
+            return;
+        }
+
+        const loadedSolution = locationState.solution;
+
+        setSolutionState(loadedSolution);
+        props.history.location.state = null;
+    }, [props.history.location.state]);
 
     useEffect(() => {
         if (!ref.firstLoaded) {
