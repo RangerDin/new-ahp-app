@@ -1,7 +1,6 @@
 import {h} from 'preact';
 
 import PageContainer from 'components/common/PageContainer';
-import {useSolution} from 'utils/useSolution';
 import Header from './components/Header';
 import MethodDescription from './components/MethodDescription';
 import Question from './components/Question';
@@ -15,6 +14,7 @@ import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
 import {saveAsFile} from 'utils/saving/file';
 import beforeUnloadEffect from 'utils/beforeUnloadEffect';
 import {useEffect, useRef} from 'preact/hooks';
+import {useSolution} from 'utils/useSolution';
 
 const MIN_OBJECTS_COUNT = 2;
 const MIN_PARAMETERS_COUNT = 1;
@@ -90,12 +90,17 @@ const Home = (props) => {
     );
 
     useEffect(() => {
-        if (!ref.started) {
-            ref.started = true;
-        } else {
+        if (!ref.firstLoaded) {
+            ref.firstLoaded = true;
+            return;
+        }
+
+        const locationState = props.history.location.state;
+        if (locationState && locationState.action === 'new') {
+            props.history.location.state = null;
             resetSolutionState();
         }
-    }, [props.matches]);
+    }, [props]);
 
     return (
         <PageContainer>

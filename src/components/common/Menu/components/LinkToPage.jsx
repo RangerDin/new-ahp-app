@@ -5,11 +5,13 @@ import cn from 'utils/classnames';
 
 import style from '../style.scss';
 
-const LinkToPage = ({href, isAlwaysActive, children, history}) => (
+const LinkToPage = ({href, isAlwaysActive, children, history, state, onClick}) => (
     <BaseLinkToPage
         history={history}
         activeClassName={!isAlwaysActive && style.menu__link_current}
         href={href}
+        state={state}
+        onClick={onClick}
         className={cn(
             style.menu__item,
             style.menu__link,
