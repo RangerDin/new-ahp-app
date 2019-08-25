@@ -144,7 +144,10 @@ export const useSolution = (initialState = defaultState) => {
     };
 
     const setSolutionState = (newState) => {
-        setState(convertStateToInnerFormat(newState));
+        setState({
+            ...convertStateToInnerFormat(newState),
+            isSynchronized: true,
+        });
     };
 
     const resetSolutionState = () => {

@@ -100,7 +100,6 @@ const Home = (props) => {
         const loadedSolution = locationState.solution;
 
         setSolutionState(loadedSolution);
-        setSynchronized();
         props.history.location.state = null;
     }, [props.history.location.state]);
 
