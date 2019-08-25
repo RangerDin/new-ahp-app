@@ -4,21 +4,35 @@ import LinkToPage from './components/LinkToPage';
 import ActionButton from './components/ActionButton';
 import LinkToLegal from './components/LinkToLegal';
 import style from './style.scss';
-import {loadSolutionFromFile} from 'utils/loading/file';
+import {loadSolutionFromFile, checkFileFormat} from 'utils/loading/file';
 
 const Menu = ({isOpen, history}) => {
     const onLoadSolutionClick = () => {
-        loadSolutionFromFile((fileContentAsText) => {
-            const loadedSolution = JSON.parse(fileContentAsText);
-            const location = {
-                state: {
-                    action: 'load',
-                    solution: loadedSolution,
-                },
-                pathname: '/',
-            };
+        const wrongFormatAlert = () => {
+            alert('Wrong file format!');
+        };
 
-            history.push(location);
+        loadSolutionFromFile((fileContentAsText) => {
+            try {
+                const loadedSolution = JSON.parse(fileContentAsText);
+
+                if (!checkFileFormat(loadedSolution)) {
+                    wrongFormatAlert();
+                    return;
+                }
+
+                const location = {
+                    state: {
+                        action: 'load',
+                        solution: loadedSolution,
+                    },
+                    pathname: '/',
+                };
+
+                history.push(location);
+            } catch (e) {
+                wrongFormatAlert();
+            }
         });
     };
 
