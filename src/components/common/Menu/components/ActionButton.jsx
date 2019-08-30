@@ -5,7 +5,7 @@ import Button from 'components/common/Button';
 
 import style from '../style.scss';
 
-const ActionButton = ({children, onClick}) => (
+export const ActionButton = ({children, onClick}) => (
     <Button
         className={cn(
             style.menu__item,
@@ -17,5 +17,3 @@ const ActionButton = ({children, onClick}) => (
         {children}
     </Button>
 );
-
-export default ActionButton;

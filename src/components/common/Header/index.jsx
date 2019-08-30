@@ -7,7 +7,7 @@ import Menu from 'components/common/Menu';
 
 import styles from './style.scss';
 
-const Header = ({history}) => {
+const Header = ({history, theme, toggleTheme}) => {
     const [isMenuOpen, setMenuOpen] = useState(false);
 
     return (
@@ -19,7 +19,12 @@ const Header = ({history}) => {
                     setMenuOpen(!isMenuOpen);
                 }}
             />
-            <Menu history={history} isOpen={isMenuOpen} />
+            <Menu
+                theme={theme}
+                toggleTheme={toggleTheme}
+                history={history}
+                isOpen={isMenuOpen}
+            />
         </header>
     );
 };

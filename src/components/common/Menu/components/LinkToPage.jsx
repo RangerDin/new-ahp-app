@@ -5,7 +5,7 @@ import cn from 'utils/classnames';
 
 import style from '../style.scss';
 
-const LinkToPage = ({href, isAlwaysActive, children, history, state, onClick}) => (
+export const LinkToPage = ({href, isAlwaysActive, children, history, state, onClick}) => (
     <BaseLinkToPage
         history={history}
         activeClassName={!isAlwaysActive && style.menu__link_current}
@@ -20,5 +20,3 @@ const LinkToPage = ({href, isAlwaysActive, children, history, state, onClick}) =
         {children}
     </BaseLinkToPage>
 );
-
-export default LinkToPage;

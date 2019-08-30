@@ -4,7 +4,7 @@ import cn from 'utils/classnames';
 
 import style from '../style.scss';
 
-const LinkToLegal = ({href, className, children}) => (
+export const LinkToLegal = ({href, className, children}) => (
     <a
         className={cn(
             style.menu__item,
@@ -17,5 +17,3 @@ const LinkToLegal = ({href, className, children}) => (
         {children}
     </a>
 );
-
-export default LinkToLegal;

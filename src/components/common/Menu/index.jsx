@@ -1,12 +1,13 @@
 import {h} from 'preact';
 
-import LinkToPage from './components/LinkToPage';
-import ActionButton from './components/ActionButton';
-import LinkToLegal from './components/LinkToLegal';
+import {LinkToPage} from './components/LinkToPage';
+import {ActionButton} from './components/ActionButton';
+import {LinkToLegal} from './components/LinkToLegal';
 import style from './style.scss';
 import {loadSolutionFromFile, checkFileFormat} from 'utils/loading/file';
+import {ThemeToggler} from './components/ThemeToggler';
 
-const Menu = ({isOpen, history}) => {
+const Menu = ({isOpen, history, theme, toggleTheme}) => {
     const onLoadSolutionClick = () => {
         const wrongFormatAlert = () => {
             alert('Wrong file format!');
@@ -52,7 +53,7 @@ const Menu = ({isOpen, history}) => {
                 About method
             </LinkToPage>
             <ActionButton onClick={onLoadSolutionClick}>Load solution</ActionButton>
-            <ActionButton>Light theme</ActionButton>
+            <ThemeToggler theme={theme} onToggleTheme={toggleTheme} />
             <ActionButton>Русский язык</ActionButton>
             <LinkToLegal className={style.menu__link_author} href='#'>
                 Made by htype
