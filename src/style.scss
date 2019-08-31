@@ -10,3 +10,8 @@ body {
     margin: 0;
     padding: 0;
 }
+
+body {
+    transition-duration: 0.3s;
+    transition-property: color, background-color, border-color;
+}

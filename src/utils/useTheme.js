@@ -1,9 +1,7 @@
 import {useState} from 'preact/hooks';
 import {getCookie, setCookie} from './cookies';
+import {DARK_THEME, LIGHT_THEME, THEME_COLORS} from 'constants/themes';
 
-const LIGHT_THEME = 'light';
-const DARK_THEME = 'dark';
-const DEFAULT_THEME = LIGHT_THEME;
 const COOKIE_THEME_KEY = 'theme';
 
 const getThemeFromCookie = () => getCookie(COOKIE_THEME_KEY);
@@ -34,6 +32,22 @@ const getThemeFromEnvironment = () => {
     return DEFAULT_THEME;
 };
 
+const setCSSVariableName = (name, value) => {
+    document.documentElement.style.setProperty(name, value);
+};
+
+const setThemeColorVariables = (value) => {
+    const theme = THEME_COLORS[value];
+
+    if (!theme) {
+        return;
+    }
+
+    Object.keys(theme).map((colorVariableName) => {
+        setCSSVariableName(colorVariableName, theme[colorVariableName]);
+    });
+};
+
 export const useTheme = (initialTheme) => {
     const [value, setValue] = useState(
         initialTheme || getThemeFromEnvironment()
@@ -41,10 +55,13 @@ export const useTheme = (initialTheme) => {
     const setTheme = (value) => {
         setValue(value);
         setThemeToCookie(value);
+        setThemeColorVariables(value);
     };
     const toggleTheme = () => {
         setTheme(value === LIGHT_THEME ? DARK_THEME : LIGHT_THEME);
     };
+
+    setTheme(value);
 
     return {
         theme: value,

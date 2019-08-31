@@ -3,7 +3,7 @@
 @import 'components/common/Link/style.scss';
 
 .menu {
-    background: $color-dark-purple;
+    background: $color-menu-background;
     text-align: center;
 
     &__item {
@@ -20,6 +20,7 @@
     }
 
     &__link {
+        color: $color-link;
         display: block;
 
         &_current {
@@ -35,7 +36,7 @@
     }
 
     &__button {
-        color: $color-active;
+        color: $color-link;
         display: block;
         width: 100%;
     }
