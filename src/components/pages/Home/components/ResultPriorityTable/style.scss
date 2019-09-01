@@ -1,5 +1,6 @@
 @import 'constants/colors.scss';
 @import 'constants/fonts.scss';
+@import 'constants/media.scss';
 
 .result {
     &__header {
@@ -22,5 +23,14 @@
         td {
             border: 1px solid #102027;
         }
+    }
+}
+
+@include for-mobile() {
+    .result__header,
+    .result__table {
+        margin-left: auto;
+        margin-right: auto;
+        width: 75%;
     }
 }

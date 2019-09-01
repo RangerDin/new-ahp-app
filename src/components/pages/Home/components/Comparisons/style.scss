@@ -1,3 +1,5 @@
+@import 'constants/media.scss';
+
 .comparison {
     &__header {
         display: block;
@@ -15,5 +17,16 @@
 
     &__select {
         margin-top: 15px;
+    }
+}
+
+@include for-mobile() {
+    .comparison__header,
+    .comparison__block,
+    .comparison__label,
+    .comparison__select {
+        margin-left: auto;
+        margin-right: auto;
+        width: 75%;
     }
 }

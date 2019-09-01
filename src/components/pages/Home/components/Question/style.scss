@@ -1,3 +1,5 @@
+@import 'constants/media.scss';
+
 .question {
     &__label {
         display: block;
@@ -8,5 +10,14 @@
         display: block;
         margin-top: 15px;
         width: 100%;
+    }
+}
+
+@include for-mobile() {
+    .question__label,
+    .question__input {
+        margin-left: auto;
+        margin-right: auto;
+        width: 75%;
     }
 }
