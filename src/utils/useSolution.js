@@ -99,7 +99,7 @@ export const useSolution = (initialState = defaultState) => {
     const deleteObjectName = (index) => {
         setState({
             ...state,
-            ...HAM.deleteObjectName(state.objectComparisons, index),
+            ...HAM.deleteObjectName(state.objectNames, state.objectComparisons, index),
             isSynchronized: false,
         });
     };

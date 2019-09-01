@@ -45,7 +45,7 @@ export default class HAM {
         };
     };
 
-    static deleteObjectName(objectComparisons, index) {
+    static deleteObjectName(objectNames, objectComparisons, index) {
         return {
             objectNames: HAM.getNameListWithDeletedName(objectNames, index),
             objectComparisons: objectComparisons.map((comparisons) =>
