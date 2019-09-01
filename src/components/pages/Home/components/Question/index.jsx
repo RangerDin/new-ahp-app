@@ -2,7 +2,7 @@ import {h, Fragment} from 'preact';
 
 import Label from 'components/common/Label';
 import Input from 'components/common/Input';
-import Error from '../Error';
+import Error from 'components/common/Error';
 import style from './style.scss';
 
 const Question = ({value, setValue}) => (

@@ -1,8 +1,8 @@
 import {h, Fragment} from 'preact';
 
 import Label from 'components/common/Label';
-import ComparisonSelect from '../ComparisonSelect';
-import Error from '../Error';
+import Error from 'components/common/Error';
+import ComparisonSelect from 'components/common/ComparisonSelect';
 import style from './style.scss';
 
 const Comparison = ({name1, name2, value, error, onChange}) => (

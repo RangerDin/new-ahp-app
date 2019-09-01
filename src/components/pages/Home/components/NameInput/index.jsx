@@ -3,7 +3,7 @@ import {h} from 'preact';
 import Button from 'components/common/Button';
 import cn from 'utils/classnames';
 import Input from '../Input';
-import Error from '../Error';
+import Error from '../../../../common/Error';
 import style from './style.scss';
 
 const NameInput = ({

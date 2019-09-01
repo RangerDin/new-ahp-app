@@ -2,7 +2,7 @@ import {h, Fragment} from 'preact';
 
 import TextArea from 'components/common/TextArea';
 import Label from 'components/common/Label';
-import Error from '../Error';
+import Error from 'components/common/Error';
 import style from './style.scss';
 
 const Description = ({value, setValue}) => (
