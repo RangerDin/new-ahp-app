@@ -1,4 +1,4 @@
-import {h, Fragment} from 'preact';
+import {h} from 'preact';
 
 import Button from 'components/common/Button';
 import cn from 'utils/classnames';
@@ -8,6 +8,7 @@ import style from './style.scss';
 
 const NameInput = ({
     className,
+    inputClassName,
     value,
     error,
     placeholder,
@@ -15,20 +16,20 @@ const NameInput = ({
     onChange,
     onDelete,
 }) => (
-    <Fragment>
+    <div className={cn(className, style['name-input'])}>
         <Input
-            className={cn(className, style.input)}
+            className={cn(inputClassName, style['name-input__input'])}
             value={value}
             placeholder={placeholder}
             onChange={onChange}
         />
         {error && <Error>{error}</Error>}
         {hasDeleteButton && (
-            <Button onClick={onDelete} className={style['delete-button']}>
+            <Button onClick={onDelete} className={style['name-input__delete-button']}>
                 delete
             </Button>
         )}
-    </Fragment>
+    </div>
 );
 
 export default NameInput;
