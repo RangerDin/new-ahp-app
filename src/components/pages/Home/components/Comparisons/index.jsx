@@ -1,25 +1,8 @@
-import {h, Fragment} from 'preact';
+import {h} from 'preact';
 
 import Label from 'components/common/Label';
-import Error from 'components/common/Error';
-import ComparisonSelect from 'components/common/ComparisonSelect';
 import style from './style.scss';
-
-const Comparison = ({name1, name2, value, error, onChange}) => (
-    <div className={style.comparison__block}>
-        <Label className={style.comparison__label}>
-            {name1}
-        </Label>
-        <ComparisonSelect
-            value={value}
-            onChange={onChange}
-        />
-        <Label className={style.comparison__label}>
-            {name2}
-        </Label>
-        {error && <Error>{error}</Error>}
-    </div>
-);
+import {Comparison} from './Comparison';
 
 const Comparisons = ({label, names, comparisons, setComparisons}) => {
     if (!comparisons.length || comparisons.length === 1) {
@@ -43,10 +26,10 @@ const Comparisons = ({label, names, comparisons, setComparisons}) => {
     }
 
     return (
-        <Fragment>
-            <Label className={style.comparison__header}>{label}</Label>
+        <div className={style.comparisons}>
+            <Label className={style.comparisons__header}>{label}</Label>
             {comparisonWidgets}
-        </Fragment>
+        </div>
     );
 };
 
