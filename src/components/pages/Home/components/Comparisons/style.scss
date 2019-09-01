@@ -6,11 +6,19 @@
     &__header {
         display: block;
     }
+
+    &__widget {
+        display: none;
+    }
 }
 
 @include for-mobile() {
     .comparisons {
         margin: 25px auto 0;
         width: 75%;
+
+        &__widget_active {
+            display: block;
+        }
     }
 }

@@ -1,0 +1,49 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.comparison-matrix {
+    margin: 15px auto 0;
+}
+
+.comparison-matrix__table {
+    margin: 0 auto;
+}
+
+.table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    color: $color-paragraph;
+    font-size: $font-xs;
+
+    &__cell {
+        box-sizing: border-box;
+        height: 35px;
+        width: 35px;
+
+        &_top-header {
+            position: relative;
+
+            & div {
+                overflow: hidden;
+                padding-left: 5px;
+                position: absolute;
+                text-overflow: ellipsis;
+                top: 0;
+                transform: rotate(-30deg);
+                width: 55px;
+            }
+        }
+
+        &_right-header {
+            padding-right: 5px;
+            text-align: right;
+        }
+
+        &_value {
+            border: 1px solid $color-cell-border;
+            box-sizing: border-box;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+}

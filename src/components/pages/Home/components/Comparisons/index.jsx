@@ -1,34 +1,45 @@
 import {h} from 'preact';
+import {useState} from 'preact/hooks';
 
 import Label from 'components/common/Label';
 import style from './style.scss';
-import {Comparison} from './Comparison';
+import {ComparisonTypeSelect} from './ComparisonTypeSelect';
+import {WIDGET_TYPE} from 'constants/comparisons';
+import {ListOfComparisons} from './ListOfComparisons';
+import {ComparisonMatrix} from './ComparisonMatrix';
+import cn from 'utils/classnames';
 
 const Comparisons = ({label, names, comparisons, setComparisons}) => {
     if (!comparisons.length || comparisons.length === 1) {
         return null;
     }
 
-    const comparisonWidgets = [];
-    for (let i = 0; i < comparisons.length; i++) {
-        for (let j = i + 1; j < comparisons.length; j++) {
-            comparisonWidgets.push(
-                <Comparison
-                    key={`${i}_${j}`}
-                    name1={names[i]}
-                    name2={names[j]}
-                    value={comparisons[i][j]}
-                    error=''
-                    onChange={(value) => setComparisons(i, j, value)}
-                />
-            );
-        }
-    }
+    const [type, setType] = useState(WIDGET_TYPE.LIST);
 
     return (
         <div className={style.comparisons}>
             <Label className={style.comparisons__header}>{label}</Label>
-            {comparisonWidgets}
+            <ComparisonTypeSelect type={type} onChange={setType} />
+            <ListOfComparisons
+                className={cn(
+                    style.comparisons__widget,
+                    type === WIDGET_TYPE.LIST &&
+                        style.comparisons__widget_active
+                )}
+                names={names}
+                comparisons={comparisons}
+                setComparisons={setComparisons}
+            />
+            <ComparisonMatrix
+                className={cn(
+                    style.comparisons__widget,
+                    type === WIDGET_TYPE.MATRIX &&
+                        style.comparisons__widget_active
+                )}
+                names={names}
+                comparisons={comparisons}
+                setComparisons={setComparisons}
+            />
         </div>
     );
 };

@@ -6,12 +6,14 @@ const LIGHT_THEME_COLORS = {
     'purple': '#3f51b5',
     'light-purple': '#5e99e2',
     'very-light-purple': '#e6e8f6',
-    'grey': '#fafafa',
-    'white': '#fff',
     'light-grey': '#adc9d9',
+    'grey': '#fafafa',
+    'dark-grey': '#102027',
+    'white': '#fff',
     'red': '#f00',
     'black': '#000',
     'light-blue': '#9ecaff',
+    'very-light-blue': '#cee0f7',
 };
 
 const DARK_THEME_COLORS = {
@@ -20,13 +22,17 @@ const DARK_THEME_COLORS = {
     'grey-blue': '#37474f',
     'green': '#00c853',
     'dark-green': '#009624',
+    'very-dark-green': '#406b52',
     'light-grey-blue': '#62727b',
     'light-grey': '#adc9d9',
+    'dark-grey': '#102027',
     'red': '#f00',
 };
 
 const LIGHT_THEME_COLOR_VARIABLES = {
     '--color-active': LIGHT_THEME_COLORS['light-purple'],
+    '--color-disabled': LIGHT_THEME_COLORS['very-light-blue'],
+    '--color-cell-border': DARK_THEME_COLORS['dark-grey'],
     '--color-link': LIGHT_THEME_COLORS['very-light-purple'],
     '--color-link-current': LIGHT_THEME_COLORS['light-purple'],
     '--color-legal': LIGHT_THEME_COLORS['light-purple'],
@@ -43,6 +49,8 @@ const LIGHT_THEME_COLOR_VARIABLES = {
 
 const DARK_THEME_COLOR_VARIABLES = {
     '--color-active': DARK_THEME_COLORS['green'],
+    '--color-disabled': DARK_THEME_COLORS['very-dark-green'],
+    '--color-cell-border': DARK_THEME_COLORS['dark-grey'],
     '--color-link': DARK_THEME_COLORS['green'],
     '--color-link-current': DARK_THEME_COLORS['white'],
     '--color-legal': DARK_THEME_COLORS['dark-green'],

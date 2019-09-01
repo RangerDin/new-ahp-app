@@ -158,15 +158,16 @@ export default class HAM {
         index2,
         value
     ) {
-        const [min, max] = index1 < index2 ? [index1, index2] : [index2, index1];
+        const [minIndex, maxIndex] = index1 < index2 ? [index1, index2] : [index2, index1];
         const reverseValue = convertToBig(1).div(value);
+        const [minIndexValue, maxIndexValue] = index1 < index2 ? [value, reverseValue] : [reverseValue, value];
 
         return [
-            ...comparisonMatrix.slice(0, min),
-            setElement(comparisonMatrix[min], max, value),
-            ...comparisonMatrix.slice(min + 1, max),
-            setElement(comparisonMatrix[max], min, reverseValue),
-            ...comparisonMatrix.slice(max + 1),
+            ...comparisonMatrix.slice(0, minIndex),
+            setElement(comparisonMatrix[minIndex], maxIndex, minIndexValue),
+            ...comparisonMatrix.slice(minIndex + 1, maxIndex),
+            setElement(comparisonMatrix[maxIndex], minIndex, maxIndexValue),
+            ...comparisonMatrix.slice(maxIndex + 1),
         ];
     };
 
