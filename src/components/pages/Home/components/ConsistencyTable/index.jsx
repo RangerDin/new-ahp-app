@@ -8,6 +8,7 @@ import {
     getPriorityMatrix,
 } from 'utils/math/ham';
 import style from './style.scss';
+import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
 
 const ConsistencyTable = ({
     parameterComparisons,
@@ -33,7 +34,7 @@ const ConsistencyTable = ({
                 </tr>
                 <tr>
                     <td>parameters</td>
-                    <td>{parameterMatrixConsistency}</td>
+                    <td>{parameterMatrixConsistency.toFixed(SHORT_COMPARISON_PRECISION)}</td>
                 </tr>
                 {objectMatrixConsistencies.map((value, index) => (
                     <tr className={style['result__consistency-record']}>
@@ -41,7 +42,7 @@ const ConsistencyTable = ({
                             className={style['result__matrix-name']}
                         >{`objects by parameter "${parameterNames[index]}"`}</td>
                         <td className={style['result__consistency-value']}>
-                            {value}
+                            {value.toFixed(SHORT_COMPARISON_PRECISION)}
                         </td>
                     </tr>
                 ))}
