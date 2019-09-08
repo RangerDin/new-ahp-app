@@ -2,7 +2,13 @@ $media-width-mobile: 360px;
 $media-width-tablet: 750px;
 
 @mixin for-mobile {
-    @media (min-width: $media-width-mobile) {
+    @media (min-width: $media-width-mobile) and (max-width: $media-width-tablet) {
+        @content;
+    }
+}
+
+@mixin for-tablet {
+    @media (min-width: $media-width-tablet + 1) {
         @content;
     }
 }

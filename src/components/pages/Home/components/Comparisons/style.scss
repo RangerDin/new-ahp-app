@@ -7,7 +7,7 @@
         display: block;
     }
 
-    &__widget {
+    &__matrix {
         display: none;
     }
 }
@@ -17,7 +17,12 @@
         margin: 25px auto 0;
         width: 75%;
 
-        &__widget_active {
+        &__list {
+            display: none;
+        }
+
+        &__list_active,
+        &__matrix_active {
             display: block;
         }
     }

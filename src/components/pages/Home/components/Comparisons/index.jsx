@@ -22,9 +22,9 @@ const Comparisons = ({label, names, comparisons, setComparisons}) => {
             <ComparisonTypeSelect type={type} onChange={setType} />
             <ListOfComparisons
                 className={cn(
-                    style.comparisons__widget,
+                    style.comparisons__list,
                     type === WIDGET_TYPE.LIST &&
-                        style.comparisons__widget_active
+                        style.comparisons__list_active
                 )}
                 names={names}
                 comparisons={comparisons}
@@ -32,9 +32,9 @@ const Comparisons = ({label, names, comparisons, setComparisons}) => {
             />
             <ComparisonMatrix
                 className={cn(
-                    style.comparisons__widget,
+                    style.comparisons__matrix,
                     type === WIDGET_TYPE.MATRIX &&
-                        style.comparisons__widget_active
+                        style.comparisons__matrix_active
                 )}
                 names={names}
                 comparisons={comparisons}

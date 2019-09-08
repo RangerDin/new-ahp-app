@@ -1,8 +1,14 @@
 @import 'constants/colors.scss';
 @import 'constants/media.scss';
 
+.comparison-type-select {
+    display: none;
+}
+
 @include for-mobile {
     .comparison-type-select {
+        display: block;
+
         &__option {
             background: none;
             border: 0;
