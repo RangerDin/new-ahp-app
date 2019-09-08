@@ -12,6 +12,7 @@ const NameInputs = ({
     labelText,
     inputPlaceholder,
     hasDeleteButton,
+    hasAddButton,
     addButtonText,
     onNameChange,
     onNameDelete,
@@ -32,12 +33,14 @@ const NameInputs = ({
                 error={!name && 'Name can\'t be empty'}
             />
         ))}
-        <Button
-            className={style['object-names__button']}
-            onClick={onNameAdd}
-        >
-            {addButtonText}
-        </Button>
+        {hasAddButton && (
+            <Button
+                className={style['object-names__button']}
+                onClick={onNameAdd}
+            >
+                {addButtonText}
+            </Button>
+        )}
     </div>
 );
 

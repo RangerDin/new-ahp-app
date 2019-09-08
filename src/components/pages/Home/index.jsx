@@ -16,9 +16,12 @@ import beforeUnloadEffect from 'utils/beforeUnloadEffect';
 import {useEffect, useRef} from 'preact/hooks';
 import {useSolution} from 'utils/useSolution';
 import style from './style.scss';
-
-const MIN_OBJECTS_COUNT = 2;
-const MIN_PARAMETERS_COUNT = 1;
+import {
+    MAX_PARAMETERS_COUNT,
+    MIN_PARAMETERS_COUNT,
+    MAX_OBJECTS_COUNT,
+    MIN_OBJECTS_COUNT,
+} from 'constants/comparisons';
 
 const Home = (props) => {
     const ref = useRef();
@@ -130,6 +133,7 @@ const Home = (props) => {
                     labelText='Enter the names of the objects you want to compare.'
                     inputPlaceholder='Name of object'
                     hasDeleteButton={objectNames.length > MIN_OBJECTS_COUNT}
+                    hasAddButton={objectNames.length < MAX_OBJECTS_COUNT}
                     addButtonText='Add object'
                     onNameChange={changeObjectName}
                     onNameDelete={deleteObjectName}
@@ -143,6 +147,7 @@ const Home = (props) => {
                     hasDeleteButton={
                         parameterNames.length > MIN_PARAMETERS_COUNT
                     }
+                    hasAddButton={parameterNames.length < MAX_PARAMETERS_COUNT}
                     addButtonText='Add parameter'
                     onNameChange={changeParameterName}
                     onNameDelete={deleteParameterName}

@@ -1,3 +1,8 @@
+export const MIN_OBJECTS_COUNT = 2;
+export const MAX_OBJECTS_COUNT = 7;
+export const MIN_PARAMETERS_COUNT = 1;
+export const MAX_PARAMETERS_COUNT = 7;
+
 export const COMPARISON_VALUES = {
     ABSOLUTELY_INFERIOR: 1/9,
     CLEARLY_LESS_PREFERABLE: 1/7,
