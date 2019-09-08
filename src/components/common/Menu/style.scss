@@ -1,10 +1,16 @@
 @import 'constants/colors.scss';
 @import 'constants/fonts.scss';
+@import 'constants/media.scss';
 @import 'components/common/Link/style.scss';
 
 .menu {
     background: $color-menu-background;
     text-align: center;
+
+    &_hidden {
+        height: 0;
+        overflow: hidden;
+    }
 
     &__item {
         line-height: 30px;
@@ -39,5 +45,32 @@
         color: $color-link;
         display: block;
         width: 100%;
+    }
+}
+
+@include for-tablet() {
+    .menu {
+        height: 30px;
+        margin: 0 auto;
+        max-width: $max-width;
+        overflow: hidden;
+
+        &__item {
+            float: left;
+            width: 15%;
+
+            &:first-child {
+                margin-top: 0;
+            }
+
+            &:nth-child(3),
+            &:nth-child(6) {
+                margin-top: 0;
+            }
+
+            &:nth-child(4) {
+                margin-left: 25%;
+            }
+        }
     }
 }

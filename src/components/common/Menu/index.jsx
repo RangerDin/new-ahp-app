@@ -6,6 +6,7 @@ import {LinkToLegal} from './components/LinkToLegal';
 import style from './style.scss';
 import {loadSolutionFromFile, checkFileFormat} from 'utils/loading/file';
 import {ThemeToggler} from './components/ThemeToggler';
+import cn from 'utils/classnames';
 
 const Menu = ({isOpen, history, theme, toggleTheme}) => {
     const onLoadSolutionClick = () => {
@@ -38,7 +39,7 @@ const Menu = ({isOpen, history, theme, toggleTheme}) => {
     };
 
     return (
-        <div className={style['menu']} hidden={!isOpen}>
+        <div className={cn(style['menu'], !isOpen && style['menu_hidden'])}>
             <LinkToPage
                 history={history}
                 href='/'

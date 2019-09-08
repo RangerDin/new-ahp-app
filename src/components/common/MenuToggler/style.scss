@@ -1,5 +1,6 @@
 @import 'constants/colors.scss';
 @import 'constants/fonts.scss';
+@import 'constants/media.scss';
 
 .menu-toggler {
     color: $color-link;
@@ -7,4 +8,10 @@
     font-size: $font-xl;
     line-height: 60px;
     width: 50%;
+}
+
+@include for-tablet() {
+    .menu-toggler {
+        display: none;
+    }
 }
