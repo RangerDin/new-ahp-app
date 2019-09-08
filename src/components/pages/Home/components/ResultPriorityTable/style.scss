@@ -25,12 +25,3 @@
         }
     }
 }
-
-@include for-mobile() {
-    .result__header,
-    .result__table {
-        margin-left: auto;
-        margin-right: auto;
-        width: 75%;
-    }
-}

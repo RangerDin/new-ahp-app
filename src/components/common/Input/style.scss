@@ -4,6 +4,7 @@
 .input {
     background: $color-placeholder-background;
     border: 1px solid $color-active;
+    box-sizing: border-box;
     color: $color-main-text;
     font-size: $font-s;
     line-height: 30px;

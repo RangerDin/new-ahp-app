@@ -15,6 +15,7 @@ import {saveAsFile} from 'utils/saving/file';
 import beforeUnloadEffect from 'utils/beforeUnloadEffect';
 import {useEffect, useRef} from 'preact/hooks';
 import {useSolution} from 'utils/useSolution';
+import style from './style.scss';
 
 const MIN_OBJECTS_COUNT = 2;
 const MIN_PARAMETERS_COUNT = 1;
@@ -122,26 +123,32 @@ const Home = (props) => {
             <MethodDescription />
             <Question value={question} setValue={setQuestion} />
             <Description value={description} setValue={setDescription} />
-            <NameInputs
-                names={objectNames}
-                labelText='Enter the names of the objects you want to compare.'
-                inputPlaceholder='Name of object'
-                hasDeleteButton={objectNames.length > MIN_OBJECTS_COUNT}
-                addButtonText='Add object'
-                onNameChange={changeObjectName}
-                onNameDelete={deleteObjectName}
-                onNameAdd={addObjectName}
-            />
-            <NameInputs
-                labelText='Enter the names of the parameters by which you want to compare the objects.'
-                inputPlaceholder='Name of parameter'
-                names={parameterNames}
-                hasDeleteButton={parameterNames.length > MIN_PARAMETERS_COUNT}
-                addButtonText='Add parameter'
-                onNameChange={changeParameterName}
-                onNameDelete={deleteParameterName}
-                onNameAdd={addParameterName}
-            />
+            <div className={style['home__name-inputs']}>
+                <NameInputs
+                    className={style['home__objects-name-inputs']}
+                    names={objectNames}
+                    labelText='Enter the names of the objects you want to compare.'
+                    inputPlaceholder='Name of object'
+                    hasDeleteButton={objectNames.length > MIN_OBJECTS_COUNT}
+                    addButtonText='Add object'
+                    onNameChange={changeObjectName}
+                    onNameDelete={deleteObjectName}
+                    onNameAdd={addObjectName}
+                />
+                <NameInputs
+                    className={style['home__parameters-name-inputs']}
+                    names={parameterNames}
+                    labelText='Enter the names of the parameters by which you want to compare the objects.'
+                    inputPlaceholder='Name of parameter'
+                    hasDeleteButton={
+                        parameterNames.length > MIN_PARAMETERS_COUNT
+                    }
+                    addButtonText='Add parameter'
+                    onNameChange={changeParameterName}
+                    onNameDelete={deleteParameterName}
+                    onNameAdd={addParameterName}
+                />
+            </div>
             {areParameterNamesFilled && (
                 <Comparisons
                     names={parameterNames}
@@ -184,8 +191,12 @@ const Home = (props) => {
             {areParameterNamesFilled &&
                 areObjectNamesFilled &&
                 !isSynchronized && <SaveButton onClick={onSaveButtonClick} />}
-            {areParameterNamesFilled && areObjectNamesFilled && isSynchronized && (
-                <SolutionIsSavedLabel>Solution is saved</SolutionIsSavedLabel>
+            {areParameterNamesFilled &&
+                areObjectNamesFilled &&
+                isSynchronized && (
+                <SolutionIsSavedLabel>
+                        Solution is saved
+                </SolutionIsSavedLabel>
             )}
         </PageContainer>
     );

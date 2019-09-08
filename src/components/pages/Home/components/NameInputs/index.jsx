@@ -1,11 +1,13 @@
-import {h, Fragment} from 'preact';
+import {h} from 'preact';
 
 import Label from 'components/common/Label';
+import cn from 'utils/classnames';
 import NameInput from '../NameInput';
 import Button from '../Button';
 import style from './style.scss';
 
 const NameInputs = ({
+    className,
     names,
     labelText,
     inputPlaceholder,
@@ -15,7 +17,7 @@ const NameInputs = ({
     onNameDelete,
     onNameAdd,
 }) => (
-    <Fragment>
+    <div className={cn(className, style['object-names'])}>
         <Label className={style['object-names__label']}>{labelText}</Label>
         {names.map((name, index) => (
             <NameInput
@@ -36,7 +38,7 @@ const NameInputs = ({
         >
             {addButtonText}
         </Button>
-    </Fragment>
+    </div>
 );
 
 export default NameInputs;

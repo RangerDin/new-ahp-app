@@ -1,3 +1,19 @@
+@import 'constants/media.scss';
+
 .page-container {
+    margin: 0 auto;
+    max-width: $max-width;
     padding: 0 5px 0;
+}
+
+@include for-mobile() {
+    .page-container {
+        padding: 0 25px 0;
+    }
+}
+
+@include for-tablet() {
+    .page-container {
+        padding: 0 30px 0;
+    }
 }

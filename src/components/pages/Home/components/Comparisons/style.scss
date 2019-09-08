@@ -14,9 +14,6 @@
 
 @include for-mobile() {
     .comparisons {
-        margin: 25px auto 0;
-        width: 75%;
-
         &__list {
             display: none;
         }

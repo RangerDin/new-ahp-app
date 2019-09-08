@@ -17,16 +17,19 @@
 @include for-mobile() {
     .name-input {
         position: relative;
+        width: 100%;
 
         &__input {
-            margin: 0 auto;
-            width: 75%;
+            &_with-delete-button {
+                width: 87.5%;
+            }
         }
 
         &__delete-button {
+            line-height: 34px;
             position: absolute;
             right: 0;
-            top: 7px;
+            top: 0;
             width: 12.5%;
         }
     }

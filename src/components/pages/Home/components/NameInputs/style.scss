@@ -10,12 +10,3 @@
         margin-top: 15px;
     }
 }
-
-@include for-mobile() {
-    .object-names__label,
-    .object-names__button {
-        margin-left: auto;
-        margin-right: auto;
-        width: 75%;
-    }
-}

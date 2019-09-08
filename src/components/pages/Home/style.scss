@@ -1,0 +1,27 @@
+@import 'constants/colors.scss';
+@import 'constants/media.scss';
+
+@include for-tablet() {
+    .home {
+        &__name-inputs {
+            display: table;
+            margin-top: 25px;
+            width: 100%;
+        }
+
+        &__objects-name-inputs {
+            box-sizing: border-box;
+            display: table-cell;
+            padding-right: 15px;
+            width: 50%;
+        }
+
+        &__parameters-name-inputs {
+            border-left: 1px solid $color-active;
+            box-sizing: border-box;
+            display: table-cell;
+            padding-left: 15px;
+            width: 50%;
+        }
+    }
+}

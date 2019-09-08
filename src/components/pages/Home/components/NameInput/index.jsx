@@ -18,14 +18,21 @@ const NameInput = ({
 }) => (
     <div className={cn(className, style['name-input'])}>
         <Input
-            className={cn(inputClassName, style['name-input__input'])}
+            className={cn(
+                inputClassName,
+                style['name-input__input'],
+                hasDeleteButton && style['name-input__input_with-delete-button']
+            )}
             value={value}
             placeholder={placeholder}
             onChange={onChange}
         />
         {error && <Error>{error}</Error>}
         {hasDeleteButton && (
-            <Button onClick={onDelete} className={style['name-input__delete-button']}>
+            <Button
+                onClick={onDelete}
+                className={style['name-input__delete-button']}
+            >
                 delete
             </Button>
         )}

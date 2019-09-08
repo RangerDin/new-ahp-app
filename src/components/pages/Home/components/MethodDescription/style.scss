@@ -3,11 +3,3 @@
 .method-description {
     margin-top: 25px;
 }
-
-@include for-mobile() {
-    .method-description {
-        margin-left: auto;
-        margin-right: auto;
-        width: 75%;
-    }
-}
