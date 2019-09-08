@@ -32,7 +32,7 @@ export const ComparisonMatrix = ({
                                 style['table__cell_top-header']
                             )}
                         >
-                            <div>{names}</div>
+                            <div>{names[i]}</div>
                         </td>
                     ))}
                 </tr>

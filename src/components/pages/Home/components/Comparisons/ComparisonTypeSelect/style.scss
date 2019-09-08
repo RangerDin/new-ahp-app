@@ -23,3 +23,17 @@
         }
     }
 }
+
+@include for-tablet {
+    .comparison-type-select {
+        display: block;
+
+        &__option {
+            background: none;
+            border: 0;
+            color: $color-main-text;
+            line-height: 30px;
+            width: 50%;
+        }
+    }
+}

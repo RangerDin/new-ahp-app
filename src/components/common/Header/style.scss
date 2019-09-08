@@ -1,8 +1,15 @@
 @import 'constants/colors.scss';
+@import 'constants/media.scss';
 @import 'utils/styleHelpers.scss';
 
 .header {
     @include clearfix();
 
     background: $color-menu-background;
+}
+
+@include for-tablet() {
+    .header {
+        padding: 0 30px;
+    }
 }
