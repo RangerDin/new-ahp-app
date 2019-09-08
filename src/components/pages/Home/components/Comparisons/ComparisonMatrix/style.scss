@@ -30,13 +30,16 @@
                 text-overflow: ellipsis;
                 top: 0;
                 transform: rotate(-30deg);
-                width: 55px;
+                width: 70px;
             }
         }
 
         &_right-header {
+            max-width: 70px;
+            overflow: hidden;
             padding-right: 5px;
             text-align: right;
+            text-overflow: ellipsis;
         }
 
         &_value {

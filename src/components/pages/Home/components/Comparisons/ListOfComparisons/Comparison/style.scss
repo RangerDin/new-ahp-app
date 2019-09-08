@@ -7,6 +7,8 @@
     &__label {
         display: block;
         line-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__select {

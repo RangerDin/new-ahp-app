@@ -25,9 +25,9 @@ const ResultPriorityTable = ({
                     <th>Priorities</th>
                 </tr>
                 {overallRanking.map((value, index) => (
-                    <tr>
-                        <td>{objectNames[index]}</td>
-                        <td>{value[0].toFixed(2)}</td>
+                    <tr className={style['result__object']}>
+                        <td className={style['result__object-name']}>{objectNames[index]}</td>
+                        <td className={style['result__object-priority']}>{value[0].toFixed(2)}</td>
                     </tr>
                 ))}
             </table>

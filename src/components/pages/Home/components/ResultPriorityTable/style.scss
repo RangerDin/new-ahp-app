@@ -13,15 +13,23 @@
         color: $color-main-text;
         font-size: $font-xs;
         margin-top: 15px;
+        table-layout: fixed;
         text-align: center;
         width: 100%;
 
-        tr {
-            height: 30px;
-        }
-
         td {
             border: 1px solid #102027;
+            padding: 5px 10px;
+        }
+    }
+
+    &__object {
+        height: 30px;
+
+        &-name,
+        &-priority {
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 }
