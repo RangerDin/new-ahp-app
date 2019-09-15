@@ -56,11 +56,8 @@ const Menu = ({isOpen, history, theme, toggleTheme}) => {
             <ActionButton onClick={onLoadSolutionClick}>Load solution</ActionButton>
             <ThemeToggler theme={theme} onToggleTheme={toggleTheme} />
             <ActionButton>Русский язык</ActionButton>
-            <LinkToLegal className={style.menu__link_author} href='#'>
+            <LinkToLegal className={style.menu__link_author} href='https://htype.me'>
                 Made by htype
-            </LinkToLegal>
-            <LinkToLegal className={style.menu__link_icons8} href='#'>
-                Icons by Icons8
             </LinkToLegal>
         </div>
     );

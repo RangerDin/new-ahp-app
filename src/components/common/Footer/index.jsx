@@ -10,16 +10,9 @@ const Footer = ({history}) => (
                 <LinkToPage
                     className={style['footer__link']}
                     history={history}
-                    href='#'
+                    href='https://htype.me'
                 >
                     Made by htype
-                </LinkToPage>
-                <LinkToPage
-                    className={style['footer__link']}
-                    history={history}
-                    href='#'
-                >
-                    Icons by Icons8
                 </LinkToPage>
             </div>
         </div>
