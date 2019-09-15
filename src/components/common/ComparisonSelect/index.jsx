@@ -2,6 +2,8 @@ import {h} from 'preact';
 
 import {COMPARISON_LABELS, COMPARISON_VALUES} from 'constants/comparisons';
 import Select from '../Select';
+import cn from 'utils/classnames';
+import style from './style.scss';
 
 const options = Object.keys(COMPARISON_VALUES).map((key) => ({
     label: COMPARISON_LABELS[COMPARISON_VALUES[key]],
@@ -10,7 +12,7 @@ const options = Object.keys(COMPARISON_VALUES).map((key) => ({
 
 const ComparisonSelect = ({className, value, onChange}) => (
     <Select
-        className={className}
+        className={cn(className, style['comparison-select'])}
         value={value}
         options={options}
         onChange={(event) => {
