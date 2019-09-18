@@ -73,7 +73,7 @@ const Home = (props) => {
         }
     };
 
-    beforeUnloadEffect(onBeforeUnload);
+    beforeUnloadEffect(onBeforeUnload, isSynchronized);
 
     useEffect(() => {
         if (!isSynchronized) {
