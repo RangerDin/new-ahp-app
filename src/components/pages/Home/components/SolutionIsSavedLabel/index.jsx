@@ -1,5 +1,5 @@
 import {h} from 'preact';
-import Paragraph from 'components/common/Paragraph';
+import Paragraph from 'components/pages/Home/components/Paragraph';
 
 import style from './style.scss';
 

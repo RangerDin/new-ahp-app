@@ -5,8 +5,8 @@ import Label from 'components/common/Label';
 import style from './style.scss';
 import {ComparisonTypeSelect} from './ComparisonTypeSelect';
 import {WIDGET_TYPE} from 'constants/comparisons';
-import {ListOfComparisons} from './ListOfComparisons';
-import {ComparisonMatrix} from './ComparisonMatrix';
+import {ListOfComparisons} from '../ListOfComparisons';
+import {ComparisonMatrix} from '../ComparisonMatrix';
 import cn from 'utils/classnames';
 
 const Comparisons = ({label, names, comparisons, setComparisons}) => {

@@ -1,0 +1,14 @@
+@import 'constants/colors.scss';
+@import 'constants/fonts.scss';
+
+.table-of-contents {
+    &__item {
+        padding: 2px 0;
+    }
+
+    &__link {
+        color: $color-active;
+        font-size: $font-xs;
+        text-decoration: none;
+    }
+}

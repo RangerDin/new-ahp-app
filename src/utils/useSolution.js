@@ -154,6 +154,14 @@ export const useSolution = (initialState = defaultState) => {
         setSolutionState(defaultState);
     };
 
+    const areObjectNamesFilled = () => (
+        state.objectNames.every(Boolean)
+    );
+
+    const areParameterNamesFilled = () => (
+        state.parameterNames.every(Boolean)
+    );
+
     return {
         state,
         operations: {
@@ -170,6 +178,8 @@ export const useSolution = (initialState = defaultState) => {
             setSynchronized,
             setSolutionState,
             resetSolutionState,
+            areObjectNamesFilled,
+            areParameterNamesFilled,
         },
     };
 };

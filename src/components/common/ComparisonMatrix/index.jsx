@@ -8,6 +8,7 @@ export const ComparisonMatrix = ({
     className,
     names,
     comparisons,
+    disabled,
     setComparisons,
 }) => {
     return (
@@ -46,23 +47,27 @@ export const ComparisonMatrix = ({
                         >
                             {names[i]}
                         </td>
-                        {row.map((cell, j) => (
-                            <td
-                                className={cn(
-                                    style['table__cell'],
-                                    style['table__cell_value'],
-                                    i !== j && style['table__cell_value-active']
-                                )}
-                            >
-                                <ComparisonInput
-                                    disabled={i === j}
-                                    value={cell}
-                                    onChange={(value) => {
-                                        setComparisons(i, j, value);
-                                    }}
-                                />
-                            </td>
-                        ))}
+                        {row.map((cell, j) => {
+                            const isDisabled = disabled || i == j;
+
+                            return (
+                                <td
+                                    className={cn(
+                                        style['table__cell'],
+                                        style['table__cell_value'],
+                                        !isDisabled && style['table__cell_value-active']
+                                    )}
+                                >
+                                    <ComparisonInput
+                                        disabled={isDisabled}
+                                        value={cell}
+                                        onChange={(value) => {
+                                            setComparisons(i, j, value);
+                                        }}
+                                    />
+                                </td>
+                            );
+                        })}
                     </tr>
                 ))}
             </table>

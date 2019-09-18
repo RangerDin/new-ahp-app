@@ -1,7 +1,7 @@
 import {h} from 'preact';
 
 import Link from 'components/common/Link';
-import Paragraph from 'components/common/Paragraph';
+import Paragraph from 'components/pages/Home/components/Paragraph';
 import style from './style.scss';
 
 const MethodDescription = () => (

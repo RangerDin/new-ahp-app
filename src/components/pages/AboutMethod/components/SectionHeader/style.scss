@@ -1,9 +1,8 @@
 @import 'constants/colors.scss';
 @import 'constants/fonts.scss';
 
-.page-header {
-    font-size: $font-s;
-    margin: 15px 0 0;
-    padding: 0;
+.section-header {
+    font-size: $font-xs;
+    margin: 15px 0;
     text-align: center;
 }
