@@ -7,6 +7,7 @@ import style from './style.scss';
 import {loadSolutionFromFile, checkFileFormat} from 'utils/loading/file';
 import {ThemeToggler} from './components/ThemeToggler';
 import cn from 'utils/classnames';
+import {Copyright} from './components/Copyright';
 
 const Menu = ({isOpen, history, theme, toggleTheme}) => {
     const onLoadSolutionClick = () => {
@@ -59,6 +60,7 @@ const Menu = ({isOpen, history, theme, toggleTheme}) => {
             <LinkToLegal className={style.menu__link_author} href='https://htype.me'>
                 Made by htype
             </LinkToLegal>
+            <Copyright />
         </div>
     );
 };

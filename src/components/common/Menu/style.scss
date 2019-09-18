@@ -46,6 +46,11 @@
         display: block;
         width: 100%;
     }
+
+    &__copyright {
+        color: $color-legal;
+        font-size: $font-xs;
+    }
 }
 
 @include for-tablet() {
@@ -71,6 +76,10 @@
             &:nth-child(4) {
                 margin-left: 25%;
             }
+        }
+
+        &__copyright {
+            display: none;
         }
     }
 }
