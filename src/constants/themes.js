@@ -1,5 +1,5 @@
-export const LIGHT_THEME = 'light';
-export const DARK_THEME = 'dark';
+export const LIGHT_THEME = 'menu.theme-light';
+export const DARK_THEME = 'menu.theme-dark';
 export const DEFAULT_THEME = LIGHT_THEME;
 
 const LIGHT_THEME_COLORS = {

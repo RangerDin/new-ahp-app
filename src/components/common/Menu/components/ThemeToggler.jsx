@@ -1,8 +1,11 @@
 import {h} from 'preact';
 
-import {capitalize} from 'utils/string';
 import {ActionButton} from './ActionButton';
+import {useContext} from 'preact/hooks';
+import {TranslationContext} from 'utils/translation';
 
-export const ThemeToggler = ({theme, onToggleTheme}) => (
-    <ActionButton onClick={onToggleTheme}>{capitalize(theme)} theme</ActionButton>
-);
+export const ThemeToggler = ({theme, onToggleTheme}) => {
+    const {t} = useContext(TranslationContext);
+
+    return <ActionButton onClick={onToggleTheme}>{t(theme)}</ActionButton>;
+};

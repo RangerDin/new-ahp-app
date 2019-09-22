@@ -8,11 +8,9 @@ import {SaatiScale} from '../SaatiScale';
 import {UL} from '../UL';
 import {COMPARISON_VALUES} from 'constants/comparisons';
 import {CONTENT_ANCHOR} from '../../constants/contents';
-import {Bibliography} from '../Bibliography';
 import {BibliographyLink} from '../BibliographyLink';
 import {
     BIBLIOGRAPHY,
-    BIBLIOGRAPHY_ANCHOR_PREFIX,
     BIBLIOGRAPHY_ANCHOR,
 } from '../../constants/bibliography';
 

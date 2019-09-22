@@ -3,9 +3,13 @@ import {h} from 'preact';
 import {WIDGET_TYPE} from 'constants/comparisons';
 import cn from 'utils/classnames';
 import style from './style.scss';
+import {useContext} from 'preact/hooks';
+import {TranslationContext} from 'utils/translation';
 
-export const ComparisonTypeSelect = ({type, onChange}) => (
-    <div className={style['comparison-type-select']}>
+export const ComparisonTypeSelect = ({type, onChange}) => {
+    const {t} = useContext(TranslationContext);
+
+    return <div className={style['comparison-type-select']}>
         <button
             onClick={() => onChange(WIDGET_TYPE.LIST)}
             className={cn(
@@ -14,7 +18,7 @@ export const ComparisonTypeSelect = ({type, onChange}) => (
                     style['comparison-type-select__option_active']
             )}
         >
-            list of comparisons
+            {t('home.list-of-comparisons.title')}
         </button>
         <button
             onClick={() => onChange(WIDGET_TYPE.MATRIX)}
@@ -24,7 +28,7 @@ export const ComparisonTypeSelect = ({type, onChange}) => (
                     style['comparison-type-select__option_active']
             )}
         >
-            comparison matrix
+            {t('home.comparison-matrix.title')}
         </button>
-    </div>
-);
+    </div>;
+};

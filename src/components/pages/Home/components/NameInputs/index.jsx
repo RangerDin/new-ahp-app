@@ -9,6 +9,7 @@ import style from './style.scss';
 const NameInputs = ({
     className,
     names,
+    error,
     labelText,
     inputPlaceholder,
     hasDeleteButton,
@@ -30,7 +31,7 @@ const NameInputs = ({
                 onDelete={() => {
                     onNameDelete(index);
                 }}
-                error={!name && 'Name can\'t be empty'}
+                error={!name && error}
             />
         ))}
         {hasAddButton && (

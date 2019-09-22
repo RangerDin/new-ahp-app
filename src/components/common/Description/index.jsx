@@ -4,21 +4,24 @@ import TextArea from 'components/common/TextArea';
 import Label from 'components/common/Label';
 import Error from 'components/common/Error';
 import style from './style.scss';
+import {useContext} from 'preact/hooks';
+import {TranslationContext} from 'utils/translation';
 
-const Description = ({value, setValue}) => (
-    <Fragment>
+const Description = ({value, setValue}) => {
+    const {t} = useContext(TranslationContext);
+
+    return <Fragment>
         <Label className={style['description__label']}>
-            Enter a description of the solution. For example: "Solution of one
-            authoritative auto journalist"
+            {t('home.description.label')}
         </Label>
         <TextArea
             value={value}
             onChange={(event) => setValue(event.target.value)}
             className={style['description__textarea']}
-            placeholder='Description of the solution'
+            placeholder={t('home.description.placeholder')}
         />
-        {!value && <Error>Description can't be empty</Error>}
-    </Fragment>
-);
+        {!value && <Error>{t('home.description.error')}</Error>}
+    </Fragment>;
+};
 
 export default Description;

@@ -11,10 +11,11 @@ import SaveButton from './components/SaveButton';
 import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
 import {saveAsFile} from 'utils/saving/file';
 import beforeUnloadEffect from 'utils/beforeUnloadEffect';
-import {useEffect, useRef} from 'preact/hooks';
+import {useEffect, useRef, useContext} from 'preact/hooks';
 import {useSolution} from 'utils/useSolution';
 import PageHeader from 'components/common/PageHeader';
 import {EntityNameInputs} from './components/EntityNameInputs';
+import {TranslationContext} from 'utils/translation';
 
 const Home = (props) => {
     const ref = useRef();
@@ -113,9 +114,11 @@ const Home = (props) => {
         }
     }, [props]);
 
+    const {t} = useContext(TranslationContext);
+
     return (
         <PageContainer>
-            <PageHeader>Analytic Hierarchy Process</PageHeader>
+            <PageHeader>{t('home.header')}</PageHeader>
             <MethodDescription />
             <Question value={question} setValue={setQuestion} />
             <Description value={description} setValue={setDescription} />
@@ -134,7 +137,7 @@ const Home = (props) => {
                     names={parameterNames}
                     comparisons={parameterComparisons}
                     setComparisons={setParameterComparison}
-                    label='Compare parameters'
+                    label={t('home.parameters.comparisons.label')}
                 />
             )}
             {areParameterNamesFilled() &&
@@ -151,7 +154,7 @@ const Home = (props) => {
                                 value
                             )
                         }
-                        label={`Compare objects by parameter ${parameterName}`}
+                        label={`${t('home.objects.comparisons.label')} ${parameterName}`}
                     />
                 ))}
             {areParameterNamesFilled() && areObjectNamesFilled() && (
@@ -174,9 +177,7 @@ const Home = (props) => {
             {areParameterNamesFilled() &&
                 areObjectNamesFilled() &&
                 isSynchronized && (
-                <SolutionIsSavedLabel>
-                        Solution is saved
-                </SolutionIsSavedLabel>
+                <SolutionIsSavedLabel />
             )}
         </PageContainer>
     );

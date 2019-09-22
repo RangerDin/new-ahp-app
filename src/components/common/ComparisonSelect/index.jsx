@@ -9,24 +9,28 @@ import {
 import Select from '../Select';
 import cn from 'utils/classnames';
 import style from './style.scss';
+import {useContext} from 'preact/hooks';
+import {TranslationContext} from 'utils/translation';
 
-const options = Object.keys(COMPARISON_VALUES).map((key) => ({
-    label: COMPARISON_LABELS[COMPARISON_VALUES[key]],
+const getOptions = (t) => Object.keys(COMPARISON_VALUES).map((key) => ({
+    label: t(COMPARISON_LABELS[COMPARISON_VALUES[key]]),
     value: COMPARISON_VALUES[key].toFixed(SHORT_COMPARISON_PRECISION),
 }));
 
-const ComparisonSelect = ({className, value, onChange}) => (
-    <Select
+const ComparisonSelect = ({className, value, onChange}) => {
+    const {t} = useContext(TranslationContext);
+
+    return <Select
         className={cn(className, style['comparison-select'])}
         value={value.toFixed(SHORT_COMPARISON_PRECISION)}
-        options={options}
+        options={getOptions(t)}
         onChange={(event) => {
             const comparisonValue =
                 SHORT_COMPARISON_VALUES_TO_LONG[event.target.value];
 
             onChange(comparisonValue);
         }}
-    />
-);
+    />;
+};
 
 export default ComparisonSelect;

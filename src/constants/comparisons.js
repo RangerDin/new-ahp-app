@@ -39,15 +39,15 @@ export const COMPARISON_VALUES_TO_STRING = {
 };
 
 export const COMPARISON_LABELS = {
-    [COMPARISON_VALUES.ABSOLUTELY_INFERIOR]: 'is absolutely inferior to',
-    [COMPARISON_VALUES.CLEARLY_LESS_PREFERABLE]: 'is clearly less preferable to',
-    [COMPARISON_VALUES.MUCH_LESS_PREFERABLE]: 'is much less preferable to',
-    [COMPARISON_VALUES.SLIGHTLY_LESS_PREFERABLE]: 'is slightly less preferable to',
-    [COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE]: 'has the same degree of preference as',
-    [COMPARISON_VALUES.SLIGHTLY_PREFERABLE]: 'is slightly preferable to',
-    [COMPARISON_VALUES.MUCH_PREFERABLE]: 'is much preferable to',
-    [COMPARISON_VALUES.CLEARLY_PREFERABLE]: 'is clearly preferable to',
-    [COMPARISON_VALUES.ABSOLUTELY_SUPERIOR]: 'is absolutely superior to',
+    [COMPARISON_VALUES.ABSOLUTELY_INFERIOR]: 'comparisons.absolutely-inferior',
+    [COMPARISON_VALUES.CLEARLY_LESS_PREFERABLE]: 'comparisons.clearly-less-preferable',
+    [COMPARISON_VALUES.MUCH_LESS_PREFERABLE]: 'comparisons.much-less-preferable',
+    [COMPARISON_VALUES.SLIGHTLY_LESS_PREFERABLE]: 'comparisons.slightly-less-preferable',
+    [COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE]: 'comparisons.same-degree',
+    [COMPARISON_VALUES.SLIGHTLY_PREFERABLE]: 'comparisons.slightly-preferable',
+    [COMPARISON_VALUES.MUCH_PREFERABLE]: 'comparisons.much-preferable',
+    [COMPARISON_VALUES.CLEARLY_PREFERABLE]: 'comparisons.clearly-preferable',
+    [COMPARISON_VALUES.ABSOLUTELY_SUPERIOR]: 'comparisons.absolutely-superior',
 };
 
 export const WIDGET_TYPE = {

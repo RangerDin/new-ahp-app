@@ -8,8 +8,12 @@ import {loadSolutionFromFile, checkFileFormat} from 'utils/loading/file';
 import {ThemeToggler} from './components/ThemeToggler';
 import cn from 'utils/classnames';
 import {Copyright} from './components/Copyright';
+import {LanguageToggler} from './components/LanguageToggler';
+import {TranslationContext} from 'utils/translation';
+import {useContext} from 'preact/hooks';
 
 const Menu = ({isOpen, history, theme, toggleTheme}) => {
+    const {t} = useContext(TranslationContext);
     const onLoadSolutionClick = () => {
         const wrongFormatAlert = () => {
             alert('Wrong file format!');
@@ -49,16 +53,21 @@ const Menu = ({isOpen, history, theme, toggleTheme}) => {
                 }}
                 isAlwaysActive
             >
-                New solution
+                {t('menu.new-solution')}
             </LinkToPage>
             <LinkToPage history={history} href='/about'>
-                About method
+                {t('menu.about-method')}
             </LinkToPage>
-            <ActionButton onClick={onLoadSolutionClick}>Load solution</ActionButton>
+            <ActionButton onClick={onLoadSolutionClick}>
+                {t('menu.load-solution')}
+            </ActionButton>
             <ThemeToggler theme={theme} onToggleTheme={toggleTheme} />
-            <ActionButton>Русский язык</ActionButton>
-            <LinkToLegal className={style.menu__link_author} href='https://htype.me'>
-                Made by htype
+            <LanguageToggler />
+            <LinkToLegal
+                className={style.menu__link_author}
+                href='https://htype.me'
+            >
+                {t('site.made-by-htype')}
             </LinkToLegal>
             <Copyright />
         </div>
