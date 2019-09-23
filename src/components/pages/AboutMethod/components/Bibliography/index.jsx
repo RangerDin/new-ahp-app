@@ -5,21 +5,27 @@ import {SectionHeader} from '../SectionHeader';
 import {CONTENT_ANCHOR} from '../../constants/contents';
 import {BIBLIOGRAPHY_LIST, BIBLIOGRAPHY_ANCHOR_PREFIX} from '../../constants/bibliography';
 import {LI} from '../LI';
+import {useContext} from 'preact/hooks';
+import {TranslationContext} from 'utils/translation';
 
-export const Bibliography = () => (
-    <div>
-        <SectionHeader anchor={CONTENT_ANCHOR.BIBLIOGRAPHY}>
-            Bibliography
-        </SectionHeader>
-        <Paragraph>
-            When creating the site, the following literature was used:
-        </Paragraph>
-        <OL>
-            {BIBLIOGRAPHY_LIST.map((item) => (
-                <LI><a id={`${BIBLIOGRAPHY_ANCHOR_PREFIX}${item.order}`} />
-                    {item.text}
-                </LI>
-            ))}
-        </OL>
-    </div>
-);
+export const Bibliography = () => {
+    const {t} = useContext(TranslationContext);
+
+    return (
+        <div>
+            <SectionHeader anchor={CONTENT_ANCHOR.BIBLIOGRAPHY}>
+                {t('about.bibliography.title')}
+            </SectionHeader>
+            <Paragraph>
+                {t('about.bibliography.literature-was-used')}
+            </Paragraph>
+            <OL>
+                {BIBLIOGRAPHY_LIST.map((item) => (
+                    <LI><a id={`${BIBLIOGRAPHY_ANCHOR_PREFIX}${item.order}`} />
+                        {t(item.text)}
+                    </LI>
+                ))}
+            </OL>
+        </div>
+    );
+};

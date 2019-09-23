@@ -9,22 +9,22 @@ export const CONTENT_ANCHOR = {
 export const CONTENTS = [
     {
         anchor: CONTENT_ANCHOR.DEFINITION,
-        name: 'Definition',
+        name: 'about.definition.title',
     },
     {
         anchor: CONTENT_ANCHOR.APPLICATIONS,
-        name: 'Applications',
+        name: 'about.applications.title',
     },
     {
         anchor: CONTENT_ANCHOR.DESCRIPTION,
-        name: 'Description',
+        name: 'about.description.title',
     },
     {
         anchor: CONTENT_ANCHOR.EXAMPLE,
-        name: 'Example',
+        name: 'about.example.title',
     },
     {
         anchor: CONTENT_ANCHOR.BIBLIOGRAPHY,
-        name: 'Bibliography',
+        name: 'about.bibliography.title',
     },
 ];

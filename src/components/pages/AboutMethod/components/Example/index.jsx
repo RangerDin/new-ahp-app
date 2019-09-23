@@ -11,6 +11,8 @@ import ResultPriorityTable from 'components/pages/Home/components/ResultPriority
 import ConsistencyTable from 'components/pages/Home/components/ConsistencyTable';
 import {LI} from '../LI';
 import {UL} from '../UL';
+import {useContext} from 'preact/hooks';
+import {TranslationContext} from 'utils/translation';
 
 export const Example = () => {
     const {
@@ -37,34 +39,29 @@ export const Example = () => {
             areParameterNamesFilled,
         },
     } = useSolution();
+    const {t} = useContext(TranslationContext);
 
     return (
         <div>
             <SectionHeader anchor={CONTENT_ANCHOR.EXAMPLE}>
-                Example
+                {t('about.example.title')}
             </SectionHeader>
             <Paragraph>
-                An interactive example below shows how to use the analytic
-                hierarchy process and this web application.
+                {t('about.example.preface')}
             </Paragraph>
             <Paragraph>
-                Suppose an amateur car magazine "First Gear" decided to conduct
-                its own research and decided to use the AHP and this web
-                application in order to choose the best Italian mid-engine
-                supercar worth less than 10.000 pounds.
+                {t('about.example.preface')}
             </Paragraph>
             <Paragraph>
-                First of all, it is necessary to determine the goal:
+                {t('about.example.goal')}
             </Paragraph>
             <Question value={question} setValue={setQuestion} />
             <Paragraph>
-                Details of the task should be placed in the description:
+                {t('about.example.description')}
             </Paragraph>
             <Description value={description} setValue={setDescription} />
             <Paragraph>
-                Next, you need to list all the compared objects. It is also
-                necessary to list all the criteria by which these objects are
-                evaluated:
+                {t('about.example.criteria')}
             </Paragraph>
             <EntityNameInputs
                 objectNames={objectNames}
@@ -77,25 +74,13 @@ export const Example = () => {
                 addParameterName={addParameterName}
             />
             <Paragraph>
-                After all the criteria are listed, you can proceed to compare
-                them. For pairwise object comparisons, one of two views can be
-                used: "List of comparisons" or "Comparison matrix".
+                {t('about.example.object-comparisons')}
             </Paragraph>
             <Paragraph>
-                "List of comparisons" is intended for those who are not yet very
-                well versed in the analytic hierarchy process. In this view,
-                each comparison is represented by a slider, changing the
-                position of which, you can set the desired degree of preference
-                for the left object to the right.
+                {t('about.example.comparison-control')}
             </Paragraph>
             <Paragraph>
-                "Comparison matrix" is intended for experts. And allows you to
-                directly change the state of the matrix of pairwise comparisons.
-                Each cell of the matrix, except for the cells of the main
-                diagonal, can be edited. The cell can take values from the
-                "Saati scale" and their reciprocals. After changing the value of
-                the cell, the value of the "symmetric" cell of the matrix also
-                changes.
+                {t('about.example.comparison-matrix')}
             </Paragraph>
             {areParameterNamesFilled() && (
                 <Comparisons
@@ -106,16 +91,14 @@ export const Example = () => {
                 />
             )}
             <Paragraph>
-                Next, you need to perform pairwise comparisons of the objects
-                for each of the criteria. Comparisons of the objects are made in
-                a manner similar to the comparison of parameters.
+                {t('about.example.pairwise-comparisons')}
             </Paragraph>
             {areParameterNamesFilled() &&
                 areObjectNamesFilled() &&
                 parameterNames.map((parameterName, parameterIndex) => (
                     <Fragment>
                         <Paragraph>
-                            Comparison of objects by parameter {parameterName}.
+                            {t('about.example.comparison-of-objects-title')} {parameterName}.
                         </Paragraph>
                         <Comparisons
                             names={objectNames}
@@ -128,17 +111,15 @@ export const Example = () => {
                                     value
                                 )
                             }
-                            label={`Compare objects by parameter ${parameterName}`}
+                            label={`${t('about.example.comparison-of-objects-label')} ${parameterName}`}
                         />
                     </Fragment>
                 ))}
             <Paragraph>
-                The table below contains a list of objects and their respective
-                priorities. Also, the object with the highest priority is
-                displayed separately.
+                {t('about.example.comparison-of-objects-matrix')}
             </Paragraph>
             <Paragraph>
-                Objects with the highest priority: Ferrari 308 GT4
+                {t('about.example.highest-priority')}
             </Paragraph>
             {areParameterNamesFilled() && areObjectNamesFilled() && (
                 <ResultPriorityTable
@@ -148,13 +129,7 @@ export const Example = () => {
                 />
             )}
             <Paragraph>
-                The table below contains a list of matrices and their
-                corresponding consistency ratios. The consistency ratio shows
-                how the comparisons in the matrix are consistent. If the
-                consistency ratio of matrix is less than 0.1, the comparisons in
-                this matrix are considered to be sufficiently consistent.
-                Otherwise, comparisons in this matrix are considered to be
-                inconsistent, and it is better to make them again.
+                {t('about.example.consistency-ratio')}
             </Paragraph>
             {areParameterNamesFilled() && areObjectNamesFilled() && (
                 <ConsistencyTable
@@ -164,27 +139,21 @@ export const Example = () => {
                 />
             )}
             <Paragraph>
-                Inconsistency arises, for example, with the following set of
-                comparisons:
+                {t('about.example.inconsistency-example')}
             </Paragraph>
             <UL>
-                <LI>A is preferable to B;</LI>
-                <LI>B is preferable to C;</LI>
-                <LI>C is preferable to A.</LI>
+                <LI>{t('about.example.inconsistency-example-description.1')}</LI>
+                <LI>{t('about.example.inconsistency-example-description.2')}</LI>
+                <LI>{t('about.example.inconsistency-example-description.3')}</LI>
             </UL>
             <Paragraph>
-                It can be seen that the comparisons in the example above are
-                illogical and contradict each other. If there are similar
-                comparisons in the solution, the analytic hierarchy process
-                produces an incorrect result.
+                {t('about.example.incorrect-result')}
             </Paragraph>
             <Paragraph>
-                When all data is filled, the result is calculated and all
-                matrices have acceptable consistency, the solution can be used.
+                {t('about.example.solution-can-be-used')}
             </Paragraph>
             <Paragraph>
-                This completes the training example. Good luck with your
-                decision-making!
+                {t('about.example.conclusion')}
             </Paragraph>
         </div>
     );

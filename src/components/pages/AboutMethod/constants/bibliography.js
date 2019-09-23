@@ -8,15 +8,11 @@ export const BIBLIOGRAPHY_ANCHOR_PREFIX = 'bibliography-';
 export const BIBLIOGRAPHY = {
     [BIBLIOGRAPHY_ANCHOR.DECISION_MAKING]: {
         order: 1,
-        text:
-            'Саати Т. Л. Принятие решений. Метод анализа иерархий. — М.: Радио и связь, 1989. — 316 с.',
+        text: 'about.bibliography.literature-1',
     },
     [BIBLIOGRAPHY_ANCHOR.ABOUT_MEASURING_INTANGIBLE]: {
         order: 2,
-        text: `Саати Т. Л. Об измерении неосязаемого. 
-            Подход к относительным измерениям на основе 
-            главного собственного вектора матрицы парных сравнений 
-            // Журнал "Cloud Of Science". 2015. Т. 2. № 1`,
+        text: 'about.bibliography.literature-2',
     },
 };
 
