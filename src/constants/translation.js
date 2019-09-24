@@ -4,6 +4,6 @@ export const LANGUAGE = {
 };
 
 export const LANGUAGE_LABEL = {
-    [LANGUAGE.RUSSIAN]: 'Русский язык',
-    [LANGUAGE.ENGLISH]: 'English',
+    [LANGUAGE.RUSSIAN]: 'English',
+    [LANGUAGE.ENGLISH]: 'Русский язык',
 };
