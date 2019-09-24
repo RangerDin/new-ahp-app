@@ -50,7 +50,7 @@ export const Example = () => {
                 {t('about.example.preface')}
             </Paragraph>
             <Paragraph>
-                {t('about.example.preface')}
+                {t('about.example.story')}
             </Paragraph>
             <Paragraph>
                 {t('about.example.goal')}
@@ -87,7 +87,7 @@ export const Example = () => {
                     names={parameterNames}
                     comparisons={parameterComparisons}
                     setComparisons={setParameterComparison}
-                    label='Compare parameters'
+                    label={t('about.example.parameters-comparison-matrix-label')}
                 />
             )}
             <Paragraph>
@@ -97,9 +97,6 @@ export const Example = () => {
                 areObjectNamesFilled() &&
                 parameterNames.map((parameterName, parameterIndex) => (
                     <Fragment>
-                        <Paragraph>
-                            {t('about.example.comparison-of-objects-title')} {parameterName}.
-                        </Paragraph>
                         <Comparisons
                             names={objectNames}
                             comparisons={objectComparisons[parameterIndex]}
@@ -117,9 +114,6 @@ export const Example = () => {
                 ))}
             <Paragraph>
                 {t('about.example.comparison-of-objects-matrix')}
-            </Paragraph>
-            <Paragraph>
-                {t('about.example.highest-priority')}
             </Paragraph>
             {areParameterNamesFilled() && areObjectNamesFilled() && (
                 <ResultPriorityTable

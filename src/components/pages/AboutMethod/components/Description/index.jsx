@@ -16,7 +16,7 @@ import {
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/translation';
 
-const EXAMPLE_OBJECT_NAME = ['Cat', 'Dog', 'Parrot'];
+const EXAMPLE_OBJECT_NAME = ['Object 1', 'Object 2', 'Object 3'];
 
 const EXAMPLE_MATRIX_OF_PAIRWISE_COMPARISONS = [
     [
