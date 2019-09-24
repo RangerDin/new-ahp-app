@@ -4,7 +4,7 @@
     appearance: none;
     background: $color-main-background;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='%23102027'><polygon points='0,0 100,0 50,50'/></svg>");
-    background-position: right 1px top 12px, 0 0;
+    background-position: right 2px top 2px, 0 0;
     background-repeat: no-repeat;
     background-size: 5px;
     border: 0;
@@ -12,8 +12,12 @@
     font-weight: bold;
     height: 100%;
     margin: 0;
-    padding: 0 0 0 2px;
+    padding: 0 4px 0;
     width: 100%;
+
+    & option {
+        padding: 0;
+    }
 }
 
 .comparison-input:disabled {
