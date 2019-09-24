@@ -1,6 +1,11 @@
+@import 'constants/media.scss';
+
 .application {
     box-sizing: border-box;
     min-height: 100%;
-    padding-bottom: 45px;
     position: relative;
+}
+
+@include for-tablet() {
+    padding-bottom: 45px;
 }
