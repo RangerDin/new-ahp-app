@@ -7,5 +7,7 @@
 }
 
 @include for-tablet() {
-    padding-bottom: 45px;
+    .application {
+        padding-bottom: 45px;
+    }
 }
