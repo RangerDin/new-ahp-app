@@ -104,6 +104,7 @@ const Home = (props) => {
     useEffect(() => {
         if (!ref.firstLoaded) {
             ref.firstLoaded = true;
+            props.history.location.state = null;
             return;
         }
 
