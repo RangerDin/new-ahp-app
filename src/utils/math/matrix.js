@@ -14,7 +14,9 @@ export const multiply = function(matrix1, matrix2) {
             result[i][j] = new Big(0);
 
             for (let k = 0; k < column1; k++) {
-                result[i][j] = result[i][j].add((matrix1[i][k]).mul(matrix2[k][j]));
+                result[i][j] = result[i][j].add(
+                    matrix1[i][k].mul(matrix2[k][j])
+                );
             }
         }
     }
@@ -22,14 +24,39 @@ export const multiply = function(matrix1, matrix2) {
     return result;
 };
 
-export const pow = function(matrix, exponent) {
-    let resultMatrix = copy(matrix);
+const asyncMultiply = (matrix1, matrix2) =>
+    new Promise((resolve) => {
+        const timeoutId = setTimeout(() => {
+            const product = multiply(matrix1, matrix2);
 
-    for (let i = 1; i < exponent; i++) {
-        resultMatrix = multiply(resultMatrix, matrix);
+            resolve([product, timeoutId]);
+        }, 0);
+    });
+
+export const pow = function(matrix, exponent) {
+    const timeoutIds = [];
+    let resultPromise = Promise.resolve([matrix, null]);
+
+    for (let i = 1; i < exponent;) {
+        const doubledPow = i * 2;
+
+        resultPromise = resultPromise.then(([resultMatrix, timeoutId]) => {
+            if (timeoutId) {
+                timeoutIds.push(timeoutId);
+            }
+
+            const secondMultiplier = doubledPow < exponent ? resultMatrix : matrix;
+
+            return asyncMultiply(resultMatrix, secondMultiplier);
+        });
+        i = doubledPow < exponent ? doubledPow : i + 1;
     }
 
-    return resultMatrix;
+    return resultPromise.then(([resultMatrix, timeoutId]) => {
+        timeoutIds.push(timeoutId);
+
+        return [resultMatrix, timeoutIds];
+    });
 };
 
 export const copy = function(matrix) {

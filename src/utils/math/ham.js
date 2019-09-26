@@ -15,29 +15,39 @@ const getVectorOfRowSums = (matrix) =>
     matrix.map((row) => row.reduce((sum, element) => sum.add(element)));
 
 export const getPriorityVector = (matrix) => {
-    const poweredMatrix = pow(matrix, MATRIX_POWER);
+    return pow(matrix, MATRIX_POWER).then(([poweredMatrix, timeoutIds]) => {
+        const vectorOfRowSums = getVectorOfRowSums(poweredMatrix);
+        const matrixSum = sumOfElements(poweredMatrix);
+        const priorityVector = divideMatrixToNumber(vectorOfRowSums, matrixSum);
 
-    const matrixSum = sumOfElements(poweredMatrix);
-    const vectorOfRowSums = getVectorOfRowSums(poweredMatrix);
-    return divideMatrixToNumber(vectorOfRowSums, matrixSum);
+        return [priorityVector, timeoutIds];
+    });
 };
 
 export const getPriorityMatrix = (comparisonMatrixes) => {
-    const priorityVectors = comparisonMatrixes.map((comparisonMatrix) =>
-        getPriorityVector(comparisonMatrix)
-    );
+    return Promise.all(
+        comparisonMatrixes.map((comparisonMatrix) =>
+            getPriorityVector(comparisonMatrix)
+        )
+    ).then((priorityAndTimeoutVectors) => {
+        const priorityVectors = priorityAndTimeoutVectors.map(
+            ([priorityVector]) => priorityVector
+        );
+        const allTimeoutIds = priorityAndTimeoutVectors.reduce(
+            (allIds, [_, timeoutIds]) => [...timeoutIds, ...allIds],
+            []
+        );
 
-    return transponse(priorityVectors);
+        const transponsedPriorityVectors = transponse(priorityVectors);
+
+        return [transponsedPriorityVectors, allTimeoutIds];
+    });
 };
 
-export const getOverallRanking = (parameterMatrix, objectsMatrixes) => {
-    const priorityVector = vectorToMatrix(getPriorityVector(parameterMatrix));
-    const priorityMatrix = getPriorityMatrix(objectsMatrixes);
-
-    return multiply(priorityMatrix, priorityVector);
-};
-
-export const getOverallRankingByPriorities = (parameterPriorityVector, objectPriorityMatrix) => {
+export const getOverallRankingByPriorities = (
+    parameterPriorityVector,
+    objectPriorityMatrix
+) => {
     const priorityVectorAsMatrix = vectorToMatrix(parameterPriorityVector);
 
     return multiply(priorityVectorAsMatrix, objectPriorityMatrix);
@@ -69,10 +79,7 @@ export const getRandomCoherenceIndex = (rank) => {
     return null;
 };
 
-export const getCoherenceRelation = (
-    comparisonMatrix,
-    priorityVector = getPriorityVector(comparisonMatrix)
-) => {
+export const getCoherenceRelation = (comparisonMatrix, priorityVector) => {
     const rank = priorityVector.length;
     const priorityMatrix = vectorToMatrix(priorityVector);
 
@@ -84,10 +91,7 @@ export const getCoherenceRelation = (
     }
 
     const principalEigenvalue = mean(
-        dotDivide(
-            multiply(comparisonMatrix, priorityMatrix),
-            priorityMatrix
-        )
+        dotDivide(multiply(comparisonMatrix, priorityMatrix), priorityMatrix)
     );
 
     return (

@@ -44,48 +44,65 @@ const convertStateToInnerFormat = (state) => ({
 });
 
 let resultCalculationTimeout = null;
+let resultCalculationId = 0;
+let childTaskTimeoutIds = [];
 
 export const useSolution = (initialState = defaultState) => {
     const [state, setState] = useState(convertStateToInnerFormat(initialState));
 
-    const calculateResult = () => {
+    const calculateResult = (resultId) => {
         if (!areObjectNamesFilled() || !areParameterNamesFilled()) {
             return;
         }
 
-        const parameterPriorityVector = getPriorityVector(
-            state.parameterComparisons
-        );
-        const objectPriorityMatrix = getPriorityMatrix(
-            state.objectComparisons
-        );
+        Promise.all([
+            getPriorityVector(state.parameterComparisons),
+            getPriorityMatrix(state.objectComparisons),
+        ]).then(
+            ([
+                [parameterPriorityVector, parameterTimeoutIds],
+                [objectPriorityMatrix, objectTimeoutIds],
+            ]) => {
+                if (resultCalculationId !== resultId) {
+                    return;
+                }
 
-        setState({
-            ...state,
-            parameterPriorityVector,
-            parameterMatrixConsistency: getCoherenceRelation(
-                state.parameterComparisons,
-                parameterPriorityVector
-            ),
-            objectPriorityMatrix,
-            objectMatrixConsistencies: getObjectCoherenceRelations(
-                state.objectComparisons,
-                objectPriorityMatrix
-            ),
-            overallRanking: getOverallRankingByPriorities(
-                parameterPriorityVector,
-                objectPriorityMatrix
-            ),
-        });
+                childTaskTimeoutIds = [
+                    ...parameterTimeoutIds,
+                    ...objectTimeoutIds,
+                ];
+
+                setState({
+                    ...state,
+                    parameterPriorityVector,
+                    parameterMatrixConsistency: getCoherenceRelation(
+                        state.parameterComparisons,
+                        parameterPriorityVector
+                    ),
+                    objectPriorityMatrix,
+                    objectMatrixConsistencies: getObjectCoherenceRelations(
+                        state.objectComparisons,
+                        objectPriorityMatrix
+                    ),
+                    overallRanking: getOverallRankingByPriorities(
+                        parameterPriorityVector,
+                        objectPriorityMatrix
+                    ),
+                });
+            }
+        );
     };
 
     const scheduleResultCalculation = () => {
         if (resultCalculationTimeout) {
             clearTimeout(resultCalculationTimeout);
             resultCalculationTimeout = null;
+            childTaskTimeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
+            childTaskTimeoutIds = [];
         }
 
-        resultCalculationTimeout = setTimeout(calculateResult, 100);
+        resultCalculationId++;
+        resultCalculationTimeout = setTimeout(calculateResult, 100, resultCalculationId);
     };
 
     const setName = (nameListProperty) => (index, newName) => {
@@ -218,7 +235,12 @@ export const useSolution = (initialState = defaultState) => {
 
     useEffect(() => {
         scheduleResultCalculation();
-    }, [state.parameterNames, state.parameterComparisons, state.objectNames, state.objectComparisons]);
+    }, [
+        state.parameterNames,
+        state.parameterComparisons,
+        state.objectNames,
+        state.objectComparisons,
+    ]);
 
     return {
         state,
