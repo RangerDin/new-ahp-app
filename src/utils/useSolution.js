@@ -1,8 +1,15 @@
-import {useState} from 'preact/hooks';
+import {useState, useEffect} from 'preact/hooks';
 
 import {COMPARISON_VALUES} from 'constants/comparisons';
 import convertToBig from 'utils/structures/convertToBig';
 import HAM from 'utils/structures/ham';
+import {
+    getPriorityVector,
+    getPriorityMatrix,
+    getCoherenceRelation,
+    getObjectCoherenceRelations,
+    getOverallRankingByPriorities,
+} from './math/ham';
 
 const defaultState = {
     isSynchronized: true,
@@ -23,6 +30,11 @@ const defaultState = {
             ],
         ],
     ],
+    parameterPriorityVector: null,
+    parameterMatrixConsistency: null,
+    objectPriorityMatrix: null,
+    objectMatrixConsistencies: null,
+    overallRanking: null,
 };
 
 const convertStateToInnerFormat = (state) => ({
@@ -31,8 +43,50 @@ const convertStateToInnerFormat = (state) => ({
     objectComparisons: convertToBig(state.objectComparisons),
 });
 
+let resultCalculationTimeout = null;
+
 export const useSolution = (initialState = defaultState) => {
     const [state, setState] = useState(convertStateToInnerFormat(initialState));
+
+    const calculateResult = () => {
+        if (!areObjectNamesFilled() || !areParameterNamesFilled()) {
+            return;
+        }
+
+        const parameterPriorityVector = getPriorityVector(
+            state.parameterComparisons
+        );
+        const objectPriorityMatrix = getPriorityMatrix(
+            state.objectComparisons
+        );
+
+        setState({
+            ...state,
+            parameterPriorityVector,
+            parameterMatrixConsistency: getCoherenceRelation(
+                state.parameterComparisons,
+                parameterPriorityVector
+            ),
+            objectPriorityMatrix,
+            objectMatrixConsistencies: getObjectCoherenceRelations(
+                state.objectComparisons,
+                objectPriorityMatrix
+            ),
+            overallRanking: getOverallRankingByPriorities(
+                parameterPriorityVector,
+                objectPriorityMatrix
+            ),
+        });
+    };
+
+    const scheduleResultCalculation = () => {
+        if (resultCalculationTimeout) {
+            clearTimeout(resultCalculationTimeout);
+            resultCalculationTimeout = null;
+        }
+
+        resultCalculationTimeout = setTimeout(calculateResult, 100);
+    };
 
     const setName = (nameListProperty) => (index, newName) => {
         setState({
@@ -99,7 +153,11 @@ export const useSolution = (initialState = defaultState) => {
     const deleteObjectName = (index) => {
         setState({
             ...state,
-            ...HAM.deleteObjectName(state.objectNames, state.objectComparisons, index),
+            ...HAM.deleteObjectName(
+                state.objectNames,
+                state.objectComparisons,
+                index
+            ),
             isSynchronized: false,
         });
     };
@@ -154,13 +212,13 @@ export const useSolution = (initialState = defaultState) => {
         setSolutionState(defaultState);
     };
 
-    const areObjectNamesFilled = () => (
-        state.objectNames.every(Boolean)
-    );
+    const areObjectNamesFilled = () => state.objectNames.every(Boolean);
 
-    const areParameterNamesFilled = () => (
-        state.parameterNames.every(Boolean)
-    );
+    const areParameterNamesFilled = () => state.parameterNames.every(Boolean);
+
+    useEffect(() => {
+        scheduleResultCalculation();
+    }, [state.parameterNames, state.parameterComparisons, state.objectNames, state.objectComparisons]);
 
     return {
         state,
@@ -180,6 +238,7 @@ export const useSolution = (initialState = defaultState) => {
             resetSolutionState,
             areObjectNamesFilled,
             areParameterNamesFilled,
+            scheduleResultCalculation,
         },
     };
 };

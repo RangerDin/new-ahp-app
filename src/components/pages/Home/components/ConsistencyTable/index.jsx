@@ -1,30 +1,20 @@
 import {h, Fragment} from 'preact';
 
 import Label from 'components/common/Label';
-import {
-    getCoherenceRelation,
-    getPriorityVector,
-    getObjectCoherenceRelations,
-    getPriorityMatrix,
-} from 'utils/math/ham';
 import style from './style.scss';
 import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/translation';
 
 const ConsistencyTable = ({
-    parameterComparisons,
-    objectComparisons,
+    parameterMatrixConsistency,
+    objectMatrixConsistencies,
     parameterNames,
 }) => {
-    const parameterMatrixConsistency = getCoherenceRelation(
-        parameterComparisons,
-        getPriorityVector(parameterComparisons)
-    );
-    const objectMatrixConsistencies = getObjectCoherenceRelations(
-        objectComparisons,
-        getPriorityMatrix(objectComparisons)
-    );
+    if (!parameterMatrixConsistency || !objectMatrixConsistencies) {
+        return null;
+    }
+
     const {t} = useContext(TranslationContext);
 
     return (

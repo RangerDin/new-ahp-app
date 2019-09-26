@@ -28,6 +28,9 @@ const Home = (props) => {
             parameterComparisons,
             objectNames,
             objectComparisons,
+            parameterMatrixConsistency,
+            objectMatrixConsistencies,
+            overallRanking,
         },
         operations: {
             setQuestion,
@@ -160,15 +163,14 @@ const Home = (props) => {
                 ))}
             {areParameterNamesFilled() && areObjectNamesFilled() && (
                 <ResultPriorityTable
-                    parameterComparisons={parameterComparisons}
-                    objectComparisons={objectComparisons}
+                    overallRanking={overallRanking}
                     objectNames={objectNames}
                 />
             )}
             {areParameterNamesFilled() && areObjectNamesFilled() && (
                 <ConsistencyTable
-                    parameterComparisons={parameterComparisons}
-                    objectComparisons={objectComparisons}
+                    parameterMatrixConsistency={parameterMatrixConsistency}
+                    objectMatrixConsistencies={objectMatrixConsistencies}
                     parameterNames={parameterNames}
                 />
             )}

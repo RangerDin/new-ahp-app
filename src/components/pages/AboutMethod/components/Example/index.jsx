@@ -23,6 +23,9 @@ export const Example = () => {
             parameterComparisons,
             objectNames,
             objectComparisons,
+            parameterMatrixConsistency,
+            objectMatrixConsistencies,
+            overallRanking,
         },
         operations: {
             setQuestion,
@@ -117,8 +120,7 @@ export const Example = () => {
             </Paragraph>
             {areParameterNamesFilled() && areObjectNamesFilled() && (
                 <ResultPriorityTable
-                    parameterComparisons={parameterComparisons}
-                    objectComparisons={objectComparisons}
+                    overallRanking={overallRanking}
                     objectNames={objectNames}
                 />
             )}
@@ -127,8 +129,8 @@ export const Example = () => {
             </Paragraph>
             {areParameterNamesFilled() && areObjectNamesFilled() && (
                 <ConsistencyTable
-                    parameterComparisons={parameterComparisons}
-                    objectComparisons={objectComparisons}
+                    parameterMatrixConsistency={parameterMatrixConsistency}
+                    objectMatrixConsistencies={objectMatrixConsistencies}
                     parameterNames={parameterNames}
                 />
             )}

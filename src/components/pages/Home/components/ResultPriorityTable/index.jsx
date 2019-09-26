@@ -1,22 +1,20 @@
 import {h, Fragment} from 'preact';
 
 import Label from 'components/common/Label';
-import {getOverallRanking} from 'utils/math/ham';
 import style from './style.scss';
 import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/translation';
 
 const ResultPriorityTable = ({
-    parameterComparisons,
-    objectComparisons,
+    overallRanking,
     objectNames,
 }) => {
+    if (!overallRanking) {
+        return null;
+    }
+
     const {t} = useContext(TranslationContext);
-    const overallRanking = getOverallRanking(
-        parameterComparisons,
-        objectComparisons
-    );
 
     return (
         <Fragment>

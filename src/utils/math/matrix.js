@@ -26,7 +26,7 @@ export const pow = function(matrix, exponent) {
     let resultMatrix = copy(matrix);
 
     for (let i = 1; i < exponent; i++) {
-        resultMatrix = multiply(resultMatrix, resultMatrix);
+        resultMatrix = multiply(resultMatrix, matrix);
     }
 
     return resultMatrix;

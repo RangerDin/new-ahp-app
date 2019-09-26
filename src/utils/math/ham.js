@@ -9,7 +9,7 @@ import {
     vectorToMatrix,
 } from './matrix';
 
-export const MATRIX_POWER = 7;
+export const MATRIX_POWER = 50;
 
 const getVectorOfRowSums = (matrix) =>
     matrix.map((row) => row.reduce((sum, element) => sum.add(element)));
@@ -35,6 +35,12 @@ export const getOverallRanking = (parameterMatrix, objectsMatrixes) => {
     const priorityMatrix = getPriorityMatrix(objectsMatrixes);
 
     return multiply(priorityMatrix, priorityVector);
+};
+
+export const getOverallRankingByPriorities = (parameterPriorityVector, objectPriorityMatrix) => {
+    const priorityVectorAsMatrix = vectorToMatrix(parameterPriorityVector);
+
+    return multiply(priorityVectorAsMatrix, objectPriorityMatrix);
 };
 
 const RANDOM_COHERENCE_INDEXES = {
