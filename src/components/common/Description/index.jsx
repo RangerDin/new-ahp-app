@@ -20,7 +20,7 @@ const Description = ({value, setValue}) => {
             className={style['description__textarea']}
             placeholder={t('home.description.placeholder')}
         />
-        {!value && <Error>{t('home.description.error')}</Error>}
+        <Error isVisible={!value}>{t('home.description.error')}</Error>
     </Fragment>;
 };
 

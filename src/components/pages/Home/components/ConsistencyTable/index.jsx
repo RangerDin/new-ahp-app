@@ -11,7 +11,7 @@ const ConsistencyTable = ({
     objectMatrixConsistencies,
     parameterNames,
 }) => {
-    if (!parameterMatrixConsistency || !objectMatrixConsistencies) {
+    if (parameterMatrixConsistency === null || objectMatrixConsistencies === null) {
         return null;
     }
 
@@ -30,7 +30,7 @@ const ConsistencyTable = ({
                     <td>{parameterMatrixConsistency.toFixed(SHORT_COMPARISON_PRECISION)}</td>
                 </tr>
                 {objectMatrixConsistencies.map((value, index) => (
-                    <tr className={style['result__consistency-record']}>
+                    <tr key={index} className={style['result__consistency-record']}>
                         <td
                             className={style['result__matrix-name']}
                         >{`${t('home.consistency-ratio-table.objects-label')} "${parameterNames[index]}"`}</td>

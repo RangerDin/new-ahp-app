@@ -50,7 +50,7 @@ export const getOverallRankingByPriorities = (
 ) => {
     const priorityVectorAsMatrix = vectorToMatrix(parameterPriorityVector);
 
-    return multiply(priorityVectorAsMatrix, objectPriorityMatrix);
+    return multiply(objectPriorityMatrix, priorityVectorAsMatrix);
 };
 
 const RANDOM_COHERENCE_INDEXES = {

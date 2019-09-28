@@ -27,7 +27,7 @@ const NameInput = ({
             placeholder={placeholder}
             onChange={onChange}
         />
-        {error && <Error>{error}</Error>}
+        <Error isVisible={error}>{error}</Error>
         {hasDeleteButton && (
             <Button
                 onClick={onDelete}

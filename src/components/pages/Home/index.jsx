@@ -136,52 +136,44 @@ const Home = (props) => {
                 deleteParameterName={deleteParameterName}
                 addParameterName={addParameterName}
             />
-            {areParameterNamesFilled() && (
+            <Comparisons
+                names={parameterNames}
+                comparisons={parameterComparisons}
+                setComparisons={setParameterComparison}
+                label={t('home.parameters.comparisons.label')}
+            />
+            {parameterNames.map((parameterName, parameterIndex) => (
                 <Comparisons
-                    names={parameterNames}
-                    comparisons={parameterComparisons}
-                    setComparisons={setParameterComparison}
-                    label={t('home.parameters.comparisons.label')}
+                    names={objectNames}
+                    comparisons={objectComparisons[parameterIndex]}
+                    setComparisons={(index1, index2, value) =>
+                        setObjectComparison(
+                            parameterIndex,
+                            index1,
+                            index2,
+                            value
+                        )
+                    }
+                    label={`${t(
+                        'home.objects.comparisons.label'
+                    )} ${parameterName}`}
                 />
-            )}
+            ))}
+            <ResultPriorityTable
+                overallRanking={overallRanking}
+                objectNames={objectNames}
+            />
+            <ConsistencyTable
+                parameterMatrixConsistency={parameterMatrixConsistency}
+                objectMatrixConsistencies={objectMatrixConsistencies}
+                parameterNames={parameterNames}
+            />
             {areParameterNamesFilled() &&
                 areObjectNamesFilled() &&
-                parameterNames.map((parameterName, parameterIndex) => (
-                    <Comparisons
-                        names={objectNames}
-                        comparisons={objectComparisons[parameterIndex]}
-                        setComparisons={(index1, index2, value) =>
-                            setObjectComparison(
-                                parameterIndex,
-                                index1,
-                                index2,
-                                value
-                            )
-                        }
-                        label={`${t('home.objects.comparisons.label')} ${parameterName}`}
-                    />
-                ))}
-            {areParameterNamesFilled() && areObjectNamesFilled() && (
-                <ResultPriorityTable
-                    overallRanking={overallRanking}
-                    objectNames={objectNames}
-                />
-            )}
-            {areParameterNamesFilled() && areObjectNamesFilled() && (
-                <ConsistencyTable
-                    parameterMatrixConsistency={parameterMatrixConsistency}
-                    objectMatrixConsistencies={objectMatrixConsistencies}
-                    parameterNames={parameterNames}
-                />
-            )}
+                <SaveButton onClick={onSaveButtonClick} />}
             {areParameterNamesFilled() &&
                 areObjectNamesFilled() &&
-                !isSynchronized && <SaveButton onClick={onSaveButtonClick} />}
-            {areParameterNamesFilled() &&
-                areObjectNamesFilled() &&
-                isSynchronized && (
-                <SolutionIsSavedLabel />
-            )}
+                isSynchronized && <SolutionIsSavedLabel />}
         </PageContainer>
     );
 };

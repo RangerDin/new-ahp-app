@@ -20,7 +20,7 @@ const Question = ({value, setValue}) => {
             className={style['question__input']}
             placeholder={t('home.question.placeholder')}
         />
-        {!value && <Error>{t('home.question.error')}</Error>}
+        <Error isVisible={!value}>{t('home.question.error')}</Error>
     </Fragment>;
 };
 

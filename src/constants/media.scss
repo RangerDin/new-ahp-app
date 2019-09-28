@@ -13,3 +13,9 @@ $max-width: 1000px;
         @content;
     }
 }
+
+@mixin for-more-then-mobile {
+    @media (min-width: $media-width-mobile) {
+        @content;
+    }
+}

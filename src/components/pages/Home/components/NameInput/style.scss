@@ -14,7 +14,7 @@
     }
 }
 
-@include for-mobile() {
+@include for-more-then-mobile() {
     .name-input {
         position: relative;
         width: 100%;
