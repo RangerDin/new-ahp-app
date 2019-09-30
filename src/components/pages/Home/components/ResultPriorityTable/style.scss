@@ -3,6 +3,8 @@
 @import 'constants/media.scss';
 
 .result {
+    position: relative;
+
     &__header {
         display: block;
         margin-top: 25px;
@@ -30,5 +32,13 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+    }
+
+    &__error-popup {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
     }
 }

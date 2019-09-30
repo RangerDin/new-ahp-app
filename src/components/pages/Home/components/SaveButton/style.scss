@@ -4,4 +4,13 @@
 .save-button {
     font-size: $font-s;
     margin-top: 25px;
+    position: relative;
+
+    &__error-popup {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
 }

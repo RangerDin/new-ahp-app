@@ -14,6 +14,7 @@ const LIGHT_THEME_COLORS = {
     'black': '#000',
     'light-blue': '#9ecaff',
     'very-light-blue': '#cee0f7',
+    'transparent-white': 'rgba(230, 230, 230, 0.9)',
 };
 
 const DARK_THEME_COLORS = {
@@ -27,6 +28,7 @@ const DARK_THEME_COLORS = {
     'light-grey': '#adc9d9',
     'dark-grey': '#102027',
     'red': '#f00',
+    'transparent-black': 'rgba(16, 32, 39, 0.9)',
 };
 
 const LIGHT_THEME_COLOR_VARIABLES = {
@@ -45,6 +47,7 @@ const LIGHT_THEME_COLOR_VARIABLES = {
     '--color-menu-background': LIGHT_THEME_COLORS['purple'],
     '--color-main-background': LIGHT_THEME_COLORS['grey'],
     '--color-error': LIGHT_THEME_COLORS['red'],
+    '--color-error-popup': LIGHT_THEME_COLORS['transparent-white'],
 };
 
 const DARK_THEME_COLOR_VARIABLES = {
@@ -63,6 +66,7 @@ const DARK_THEME_COLOR_VARIABLES = {
     '--color-menu-background': DARK_THEME_COLORS['dark-purple'],
     '--color-main-background': DARK_THEME_COLORS['grey-blue'],
     '--color-error': DARK_THEME_COLORS['red'],
+    '--color-error-popup': DARK_THEME_COLORS['transparent-black'],
 };
 
 export const THEME_COLORS = {

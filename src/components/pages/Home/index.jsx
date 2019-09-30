@@ -141,6 +141,10 @@ const Home = (props) => {
                 comparisons={parameterComparisons}
                 setComparisons={setParameterComparison}
                 label={t('home.parameters.comparisons.label')}
+                error={
+                    !areParameterNamesFilled() &&
+                    t('home.parameters.comparisons.popup-error')
+                }
             />
             {parameterNames.map((parameterName, parameterIndex) => (
                 <Comparisons
@@ -157,20 +161,39 @@ const Home = (props) => {
                     label={`${t(
                         'home.objects.comparisons.label'
                     )} ${parameterName}`}
+                    error={
+                        !areObjectNamesFilled() &&
+                        t('home.objects.comparisons.popup-error')
+                    }
                 />
             ))}
             <ResultPriorityTable
                 overallRanking={overallRanking}
                 objectNames={objectNames}
+                error={
+                    (!areObjectNamesFilled() || !areParameterNamesFilled()) &&
+                    t('home.result.popup-error')
+                }
             />
             <ConsistencyTable
                 parameterMatrixConsistency={parameterMatrixConsistency}
                 objectMatrixConsistencies={objectMatrixConsistencies}
                 parameterNames={parameterNames}
+                error={
+                    (!areObjectNamesFilled() || !areParameterNamesFilled()) &&
+                    t('home.consistency.popup-error')
+                }
             />
-            {areParameterNamesFilled() &&
-                areObjectNamesFilled() &&
-                <SaveButton onClick={onSaveButtonClick} />}
+            <SaveButton
+                error={
+                    (!question ||
+                        !description ||
+                        !areParameterNamesFilled() ||
+                        !areObjectNamesFilled()) &&
+                    t('home.save-button.popup-error')
+                }
+                onClick={onSaveButtonClick}
+            />
             {areParameterNamesFilled() &&
                 areObjectNamesFilled() &&
                 isSynchronized && <SolutionIsSavedLabel />}

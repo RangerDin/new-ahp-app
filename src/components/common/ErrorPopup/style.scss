@@ -1,0 +1,21 @@
+@import 'constants/colors.scss';
+
+.error-popup {
+    background: $color-error-popup;
+
+    &_hidden {
+        display: none;
+    }
+
+    &__container {
+        display: table;
+        height: 100%;
+        width: 100%;
+    }
+
+    &__content {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+}

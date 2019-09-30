@@ -8,8 +8,9 @@ import {WIDGET_TYPE} from 'constants/comparisons';
 import {ListOfComparisons} from '../ListOfComparisons';
 import {ComparisonMatrix} from '../ComparisonMatrix';
 import cn from 'utils/classnames';
+import {ErrorPopup} from '../ErrorPopup';
 
-const Comparisons = ({label, names, comparisons, setComparisons}) => {
+const Comparisons = ({label, names, comparisons, error, setComparisons}) => {
     if (!comparisons.length || comparisons.length === 1) {
         return null;
     }
@@ -43,6 +44,9 @@ const Comparisons = ({label, names, comparisons, setComparisons}) => {
                     />
                 </div>
             </div>
+            <ErrorPopup className={style['comparisons__error-popup']} isOpen={error}>
+                {error}
+            </ErrorPopup>
         </div>
     );
 };

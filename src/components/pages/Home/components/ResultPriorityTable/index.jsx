@@ -1,4 +1,4 @@
-import {h, Fragment} from 'preact';
+import {h} from 'preact';
 
 import Label from 'components/common/Label';
 import style from './style.scss';
@@ -6,11 +6,9 @@ import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/translation';
 import {NAME_PLACEHOLDER} from 'constants/name';
+import {ErrorPopup} from 'components/common/ErrorPopup';
 
-const ResultPriorityTable = ({
-    overallRanking,
-    objectNames,
-}) => {
+const ResultPriorityTable = ({overallRanking, objectNames, error}) => {
     if (!overallRanking) {
         return null;
     }
@@ -18,7 +16,7 @@ const ResultPriorityTable = ({
     const {t} = useContext(TranslationContext);
 
     return (
-        <Fragment>
+        <div className={style.result}>
             <Label className={style.result__header}>
                 {t('home.result-priority-table.label')}
             </Label>
@@ -38,7 +36,10 @@ const ResultPriorityTable = ({
                     </tr>
                 ))}
             </table>
-        </Fragment>
+            <ErrorPopup className={style['result__error-popup']} isOpen={error}>
+                {error}
+            </ErrorPopup>
+        </div>
     );
 };
 
