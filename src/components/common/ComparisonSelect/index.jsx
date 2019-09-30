@@ -17,10 +17,11 @@ const getOptions = (t) => Object.keys(COMPARISON_VALUES).map((key) => ({
     value: COMPARISON_VALUES[key].toFixed(SHORT_COMPARISON_PRECISION),
 }));
 
-const ComparisonSelect = ({className, value, onChange}) => {
+const ComparisonSelect = ({className, value, disabled, onChange}) => {
     const {t} = useContext(TranslationContext);
 
     return <Select
+        disabled={disabled}
         className={cn(className, style['comparison-select'])}
         value={value.toFixed(SHORT_COMPARISON_PRECISION)}
         options={getOptions(t)}

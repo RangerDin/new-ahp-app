@@ -5,13 +5,17 @@ import style from './style.scss';
 import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/translation';
+import {NAME_PLACEHOLDER} from 'constants/name';
 
 const ConsistencyTable = ({
     parameterMatrixConsistency,
     objectMatrixConsistencies,
     parameterNames,
 }) => {
-    if (parameterMatrixConsistency === null || objectMatrixConsistencies === null) {
+    if (
+        parameterMatrixConsistency === null ||
+        objectMatrixConsistencies === null
+    ) {
         return null;
     }
 
@@ -19,21 +23,32 @@ const ConsistencyTable = ({
 
     return (
         <Fragment>
-            <Label className={style.result__header}>{t('home.consistency-ratio-table.label')}</Label>
+            <Label className={style.result__header}>
+                {t('home.consistency-ratio-table.label')}
+            </Label>
             <table className={style.result__table}>
                 <tr>
                     <th>{t('home.consistency-ratio-table.matrix-label')}</th>
                     <th>{t('home.consistency-ratio-table.value-label')}</th>
                 </tr>
                 <tr>
-                    <td>{t('home.consistency-ratio-table.parameters-label')}</td>
-                    <td>{parameterMatrixConsistency.toFixed(SHORT_COMPARISON_PRECISION)}</td>
+                    <td>
+                        {t('home.consistency-ratio-table.parameters-label')}
+                    </td>
+                    <td>
+                        {parameterMatrixConsistency.toFixed(
+                            SHORT_COMPARISON_PRECISION
+                        )}
+                    </td>
                 </tr>
                 {objectMatrixConsistencies.map((value, index) => (
-                    <tr key={index} className={style['result__consistency-record']}>
-                        <td
-                            className={style['result__matrix-name']}
-                        >{`${t('home.consistency-ratio-table.objects-label')} "${parameterNames[index]}"`}</td>
+                    <tr
+                        key={index}
+                        className={style['result__consistency-record']}
+                    >
+                        <td className={style['result__matrix-name']}>{`${t(
+                            'home.consistency-ratio-table.objects-label'
+                        )} "${parameterNames[index] || NAME_PLACEHOLDER}`}</td>
                         <td className={style['result__consistency-value']}>
                             {value.toFixed(SHORT_COMPARISON_PRECISION)}
                         </td>

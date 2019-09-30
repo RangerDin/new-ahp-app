@@ -3,6 +3,7 @@ import {h} from 'preact';
 import cn from 'utils/classnames';
 import style from './style.scss';
 import {ComparisonInput} from './ComparisonInput';
+import {NAME_PLACEHOLDER} from 'constants/name';
 
 export const ComparisonMatrix = ({
     className,
@@ -28,30 +29,32 @@ export const ComparisonMatrix = ({
                     />
                     {comparisons.map((_, i) => (
                         <td
+                            key={i}
                             className={cn(
                                 style['table__cell'],
                                 style['table__cell_top-header']
                             )}
                         >
-                            <div>{names[i]}</div>
+                            <div>{names[i] || NAME_PLACEHOLDER}</div>
                         </td>
                     ))}
                 </tr>
                 {comparisons.map((row, i) => (
-                    <tr>
+                    <tr key={i}>
                         <td
                             className={cn(
                                 style['table__cell'],
                                 style['table__cell_right-header']
                             )}
                         >
-                            {names[i]}
+                            {names[i] || NAME_PLACEHOLDER}
                         </td>
                         {row.map((cell, j) => {
                             const isDisabled = disabled || i == j;
 
                             return (
                                 <td
+                                    key={j}
                                     className={cn(
                                         style['table__cell'],
                                         style['table__cell_value'],
@@ -59,7 +62,7 @@ export const ComparisonMatrix = ({
                                     )}
                                 >
                                     <ComparisonInput
-                                        disabled={isDisabled}
+                                        disabled={isDisabled || !names[i] || !names[j]}
                                         value={cell}
                                         onChange={(value) => {
                                             setComparisons(i, j, value);

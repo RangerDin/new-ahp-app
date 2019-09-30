@@ -5,6 +5,7 @@ import style from './style.scss';
 import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/translation';
+import {NAME_PLACEHOLDER} from 'constants/name';
 
 const ResultPriorityTable = ({
     overallRanking,
@@ -27,9 +28,9 @@ const ResultPriorityTable = ({
                     <th>{t('home.result-priority-table.priorities-title')}</th>
                 </tr>
                 {overallRanking.map((value, index) => (
-                    <tr className={style['result__object']}>
+                    <tr key={value} className={style['result__object']}>
                         <td className={style['result__object-name']}>
-                            {objectNames[index]}
+                            {objectNames[index] || NAME_PLACEHOLDER}
                         </td>
                         <td className={style['result__object-priority']}>
                             {value[0].toFixed(SHORT_COMPARISON_PRECISION)}
