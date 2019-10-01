@@ -11,6 +11,7 @@
     }
 
     &__table {
+        border: 0.1px solid transparent;
         border-collapse: collapse;
         font-size: $font-xs;
         margin-top: 15px;
