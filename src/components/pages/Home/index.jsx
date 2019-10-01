@@ -162,7 +162,8 @@ const Home = (props) => {
                         'home.objects.comparisons.label'
                     )} ${parameterName}`}
                     error={
-                        !areObjectNamesFilled() &&
+                        (!areObjectNamesFilled() ||
+                            !areParameterNamesFilled()) &&
                         t('home.objects.comparisons.popup-error')
                     }
                 />
