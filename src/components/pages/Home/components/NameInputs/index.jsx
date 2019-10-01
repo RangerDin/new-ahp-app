@@ -6,7 +6,7 @@ import NameInput from '../NameInput';
 import Button from '../Button';
 import style from './style.scss';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
-import './test.scss';
+import './animation.scss';
 
 const NameInputs = ({
     className,
