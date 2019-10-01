@@ -16,12 +16,13 @@ export const OpacityAnimation = ({
     children,
     timeout = ANIMATION_TIMEOUT,
     ...otherProps
-}) => (
-    <CSSTransition
-        timeout={timeout}
-        classNames={animationClassNames}
-        {...otherProps}
-    >
-        {children}
-    </CSSTransition>
-);
+}) =>
+    (
+        <CSSTransition
+            timeout={timeout}
+            classNames={animationClassNames}
+            {...otherProps}
+        >
+            {children}
+        </CSSTransition>
+    );

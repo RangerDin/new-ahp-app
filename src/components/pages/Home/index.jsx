@@ -141,10 +141,8 @@ const Home = (props) => {
                 comparisons={parameterComparisons}
                 setComparisons={setParameterComparison}
                 label={t('home.parameters.comparisons.label')}
-                error={
-                    !areParameterNamesFilled() &&
-                    t('home.parameters.comparisons.popup-error')
-                }
+                errorText={t('home.parameters.comparisons.popup-error')}
+                isErrorVisible={!areParameterNamesFilled()}
             />
             {parameterNames.map((parameterName, parameterIndex) => (
                 <Comparisons
@@ -161,10 +159,9 @@ const Home = (props) => {
                     label={`${t(
                         'home.objects.comparisons.label'
                     )} ${parameterName}`}
-                    error={
-                        (!areObjectNamesFilled() ||
-                            !areParameterNamesFilled()) &&
-                        t('home.objects.comparisons.popup-error')
+                    errorText={t('home.objects.comparisons.popup-error')}
+                    isErrorVisible={
+                        !areObjectNamesFilled() || !areParameterNamesFilled()
                     }
                 />
             ))}

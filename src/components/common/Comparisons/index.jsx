@@ -10,7 +10,14 @@ import {ComparisonMatrix} from '../ComparisonMatrix';
 import cn from 'utils/classnames';
 import {ErrorPopup} from '../ErrorPopup';
 
-const Comparisons = ({label, names, comparisons, error, setComparisons}) => {
+const Comparisons = ({
+    label,
+    names,
+    comparisons,
+    errorText,
+    isErrorVisible,
+    setComparisons,
+}) => {
     if (!comparisons.length || comparisons.length === 1) {
         return null;
     }
@@ -26,7 +33,8 @@ const Comparisons = ({label, names, comparisons, error, setComparisons}) => {
                     <ListOfComparisons
                         className={cn(
                             style.comparisons__list,
-                            type === WIDGET_TYPE.LIST && style.comparisons__list_active
+                            type === WIDGET_TYPE.LIST &&
+                                style.comparisons__list_active
                         )}
                         names={names}
                         comparisons={comparisons}
@@ -44,8 +52,11 @@ const Comparisons = ({label, names, comparisons, error, setComparisons}) => {
                     />
                 </div>
             </div>
-            <ErrorPopup className={style['comparisons__error-popup']} isOpen={error}>
-                {error}
+            <ErrorPopup
+                className={style['comparisons__error-popup']}
+                isOpen={isErrorVisible}
+            >
+                {errorText}
             </ErrorPopup>
         </div>
     );
