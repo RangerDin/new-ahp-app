@@ -5,8 +5,8 @@ import cn from 'utils/classnames';
 import NameInput from '../NameInput';
 import Button from '../Button';
 import style from './style.scss';
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
-import './animation.scss';
+import {TransitionGroup} from 'react-transition-group';
+import {OpacityAnimation} from 'components/common/OpacityAnimation';
 
 const NameInputs = ({
     className,
@@ -25,7 +25,7 @@ const NameInputs = ({
         <Label className={style['object-names__label']}>{labelText}</Label>
         <TransitionGroup>
             {names.map((name, index) => (
-                <CSSTransition sty key={index} classNames='test' timeout={300}>
+                <OpacityAnimation key={index}>
                     <NameInput
                         value={name}
                         onChange={(event) =>
@@ -38,7 +38,7 @@ const NameInputs = ({
                         }}
                         error={!name && error}
                     />
-                </CSSTransition>
+                </OpacityAnimation>
             ))}
         </TransitionGroup>
         {hasAddButton && (

@@ -1,0 +1,19 @@
+.animation {
+    &_enter {
+        opacity: 0;
+    }
+
+    &_enter-active {
+        opacity: 1;
+        transition: opacity 300ms ease-in;
+    }
+
+    &_exit {
+        opacity: 1;
+    }
+
+    &_exit-active {
+        opacity: 0;
+        transition: opacity 300ms ease-in;
+    }
+}

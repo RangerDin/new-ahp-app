@@ -5,10 +5,12 @@
     color: $color-error;
     font-size: $font-xxs;
     height: $line-height-xxs;
+    opacity: 1;
     padding: 4px 0;
     text-align: center;
+    transition: 300ms opacity;
 
     &_hidden {
-        visibility: hidden;
+        opacity: 0;
     }
 }
