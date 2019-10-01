@@ -22,8 +22,9 @@
         "big.js": "^5.2.2",
         "file-saver": "^2.0.2",
         "history": "^4.9.0",
-        "preact": "^10.0.0-beta.2",
-        "preact-router": "^3.0.0"
+        "preact": "^10.0.0-rc.2",
+        "preact-router": "^3.0.0",
+        "react-transition-group": "^3.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.3.4",

@@ -8,26 +8,30 @@ module.exports = function(webpackEnv, argv) {
     const isEnvProduction = argv.mode === 'production';
 
     return {
-        entry: './src/index.js',
-        output: {
+        'entry': './src/index.jsx',
+        'output': {
             path: path.resolve(__dirname, 'build'),
             publicPath: '/',
             filename: 'bundle.js',
         },
-        devServer: {
+        'devServer': {
             hot: true,
             historyApiFallback: {
                 index: '/',
             },
             port: 3000,
         },
-        devtool: isEnvProduction ? 'source-map' : 'cheap-module-source-map',
-        mode: isEnvProduction ? 'production' : 'development',
-        resolve: {
-            modules: ['./src', 'node_modules'],
-            extensions: ['.js', '.jsx'],
+        'devtool': isEnvProduction ? 'source-map' : 'cheap-module-source-map',
+        'mode': isEnvProduction ? 'production' : 'development',
+        'resolve': {
+            'modules': ['./src', 'node_modules'],
+            'extensions': ['.js', '.jsx'],
+            'alias': {
+                'react': 'preact/compat',
+                'react-dom': 'preact/compat',
+            },
         },
-        optimization: {
+        'optimization': {
             minimize: isEnvProduction,
             minimizer: [
                 new TerserWebpackPlugin({
@@ -75,7 +79,7 @@ module.exports = function(webpackEnv, argv) {
                 new OptimizeCSSAssetsPlugin({}),
             ],
         },
-        module: {
+        'module': {
             rules: [
                 {
                     test: /\.jsx?$/,
@@ -120,7 +124,7 @@ module.exports = function(webpackEnv, argv) {
                 },
             ],
         },
-        plugins: [
+        'plugins': [
             new HtmlWebpackPlugin({
                 template: './src/index.html',
             }),
@@ -128,5 +132,6 @@ module.exports = function(webpackEnv, argv) {
                 filename: isEnvProduction ? '[name].[hash].css' : '[name].css',
             }),
         ],
+
     };
 };
