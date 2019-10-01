@@ -123,7 +123,7 @@ const Home = (props) => {
     return (
         <PageContainer>
             <PageHeader>{t('home.header')}</PageHeader>
-            <MethodDescription />
+            <MethodDescription history={props.history} />
             <Question value={question} setValue={setQuestion} />
             <Description value={description} setValue={setDescription} />
             <EntityNameInputs
