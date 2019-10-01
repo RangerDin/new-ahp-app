@@ -36,7 +36,7 @@ const NameInputs = ({
                         onDelete={() => {
                             onNameDelete(index);
                         }}
-                        error={!name && error}
+                        error={error}
                     />
                 </OpacityAnimation>
             ))}
