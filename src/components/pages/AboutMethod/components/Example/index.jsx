@@ -13,6 +13,7 @@ import {LI} from '../LI';
 import {UL} from '../UL';
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/translation';
+import {solution} from './solution';
 
 export const Example = () => {
     const {
@@ -41,7 +42,7 @@ export const Example = () => {
             areObjectNamesFilled,
             areParameterNamesFilled,
         },
-    } = useSolution();
+    } = useSolution(solution);
     const {t} = useContext(TranslationContext);
 
     return (
@@ -75,8 +76,7 @@ export const Example = () => {
                 changeParameterName={changeParameterName}
                 deleteParameterName={deleteParameterName}
                 addParameterName={addParameterName}
-            />
-            <Paragraph>
+            /> <Paragraph>
                 {t('about.example.object-comparisons')}
             </Paragraph>
             <Paragraph>
