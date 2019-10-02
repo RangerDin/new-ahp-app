@@ -1,8 +1,6 @@
 @import 'constants/colors.scss';
 
 .error-popup {
-    background: $color-error-popup;
-
     &_hidden {
         display: none;
     }
@@ -14,6 +12,7 @@
     }
 
     &__content {
+        background: $color-error-popup;
         display: table-cell;
         text-align: center;
         vertical-align: middle;
