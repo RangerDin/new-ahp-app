@@ -5,9 +5,16 @@ import Label from 'components/common/Label';
 import ComparisonSelect from 'components/common/ComparisonSelect';
 import Error from 'components/common/Error';
 
-export const Comparison = ({name1, name2, disabled, value, error, onChange}) => (
+export const Comparison = ({
+    name1,
+    name2,
+    disabled,
+    value,
+    error,
+    onChange,
+}) => (
     <div className={style.comparison}>
-        <Label className={style.comparison__label}>
+        <Label title={name1} className={style.comparison__label}>
             {name1}
         </Label>
         <ComparisonSelect
@@ -16,7 +23,7 @@ export const Comparison = ({name1, name2, disabled, value, error, onChange}) => 
             value={value}
             onChange={onChange}
         />
-        <Label className={style.comparison__label}>
+        <Label title={name2} className={style.comparison__label}>
             {name2}
         </Label>
         {error && <Error>{error}</Error>}

@@ -34,6 +34,7 @@ export const ComparisonMatrix = ({
                                 style['table__cell'],
                                 style['table__cell_top-header']
                             )}
+                            title={names[i] || NAME_PLACEHOLDER}
                         >
                             <div>{names[i] || NAME_PLACEHOLDER}</div>
                         </td>
@@ -46,6 +47,7 @@ export const ComparisonMatrix = ({
                                 style['table__cell'],
                                 style['table__cell_right-header']
                             )}
+                            title={names[i] || NAME_PLACEHOLDER}
                         >
                             {names[i] || NAME_PLACEHOLDER}
                         </td>
