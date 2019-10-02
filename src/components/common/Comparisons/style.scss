@@ -25,7 +25,7 @@
     }
 }
 
-@include for-mobile() {
+@include for-medium-mobile() {
     .comparisons {
         &__list {
             display: none;

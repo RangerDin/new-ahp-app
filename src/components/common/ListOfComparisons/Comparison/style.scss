@@ -16,7 +16,7 @@
     }
 }
 
-@include for-mobile() {
+@include for-medium-mobile() {
     .comparison {
         margin: 15px auto 0;
 

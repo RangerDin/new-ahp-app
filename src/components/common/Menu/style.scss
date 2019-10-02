@@ -7,11 +7,6 @@
     background: $color-menu-background;
     text-align: center;
 
-    &_hidden {
-        height: 0;
-        overflow: hidden;
-    }
-
     &__item {
         line-height: 30px;
 
@@ -51,6 +46,23 @@
     &__copyright {
         color: $color-legal;
         font-size: $font-xs;
+    }
+}
+
+@include for-mobiles() {
+    .menu {
+        max-height: 500px;
+        opacity: 1;
+        overflow: hidden;
+        transition: opacity 300ms, visibility 0s linear, max-height 300ms linear;
+        transition-delay: 0s;
+
+        &_hidden {
+            max-height: 0;
+            opacity: 0;
+            transition-delay: 0ms, 300ms, 0ms;
+            visibility: hidden;
+        }
     }
 }
 

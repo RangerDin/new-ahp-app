@@ -6,11 +6,11 @@ import {LinkToLegal} from './components/LinkToLegal';
 import style from './style.scss';
 import {loadSolutionFromFile, checkFileFormat} from 'utils/loading/file';
 import {ThemeToggler} from './components/ThemeToggler';
-import cn from 'utils/classnames';
 import {Copyright} from './components/Copyright';
 import {LanguageToggler} from './components/LanguageToggler';
 import {TranslationContext} from 'utils/translation';
 import {useContext} from 'preact/hooks';
+import cn from 'utils/classnames';
 
 const Menu = ({isOpen, history, theme, toggleTheme}) => {
     const {t} = useContext(TranslationContext);

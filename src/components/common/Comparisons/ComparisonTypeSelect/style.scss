@@ -5,7 +5,7 @@
     display: none;
 }
 
-@include for-mobile {
+@include for-medium-mobile {
     .comparison-type-select {
         display: block;
 
