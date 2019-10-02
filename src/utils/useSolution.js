@@ -41,6 +41,11 @@ const convertStateToInnerFormat = (state) => ({
     ...state,
     parameterComparisons: convertToBig(state.parameterComparisons),
     objectComparisons: convertToBig(state.objectComparisons),
+    parameterPriorityVector: null,
+    parameterMatrixConsistency: null,
+    objectPriorityMatrix: null,
+    objectMatrixConsistencies: null,
+    overallRanking: null,
 });
 
 let resultCalculationTimeout = null;
