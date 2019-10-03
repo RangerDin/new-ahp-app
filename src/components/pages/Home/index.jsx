@@ -48,6 +48,10 @@ const Home = (props) => {
             setSolutionState,
             areObjectNamesFilled,
             areParameterNamesFilled,
+            isObjectNameDuplicated,
+            isParameterNameDuplicated,
+            areObjectNamesDuplicated,
+            areParameterNamesDuplicated,
         },
     } = useSolution();
 
@@ -135,6 +139,8 @@ const Home = (props) => {
                 changeParameterName={changeParameterName}
                 deleteParameterName={deleteParameterName}
                 addParameterName={addParameterName}
+                isObjectNameDuplicated={isObjectNameDuplicated}
+                isParameterNameDuplicated={isParameterNameDuplicated}
             />
             <Comparisons
                 names={parameterNames}
@@ -142,7 +148,9 @@ const Home = (props) => {
                 setComparisons={setParameterComparison}
                 label={t('home.parameters.comparisons.label')}
                 errorText={t('home.parameters.comparisons.popup-error')}
-                isErrorVisible={!areParameterNamesFilled()}
+                isErrorVisible={
+                    !areParameterNamesFilled() || areParameterNamesDuplicated()
+                }
             />
             {parameterNames.map((parameterName, parameterIndex) => (
                 <Comparisons
@@ -161,7 +169,9 @@ const Home = (props) => {
                     )} ${parameterName}`}
                     errorText={t('home.objects.comparisons.popup-error')}
                     isErrorVisible={
-                        !areObjectNamesFilled() || !areParameterNamesFilled()
+                        !areObjectNamesFilled() ||
+                        !areParameterNamesFilled() ||
+                        areObjectNamesDuplicated()
                     }
                 />
             ))}
@@ -169,7 +179,10 @@ const Home = (props) => {
                 overallRanking={overallRanking}
                 objectNames={objectNames}
                 error={
-                    (!areObjectNamesFilled() || !areParameterNamesFilled()) &&
+                    (!areObjectNamesFilled() ||
+                        !areParameterNamesFilled() ||
+                        areObjectNamesDuplicated() ||
+                        areParameterNamesDuplicated()) &&
                     t('home.result.popup-error')
                 }
             />
@@ -178,7 +191,10 @@ const Home = (props) => {
                 objectMatrixConsistencies={objectMatrixConsistencies}
                 parameterNames={parameterNames}
                 error={
-                    (!areObjectNamesFilled() || !areParameterNamesFilled()) &&
+                    (!areObjectNamesFilled() ||
+                        !areParameterNamesFilled() ||
+                        areObjectNamesDuplicated() ||
+                        areParameterNamesDuplicated()) &&
                     t('home.consistency.popup-error')
                 }
             />
@@ -187,7 +203,9 @@ const Home = (props) => {
                     (!question ||
                         !description ||
                         !areParameterNamesFilled() ||
-                        !areObjectNamesFilled()) &&
+                        !areObjectNamesFilled() ||
+                        areObjectNamesDuplicated() ||
+                        areParameterNamesDuplicated()) &&
                     t('home.save-button.popup-error')
                 }
                 onClick={onSaveButtonClick}

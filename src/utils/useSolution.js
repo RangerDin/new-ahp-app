@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'preact/hooks';
+import {useState, useEffect, useMemo} from 'preact/hooks';
 
 import {COMPARISON_VALUES} from 'constants/comparisons';
 import convertToBig from 'utils/structures/convertToBig';
@@ -10,6 +10,31 @@ import {
     getObjectCoherenceRelations,
     getOverallRankingByPriorities,
 } from './math/ham';
+
+const arrayNameToMap = (names) =>
+    names.reduce((map, name) => {
+        map[name] = name in map ? map[name] + 1 : 1;
+
+        return map;
+    }, {});
+
+const useAreNameDuplicatedFunctions = (names) => (
+    useMemo(() => {
+        const namesMap = arrayNameToMap(names);
+
+        const isNameDuplicated = (name) => namesMap[name] > 1;
+        const _areNamesDuplicated = names.some(isNameDuplicated);
+        const areNamesDuplicated = () => _areNamesDuplicated;
+
+        return {
+            isNameDuplicated,
+            areNamesDuplicated,
+        };
+    }, [
+        names,
+    ])
+);
+
 
 const defaultState = {
     isSynchronized: true,
@@ -107,7 +132,11 @@ export const useSolution = (initialState = defaultState) => {
         }
 
         resultCalculationId++;
-        resultCalculationTimeout = setTimeout(calculateResult, 100, resultCalculationId);
+        resultCalculationTimeout = setTimeout(
+            calculateResult,
+            100,
+            resultCalculationId
+        );
     };
 
     const setName = (nameListProperty) => (index, newName) => {
@@ -238,6 +267,16 @@ export const useSolution = (initialState = defaultState) => {
 
     const areParameterNamesFilled = () => state.parameterNames.every(Boolean);
 
+    const {
+        isNameDuplicated: isObjectNameDuplicated,
+        areNamesDuplicated: areObjectNamesDuplicated,
+    } = useAreNameDuplicatedFunctions(state.objectNames);
+
+    const {
+        isNameDuplicated: isParameterNameDuplicated,
+        areNamesDuplicated: areParameterNamesDuplicated,
+    } = useAreNameDuplicatedFunctions(state.parameterNames);
+
     useEffect(() => {
         scheduleResultCalculation();
     }, [
@@ -266,6 +305,10 @@ export const useSolution = (initialState = defaultState) => {
             areObjectNamesFilled,
             areParameterNamesFilled,
             scheduleResultCalculation,
+            isObjectNameDuplicated,
+            isParameterNameDuplicated,
+            areObjectNamesDuplicated,
+            areParameterNamesDuplicated,
         },
     };
 };
