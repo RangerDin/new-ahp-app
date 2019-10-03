@@ -20,6 +20,8 @@ export const EntityNameInputs = ({
     changeParameterName,
     deleteParameterName,
     addParameterName,
+    isObjectNameDuplicated,
+    isParameterNameDuplicated,
 }) => {
     const {t} = useContext(TranslationContext);
 
@@ -38,6 +40,7 @@ export const EntityNameInputs = ({
                 onNameChange={changeObjectName}
                 onNameDelete={deleteObjectName}
                 onNameAdd={addObjectName}
+                isNameDuplicated={isObjectNameDuplicated}
             />
             <NameInputs
                 className={style['name-inputs__parameters']}
@@ -52,6 +55,7 @@ export const EntityNameInputs = ({
                 onNameChange={changeParameterName}
                 onNameDelete={deleteParameterName}
                 onNameAdd={addParameterName}
+                isNameDuplicated={isParameterNameDuplicated}
             />
         </div>
     );

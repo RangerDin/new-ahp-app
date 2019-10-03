@@ -21,18 +21,14 @@ const NameInputs = ({
     onNameAdd,
     emptyNameError,
     nonUniqueNameError,
+    isNameDuplicated,
 }) => {
-    const nameMap = names.reduce((map, name) => {
-        map[name] = name in map ? map[name] + 1 : 1;
-
-        return map;
-    }, {});
     const getNameError = (name) => {
         if (!name) {
             return emptyNameError;
         }
 
-        if (nameMap[name] > 1) {
+        if (isNameDuplicated(name)) {
             return nonUniqueNameError;
         }
 
