@@ -6,6 +6,12 @@
     position: relative;
 }
 
+@include for-mobils() {
+    .application {
+        padding-bottom: 15px;
+    }
+}
+
 @include for-tablet() {
     .application {
         padding-bottom: 45px;
