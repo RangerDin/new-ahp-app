@@ -1,8 +1,13 @@
 @import 'constants/colors.scss';
 @import 'constants/media.scss';
+@import 'constants/fonts.scss';
 
 .comparison-type-select {
     display: none;
+
+    &__option {
+        font-size: $font-s;
+    }
 }
 
 @include for-medium-mobile {
