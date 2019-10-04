@@ -34,7 +34,12 @@ const ConsistencyTable = ({
                     <th>{t('home.consistency-ratio-table.value-label')}</th>
                 </tr>
                 <tr>
-                    <td>
+                    <td
+                        title={t(
+                            'home.consistency-ratio-table.parameters-label'
+                        )}
+                        className={style['consistency__matrix-name']}
+                    >
                         {t('home.consistency-ratio-table.parameters-label')}
                     </td>
                     <td>
@@ -43,21 +48,37 @@ const ConsistencyTable = ({
                         )}
                     </td>
                 </tr>
-                {objectMatrixConsistencies.map((value, index) => (
-                    <tr
-                        key={index}
-                        className={style['consistency__consistency-record']}
-                    >
-                        <td className={style['consistency__matrix-name']}>{`${t(
-                            'home.consistency-ratio-table.objects-label'
-                        )} "${parameterNames[index] || NAME_PLACEHOLDER}`}</td>
-                        <td className={style['consistency__consistency-value']}>
-                            {value.toFixed(SHORT_COMPARISON_PRECISION)}
-                        </td>
-                    </tr>
-                ))}
+                {objectMatrixConsistencies.map((value, index) => {
+                    const title = `${t(
+                        'home.consistency-ratio-table.objects-label'
+                    )} "${parameterNames[index] || NAME_PLACEHOLDER}`;
+
+                    return (
+                        <tr
+                            key={index}
+                            className={style['consistency__consistency-record']}
+                        >
+                            <td
+                                title={title}
+                                className={style['consistency__matrix-name']}
+                            >
+                                {title}
+                            </td>
+                            <td
+                                className={
+                                    style['consistency__consistency-value']
+                                }
+                            >
+                                {value.toFixed(SHORT_COMPARISON_PRECISION)}
+                            </td>
+                        </tr>
+                    );
+                })}
             </table>
-            <ErrorPopup className={style['consistency__error-popup']} isOpen={error}>
+            <ErrorPopup
+                className={style['consistency__error-popup']}
+                isOpen={error}
+            >
                 {error}
             </ErrorPopup>
         </div>
