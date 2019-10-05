@@ -1,6 +1,6 @@
 export const LIGHT_THEME = 'menu.theme-dark';
 export const DARK_THEME = 'menu.theme-light';
-export const DEFAULT_THEME = LIGHT_THEME;
+export const DEFAULT_THEME = DARK_THEME;
 
 const LIGHT_THEME_COLORS = {
     'purple': '#3f51b5',
