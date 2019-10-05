@@ -1,6 +1,11 @@
 import {useState} from 'preact/hooks';
 import {getCookie, setCookie} from './cookies';
-import {DARK_THEME, LIGHT_THEME, THEME_COLORS} from 'constants/themes';
+import {
+    DARK_THEME,
+    LIGHT_THEME,
+    THEME_COLORS,
+    DEFAULT_THEME,
+} from 'constants/themes';
 
 const COOKIE_THEME_KEY = 'theme';
 
@@ -11,9 +16,14 @@ const setThemeToCookie = (theme) => {
 };
 
 const getThemeFromBrowser = () => {
-    const preferableColorScheme = window.matchMedia('(prefers-color-scheme)').media;
+    const preferableColorScheme = window.matchMedia('(prefers-color-scheme)')
+        .media;
 
-    return preferableColorScheme === DARK_THEME ? DARK_THEME : LIGHT_THEME;
+    if ([DARK_THEME, LIGHT_THEME].includes(preferableColorScheme)) {
+        return preferableColorScheme;
+    }
+
+    return null;
 };
 
 const getThemeFromEnvironment = () => {
