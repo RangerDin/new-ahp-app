@@ -122,6 +122,16 @@ module.exports = function(webpackEnv, argv) {
                         {loader: 'sass-loader', options: {sourceMap: true}},
                     ],
                 },
+                {
+                    test: /\.(ico|png)$/,
+                    use: {
+                        loader: 'file-loader',
+                        options: {
+                            context: path.resolve(__dirname, './src'),
+                            name: '[path][name].[ext]',
+                        },
+                    },
+                },
             ],
         },
         'plugins': [
