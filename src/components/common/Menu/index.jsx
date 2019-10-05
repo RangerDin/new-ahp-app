@@ -8,7 +8,7 @@ import {loadSolutionFromFile, checkFileFormat} from 'utils/loading/file';
 import {ThemeToggler} from './components/ThemeToggler';
 import {Copyright} from './components/Copyright';
 import {LanguageToggler} from './components/LanguageToggler';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 import {useContext} from 'preact/hooks';
 import cn from 'utils/classnames';
 

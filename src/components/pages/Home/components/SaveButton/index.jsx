@@ -3,7 +3,7 @@ import {h} from 'preact';
 import Button from '../Button';
 import style from './style.scss';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 import {ErrorPopup} from 'components/common/ErrorPopup';
 
 const SaveButton = ({error, onClick}) => {

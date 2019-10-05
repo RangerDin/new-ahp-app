@@ -5,7 +5,7 @@ import Input from 'components/common/Input';
 import Error from 'components/common/Error';
 import style from './style.scss';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 const Question = ({value, setValue}) => {
     const {t} = useContext(TranslationContext);

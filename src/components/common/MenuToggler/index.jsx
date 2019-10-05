@@ -4,7 +4,7 @@ import Button from 'components/common/Button';
 
 import style from './style.scss';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 const MenuToggle = ({isOpen, onClick}) => {
     const {t} = useContext(TranslationContext);

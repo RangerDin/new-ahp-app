@@ -5,7 +5,7 @@ import {UL} from '../UL';
 import {LI} from '../LI';
 import {CONTENT_ANCHOR} from '../../constants/contents';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 export const Applications = () => {
     const {t} = useContext(TranslationContext);

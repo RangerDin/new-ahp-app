@@ -10,7 +10,7 @@ import Select from '../Select';
 import cn from 'utils/classnames';
 import style from './style.scss';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 const getOptions = (t) => Object.keys(COMPARISON_VALUES).map((key) => ({
     label: t(COMPARISON_LABELS[COMPARISON_VALUES[key]]),

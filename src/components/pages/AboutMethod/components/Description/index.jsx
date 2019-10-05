@@ -14,7 +14,7 @@ import {
     BIBLIOGRAPHY_ANCHOR,
 } from '../../constants/bibliography';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 const EXAMPLE_OBJECT_NAME = ['Object 1', 'Object 2', 'Object 3'];
 

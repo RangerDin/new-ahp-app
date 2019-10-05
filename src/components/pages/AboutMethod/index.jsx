@@ -8,7 +8,7 @@ import {Description} from './components/Description';
 import {Bibliography} from './components/Bibliography';
 import {Example} from './components/Example';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 const AboutMethod = () => {
     const {t} = useContext(TranslationContext);

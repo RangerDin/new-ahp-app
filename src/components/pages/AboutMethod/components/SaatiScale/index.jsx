@@ -3,7 +3,7 @@ import {Table} from 'components/common/Table';
 
 import style from './style.scss';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 const SAATI_VALUES = [
     {

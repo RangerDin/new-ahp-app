@@ -3,7 +3,7 @@ import {h} from 'preact';
 import style from './style.scss';
 import {CONTENTS} from '../../constants/contents';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 export const TableOfContents = () => {
     const {t} = useContext(TranslationContext);

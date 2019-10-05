@@ -9,7 +9,7 @@ import {
     MAX_PARAMETERS_COUNT,
 } from 'constants/comparisons';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 export const EntityNameInputs = ({
     objectNames,

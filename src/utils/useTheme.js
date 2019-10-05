@@ -26,21 +26,8 @@ const getThemeFromBrowser = () => {
     return null;
 };
 
-const getThemeFromEnvironment = () => {
-    const themeFromCookie = getThemeFromCookie();
-
-    if (themeFromCookie) {
-        return themeFromCookie;
-    }
-
-    const themeFromBrowser = getThemeFromBrowser();
-
-    if (themeFromBrowser) {
-        return themeFromBrowser;
-    }
-
-    return DEFAULT_THEME;
-};
+const getThemeFromEnvironment = () =>
+    getThemeFromCookie() || getThemeFromBrowser() || DEFAULT_THEME;
 
 const setCSSVariableName = (name, value) => {
     document.documentElement.style.setProperty(name, value);

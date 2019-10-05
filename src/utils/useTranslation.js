@@ -1,8 +1,11 @@
 import {createContext} from 'preact';
-import {LANGUAGE} from 'constants/translation';
+import {LANGUAGE, DEFAULT_LANGUAGE} from 'constants/translation';
 import englishDictionary from 'assets/dictionaries/english.json';
 import russianDictionary from 'assets/dictionaries/russian.json';
 import {useState} from 'preact/hooks';
+import {setCookie, getCookie} from './cookies';
+
+const COOKIE_TRANSLATION_KEY = 'translation';
 
 const LANGUAGE_TO_DICTIONARY = {
     [LANGUAGE.ENGLISH]: englishDictionary,
@@ -15,15 +18,30 @@ export const TranslationContext = createContext({
     t: (word) => '',
 });
 
-export const useTranslation = () => {
-    const [language, setLanguage] = useState(LANGUAGE.ENGLISH);
+const getLanguageFromCookie = () => getCookie(COOKIE_TRANSLATION_KEY);
+
+const setLanguageToCookie = (value) => {
+    setCookie(COOKIE_TRANSLATION_KEY, value);
+};
+
+const getLanguageFromEnvironment = () =>
+    getLanguageFromCookie() || DEFAULT_LANGUAGE;
+
+export const useTranslation = (initialLanguage) => {
+    const [language, setValue] = useState(
+        initialLanguage || getLanguageFromEnvironment()
+    );
+
+    const setLanguage = (value) => {
+        setValue(value);
+        setLanguageToCookie(value);
+    };
 
     const toggleLanguage = () => {
-        const newLanguage = language === LANGUAGE.ENGLISH ? LANGUAGE.RUSSIAN : LANGUAGE.ENGLISH;
+        const newLanguage =
+            language === LANGUAGE.ENGLISH ? LANGUAGE.RUSSIAN : LANGUAGE.ENGLISH;
 
-        setLanguage(
-            newLanguage
-        );
+        setLanguage(newLanguage);
     };
 
     const t = (translationKey) => {
@@ -36,6 +54,8 @@ export const useTranslation = () => {
 
         return translation;
     };
+
+    setLanguage(language);
 
     return {
         language,

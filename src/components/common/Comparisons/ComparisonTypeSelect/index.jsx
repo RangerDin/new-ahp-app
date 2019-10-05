@@ -4,7 +4,7 @@ import {WIDGET_TYPE} from 'constants/comparisons';
 import cn from 'utils/classnames';
 import style from './style.scss';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 export const ComparisonTypeSelect = ({type, onChange}) => {
     const {t} = useContext(TranslationContext);

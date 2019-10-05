@@ -3,7 +3,7 @@ import {SectionHeader} from '../SectionHeader';
 import {Paragraph} from '../Paragraph';
 import {CONTENT_ANCHOR} from '../../constants/contents';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 export const Definition = () => {
     const {t} = useContext(TranslationContext);

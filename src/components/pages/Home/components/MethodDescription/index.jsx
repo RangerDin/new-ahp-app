@@ -3,7 +3,7 @@ import {h} from 'preact';
 import Paragraph from 'components/pages/Home/components/Paragraph';
 import style from './style.scss';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 import LinkToPage from 'components/common/LinkToPage';
 
 const MethodDescription = ({history}) => {

@@ -2,7 +2,7 @@ import {h} from 'preact';
 
 import style from './style.scss';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 const Logo = () => {
     const {t} = useContext(TranslationContext);

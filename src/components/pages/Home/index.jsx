@@ -15,7 +15,7 @@ import {useEffect, useRef, useContext} from 'preact/hooks';
 import {useSolution} from 'utils/useSolution';
 import PageHeader from 'components/common/PageHeader';
 import {EntityNameInputs} from './components/EntityNameInputs';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 const Home = (props) => {
     const ref = useRef();

@@ -4,7 +4,7 @@ import Label from 'components/common/Label';
 import style from './style.scss';
 import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 import {NAME_PLACEHOLDER} from 'constants/name';
 import {ErrorPopup} from 'components/common/ErrorPopup';
 

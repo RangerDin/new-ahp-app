@@ -6,7 +6,7 @@ import {CONTENT_ANCHOR} from '../../constants/contents';
 import {BIBLIOGRAPHY_LIST, BIBLIOGRAPHY_ANCHOR_PREFIX} from '../../constants/bibliography';
 import {LI} from '../LI';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 
 export const Bibliography = () => {
     const {t} = useContext(TranslationContext);

@@ -12,7 +12,7 @@ import ConsistencyTable from 'components/pages/Home/components/ConsistencyTable'
 import {LI} from '../LI';
 import {UL} from '../UL';
 import {useContext} from 'preact/hooks';
-import {TranslationContext} from 'utils/translation';
+import {TranslationContext} from 'utils/useTranslation';
 import {solution} from './solution';
 
 export const Example = () => {

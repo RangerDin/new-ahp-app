@@ -8,7 +8,7 @@ import AboutMethod from 'components/pages/AboutMethod';
 import {useTheme} from 'utils/useTheme';
 import Footer from 'components/common/Footer';
 import style from './style.scss';
-import {TranslationContext, useTranslation} from 'utils/translation';
+import {TranslationContext, useTranslation} from 'utils/useTranslation';
 import 'assets/icons/favicon.ico';
 import 'assets/icons/favicon.png';
 
