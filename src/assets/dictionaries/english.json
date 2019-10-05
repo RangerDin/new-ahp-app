@@ -1,5 +1,5 @@
 {
-    "site.title": "HAM",
+    "site.title": "AHP",
     "site.made-by-htype": "Made by htype",
     "menu.new-solution": "New solution",
     "menu.about-method": "About method",
@@ -93,7 +93,7 @@
     "about.description.saati-scale-description": "Description",
     "about.example.title": "Example",
     "about.example.preface": "The interactive example below shows how to use the hierarchy analysis method and this web application.",
-    "about.example.story": "Suppose the amateur car magazine \"First Transmission\" decided to conduct its own research and decided to use HAM and this web application in order to choose the best Italian medium-duty supercar, worth less than 10,000 pounds sterling.",
+    "about.example.story": "Suppose the amateur car magazine \"First Transmission\" decided to conduct its own research and decided to use AHP and this web application in order to choose the best Italian medium-duty supercar, worth less than 10,000 pounds sterling.",
     "about.example.goal": "First of all, it is necessary to define the target:",
     "about.example.description": "Details of the task should be placed in the description:",
     "about.example.criteria": "Next, you need to list all the compared objects. It is also necessary to list all the parameters by which these objects are evaluated:",

@@ -2,18 +2,18 @@ import convertToBig from './convertToBig';
 import {COMPARISON_VALUES} from 'constants/comparisons';
 import {setElement, deleteElement, pushElement} from './immutableArray';
 
-export default class HAM {
+export default class AHP {
     static addParameterName(
         parameterNames,
         parameterComparisons,
         objectComparisons
     ) {
         return {
-            parameterNames: HAM.getNameListWithAddedName(parameterNames),
-            parameterComparisons: HAM.getComparisonMatrixWithAddedName(
+            parameterNames: AHP.getNameListWithAddedName(parameterNames),
+            parameterComparisons: AHP.getComparisonMatrixWithAddedName(
                 parameterComparisons
             ),
-            objectComparisons: HAM.getObjectComparisonsWithAddedParameterName(
+            objectComparisons: AHP.getObjectComparisonsWithAddedParameterName(
                 objectComparisons
             ),
         };
@@ -26,12 +26,12 @@ export default class HAM {
         index
     ) {
         return {
-            parameterNames: HAM.getNameListWithDeletedName(parameterNames, index),
-            parameterComparisons: HAM.getComparisonMatrixWithDeletedName(
+            parameterNames: AHP.getNameListWithDeletedName(parameterNames, index),
+            parameterComparisons: AHP.getComparisonMatrixWithDeletedName(
                 parameterComparisons,
                 index
             ),
-            objectComparisons: HAM.getObjectComparisonsWithDeletedParameterName(
+            objectComparisons: AHP.getObjectComparisonsWithDeletedParameterName(
                 objectComparisons,
                 index
             ),
@@ -40,16 +40,16 @@ export default class HAM {
 
     static addObjectName(objectNames, objectComparisons) {
         return {
-            objectNames: HAM.getNameListWithAddedName(objectNames),
-            objectComparisons: objectComparisons.map(HAM.getComparisonMatrixWithAddedName),
+            objectNames: AHP.getNameListWithAddedName(objectNames),
+            objectComparisons: objectComparisons.map(AHP.getComparisonMatrixWithAddedName),
         };
     };
 
     static deleteObjectName(objectNames, objectComparisons, index) {
         return {
-            objectNames: HAM.getNameListWithDeletedName(objectNames, index),
+            objectNames: AHP.getNameListWithDeletedName(objectNames, index),
             objectComparisons: objectComparisons.map((comparisons) =>
-                HAM.getComparisonMatrixWithDeletedName(comparisons, index)
+                AHP.getComparisonMatrixWithDeletedName(comparisons, index)
             ),
         };
     };
@@ -61,7 +61,7 @@ export default class HAM {
         value
     ) {
         return {
-            parameterComparisons: HAM.setElementInComparisonMatrix(
+            parameterComparisons: AHP.setElementInComparisonMatrix(
                 parameterComparisons,
                 index1,
                 index2,
@@ -81,7 +81,7 @@ export default class HAM {
             objectComparisons: setElement(
                 objectComparisons,
                 parameterIndex,
-                HAM.setElementInComparisonMatrix(
+                AHP.setElementInComparisonMatrix(
                     objectComparisons[parameterIndex],
                     objectIndex1,
                     objectIndex2,
@@ -120,7 +120,7 @@ export default class HAM {
         return [
             ...comparisons,
             convertToBig(
-                HAM.create2dArray(
+                AHP.create2dArray(
                     nRows,
                     nColumns,
                     COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE

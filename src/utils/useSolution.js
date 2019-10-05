@@ -2,14 +2,14 @@ import {useState, useEffect, useMemo} from 'preact/hooks';
 
 import {COMPARISON_VALUES} from 'constants/comparisons';
 import convertToBig from 'utils/structures/convertToBig';
-import HAM from 'utils/structures/ham';
+import AHP from 'utils/structures/ahp';
 import {
     getPriorityVector,
     getPriorityMatrix,
     getCoherenceRelation,
     getObjectCoherenceRelations,
     getOverallRankingByPriorities,
-} from './math/ham';
+} from './math/ahp';
 
 const arrayNameToMap = (names) =>
     names.reduce((map, name) => {
@@ -142,7 +142,7 @@ export const useSolution = (initialState = defaultState) => {
     const setName = (nameListProperty) => (index, newName) => {
         setState({
             ...state,
-            ...HAM.setName(
+            ...AHP.setName(
                 nameListProperty,
                 state[nameListProperty],
                 index,
@@ -171,7 +171,7 @@ export const useSolution = (initialState = defaultState) => {
     const addParameterName = () => {
         setState({
             ...state,
-            ...HAM.addParameterName(
+            ...AHP.addParameterName(
                 state.parameterNames,
                 state.parameterComparisons,
                 state.objectComparisons
@@ -183,7 +183,7 @@ export const useSolution = (initialState = defaultState) => {
     const deleteParameterName = (index) => {
         setState({
             ...state,
-            ...HAM.deleteParameterName(
+            ...AHP.deleteParameterName(
                 state.parameterNames,
                 state.parameterComparisons,
                 state.objectComparisons,
@@ -196,7 +196,7 @@ export const useSolution = (initialState = defaultState) => {
     const addObjectName = () => {
         setState({
             ...state,
-            ...HAM.addObjectName(state.objectNames, state.objectComparisons),
+            ...AHP.addObjectName(state.objectNames, state.objectComparisons),
             isSynchronized: false,
         });
     };
@@ -204,7 +204,7 @@ export const useSolution = (initialState = defaultState) => {
     const deleteObjectName = (index) => {
         setState({
             ...state,
-            ...HAM.deleteObjectName(
+            ...AHP.deleteObjectName(
                 state.objectNames,
                 state.objectComparisons,
                 index
@@ -216,7 +216,7 @@ export const useSolution = (initialState = defaultState) => {
     const setParameterComparison = (index1, index2, value) => {
         setState({
             ...state,
-            ...HAM.setParameterComparison(
+            ...AHP.setParameterComparison(
                 state.parameterComparisons,
                 index1,
                 index2,
@@ -234,7 +234,7 @@ export const useSolution = (initialState = defaultState) => {
     ) => {
         setState({
             ...state,
-            ...HAM.setObjectComparison(
+            ...AHP.setObjectComparison(
                 state.objectComparisons,
                 parameterIndex,
                 objectIndex1,
