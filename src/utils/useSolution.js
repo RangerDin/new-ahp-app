@@ -8,7 +8,7 @@ import {
     getPriorityMatrix,
     getCoherenceRelation,
     getObjectCoherenceRelations,
-    getOverallRankingByPriorities,
+    getNormalizedOverallRankingByPriorities,
 } from './math/ahp';
 
 const arrayNameToMap = (names) =>
@@ -114,7 +114,7 @@ export const useSolution = (initialState = defaultState) => {
                         state.objectComparisons,
                         objectPriorityMatrix
                     ),
-                    overallRanking: getOverallRankingByPriorities(
+                    overallRanking: getNormalizedOverallRankingByPriorities(
                         parameterPriorityVector,
                         objectPriorityMatrix
                     ),

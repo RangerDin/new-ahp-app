@@ -8,6 +8,7 @@ import {
     mean,
     vectorToMatrix,
 } from './matrix';
+import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
 
 export const MATRIX_POWER = 50;
 
@@ -51,6 +52,30 @@ export const getOverallRankingByPriorities = (
     const priorityVectorAsMatrix = vectorToMatrix(parameterPriorityVector);
 
     return multiply(objectPriorityMatrix, priorityVectorAsMatrix);
+};
+
+export const getNormalizedOverallRankingByPriorities = (
+    parameterPriorityVector,
+    objectPriorityMatrix
+) => {
+    const overallRanking = getOverallRankingByPriorities(
+        parameterPriorityVector,
+        objectPriorityMatrix
+    );
+    const overallRankingWithFixedPrecision = overallRanking.map((rank) =>
+        Number(rank[0].toFixed(SHORT_COMPARISON_PRECISION))
+    );
+    const sumOfAllButLast = overallRankingWithFixedPrecision
+        .slice(-1)
+        .reduce((sum, rank) => sum + rank);
+    const lastElement = Number((1 - sumOfAllButLast).toFixed(SHORT_COMPARISON_PRECISION));
+
+    const normalizedOverallRanking = [
+        ...overallRankingWithFixedPrecision.slice(-1),
+        lastElement,
+    ];
+
+    return normalizedOverallRanking;
 };
 
 const RANDOM_COHERENCE_INDEXES = {
