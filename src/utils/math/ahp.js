@@ -65,13 +65,11 @@ export const getNormalizedOverallRankingByPriorities = (
     const overallRankingWithFixedPrecision = overallRanking.map((rank) =>
         Number(rank[0].toFixed(SHORT_COMPARISON_PRECISION))
     );
-    const sumOfAllButLast = overallRankingWithFixedPrecision
-        .slice(-1)
-        .reduce((sum, rank) => sum + rank);
+    const allElementsButLast = overallRankingWithFixedPrecision.slice(0, -1);
+    const sumOfAllButLast = allElementsButLast.reduce((sum, rank) => sum + rank);
     const lastElement = Number((1 - sumOfAllButLast).toFixed(SHORT_COMPARISON_PRECISION));
-
     const normalizedOverallRanking = [
-        ...overallRankingWithFixedPrecision.slice(-1),
+        ...allElementsButLast,
         lastElement,
     ];
 
