@@ -51,20 +51,14 @@ const Home = (props) => {
     useEffect(() => {
         const locationState = props.history.location.state;
 
-        if (!locationState || locationState.action !== MENU_ACTIONS.LOAD) {
-            return;
+        if (locationState && locationState.action === MENU_ACTIONS.LOAD) {
+            operations.setSolutionState(locationState.solution);
+            props.history.location.state = null;
         }
 
-        operations.setSolutionState(locationState.solution);
-        props.history.location.state = null;
-    }, [props.history.location.state]);
-
-    useEffect(() => {
-        const locationState = props.history.location.state;
-
         if (locationState && locationState.action === MENU_ACTIONS.NEW) {
-            props.history.location.state = null;
             operations.resetSolutionState();
+            props.history.location.state = null;
         }
     }, [props.history.location.state]);
 
