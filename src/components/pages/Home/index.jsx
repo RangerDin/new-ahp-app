@@ -17,6 +17,8 @@ import PageHeader from 'components/common/PageHeader';
 import {EntityNameInputs} from './components/EntityNameInputs';
 import {TranslationContext} from 'utils/useTranslation';
 import {MENU_ACTIONS} from 'constants/actions';
+import usePageSynchronizationBlock from 'utils/usePageSynchronizationBlock';
+import {BEFORE_UNLOAD_MESSAGE} from 'constants/messages';
 
 const Home = (props) => {
     const ref = useRef();
@@ -36,31 +38,16 @@ const Home = (props) => {
 
     const onBeforeUnload = (event) => {
         if (!state.isSynchronized) {
-            event.returnValue =
-                'You have unsaved changes. Are you sure you want to leave?';
+            event.returnValue = BEFORE_UNLOAD_MESSAGE;
         }
     };
-
     useBeforeUnload(onBeforeUnload, state.isSynchronized);
 
-    useEffect(() => {
-        if (!state.isSynchronized) {
-            ref.unblock = props.history.block(
-                'You have unsaved changes. Are you sure you want to leave?'
-            );
-        } else if (ref.unblock) {
-            ref.unblock();
-        }
-    }, [state.isSynchronized]);
-
-    useEffect(
-        () => () => {
-            if (ref.unblock) {
-                ref.unblock();
-            }
-        },
-        []
-    );
+    const onPageChange = () =>
+        props.history.block(
+            'You have unsaved changes. Are you sure you want to leave?'
+        );
+    usePageSynchronizationBlock(onPageChange, state.isSynchronized);
 
     useEffect(() => {
         const locationState = props.history.location.state;
