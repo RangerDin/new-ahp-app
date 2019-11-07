@@ -10,7 +10,7 @@ import ConsistencyTable from './components/ConsistencyTable';
 import SaveButton from './components/SaveButton';
 import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
 import {saveAsFile} from 'utils/saving/file';
-import beforeUnloadEffect from 'utils/beforeUnloadEffect';
+import useBeforeUnload from 'utils/useBeforeUnload';
 import {useEffect, useRef, useContext} from 'preact/hooks';
 import {useSolution} from 'utils/useSolution';
 import PageHeader from 'components/common/PageHeader';
@@ -41,7 +41,7 @@ const Home = (props) => {
         }
     };
 
-    beforeUnloadEffect(onBeforeUnload, state.isSynchronized);
+    useBeforeUnload(onBeforeUnload, state.isSynchronized);
 
     useEffect(() => {
         if (!state.isSynchronized) {

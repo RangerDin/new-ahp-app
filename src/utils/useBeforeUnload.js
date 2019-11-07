@@ -1,6 +1,6 @@
 import {useEffect} from 'preact/hooks';
 
-const beforeUnloadEffect = (callback, relatedValue) => {
+const useBeforeUnload = (callback, relatedValue) => {
     useEffect(() => {
         window.addEventListener('beforeunload', callback);
 
@@ -10,4 +10,4 @@ const beforeUnloadEffect = (callback, relatedValue) => {
     }, [relatedValue]);
 };
 
-export default beforeUnloadEffect;
+export default useBeforeUnload;
