@@ -20,72 +20,38 @@ import {MENU_ACTIONS} from 'constants/actions';
 
 const Home = (props) => {
     const ref = useRef();
-    const {
-        state: {
-            isSynchronized,
-            question,
-            description,
-            parameterNames,
-            parameterComparisons,
-            objectNames,
-            objectComparisons,
-            parameterMatrixConsistency,
-            objectMatrixConsistencies,
-            overallRanking,
-        },
-        operations: {
-            setQuestion,
-            setDescription,
-            changeParameterName,
-            changeObjectName,
-            deleteParameterName,
-            deleteObjectName,
-            addParameterName,
-            addObjectName,
-            setParameterComparison,
-            setObjectComparison,
-            setSynchronized,
-            resetSolutionState,
-            setSolutionState,
-            areObjectNamesFilled,
-            areParameterNamesFilled,
-            isObjectNameDuplicated,
-            isParameterNameDuplicated,
-            areObjectNamesDuplicated,
-            areParameterNamesDuplicated,
-        },
-    } = useSolution();
+    const {state, operations} = useSolution();
 
     const onSaveButtonClick = () => {
         saveAsFile({
-            question,
-            description,
-            parameterNames,
-            parameterComparisons,
-            objectNames,
-            objectComparisons,
+            question: state.question,
+            description: state.description,
+            parameterNames: state.parameterNames,
+            parameterComparisons: state.parameterComparisons,
+            objectNames: state.objectNames,
+            objectComparisons: state.objectComparisons,
         });
-        setSynchronized();
+        operations.setSynchronized();
     };
 
     const onBeforeUnload = (event) => {
-        if (!isSynchronized) {
+        if (!state.isSynchronized) {
             event.returnValue =
                 'You have unsaved changes. Are you sure you want to leave?';
         }
     };
 
-    beforeUnloadEffect(onBeforeUnload, isSynchronized);
+    beforeUnloadEffect(onBeforeUnload, state.isSynchronized);
 
     useEffect(() => {
-        if (!isSynchronized) {
+        if (!state.isSynchronized) {
             ref.unblock = props.history.block(
                 'You have unsaved changes. Are you sure you want to leave?'
             );
         } else if (ref.unblock) {
             ref.unblock();
         }
-    }, [isSynchronized]);
+    }, [state.isSynchronized]);
 
     useEffect(
         () => () => {
@@ -105,7 +71,7 @@ const Home = (props) => {
 
         const loadedSolution = locationState.solution;
 
-        setSolutionState(loadedSolution);
+        operations.setSolutionState(loadedSolution);
         props.history.location.state = null;
     }, [props.history.location.state]);
 
@@ -119,7 +85,7 @@ const Home = (props) => {
         const locationState = props.history.location.state;
         if (locationState && locationState.action === MENU_ACTIONS.NEW) {
             props.history.location.state = null;
-            resetSolutionState();
+            operations.resetSolutionState();
         }
     }, [props]);
 
@@ -129,36 +95,43 @@ const Home = (props) => {
         <PageContainer>
             <PageHeader>{t('home.header')}</PageHeader>
             <MethodDescription history={props.history} />
-            <Question value={question} setValue={setQuestion} />
-            <Description value={description} setValue={setDescription} />
+            <Question
+                value={state.question}
+                setValue={operations.setQuestion}
+            />
+            <Description
+                value={state.description}
+                setValue={operations.setDescription}
+            />
             <EntityNameInputs
-                objectNames={objectNames}
-                changeObjectName={changeObjectName}
-                deleteObjectName={deleteObjectName}
-                addObjectName={addObjectName}
-                parameterNames={parameterNames}
-                changeParameterName={changeParameterName}
-                deleteParameterName={deleteParameterName}
-                addParameterName={addParameterName}
-                isObjectNameDuplicated={isObjectNameDuplicated}
-                isParameterNameDuplicated={isParameterNameDuplicated}
+                objectNames={state.objectNames}
+                changeObjectName={operations.changeObjectName}
+                deleteObjectName={operations.deleteObjectName}
+                addObjectName={operations.addObjectName}
+                parameterNames={state.parameterNames}
+                changeParameterName={operations.changeParameterName}
+                deleteParameterName={operations.deleteParameterName}
+                addParameterName={operations.addParameterName}
+                isObjectNameDuplicated={operations.isObjectNameDuplicated}
+                isParameterNameDuplicated={operations.isParameterNameDuplicated}
             />
             <Comparisons
-                names={parameterNames}
-                comparisons={parameterComparisons}
-                setComparisons={setParameterComparison}
+                names={state.parameterNames}
+                comparisons={state.parameterComparisons}
+                setComparisons={operations.setParameterComparison}
                 label={t('home.parameters.comparisons.label')}
                 errorText={t('home.parameters.comparisons.popup-error')}
                 isErrorVisible={
-                    !areParameterNamesFilled() || areParameterNamesDuplicated()
+                    !operations.areParameterNamesFilled() ||
+                    operations.areParameterNamesDuplicated()
                 }
             />
-            {parameterNames.map((parameterName, parameterIndex) => (
+            {state.parameterNames.map((parameterName, parameterIndex) => (
                 <Comparisons
-                    names={objectNames}
-                    comparisons={objectComparisons[parameterIndex]}
+                    names={state.objectNames}
+                    comparisons={state.objectComparisons[parameterIndex]}
                     setComparisons={(index1, index2, value) =>
-                        setObjectComparison(
+                        operations.setObjectComparison(
                             parameterIndex,
                             index1,
                             index2,
@@ -170,50 +143,50 @@ const Home = (props) => {
                     )} ${parameterName}`}
                     errorText={t('home.objects.comparisons.popup-error')}
                     isErrorVisible={
-                        !areObjectNamesFilled() ||
-                        !areParameterNamesFilled() ||
-                        areObjectNamesDuplicated()
+                        !operations.areObjectNamesFilled() ||
+                        !operations.areParameterNamesFilled() ||
+                        operations.areObjectNamesDuplicated()
                     }
                 />
             ))}
             <ResultPriorityTable
-                overallRanking={overallRanking}
-                objectNames={objectNames}
+                overallRanking={state.overallRanking}
+                objectNames={state.objectNames}
                 error={
-                    (!areObjectNamesFilled() ||
-                        !areParameterNamesFilled() ||
-                        areObjectNamesDuplicated() ||
-                        areParameterNamesDuplicated()) &&
+                    (!operations.areObjectNamesFilled() ||
+                        !operations.areParameterNamesFilled() ||
+                        operations.areObjectNamesDuplicated() ||
+                        operations.areParameterNamesDuplicated()) &&
                     t('home.result.popup-error')
                 }
             />
             <ConsistencyTable
-                parameterMatrixConsistency={parameterMatrixConsistency}
-                objectMatrixConsistencies={objectMatrixConsistencies}
-                parameterNames={parameterNames}
+                parameterMatrixConsistency={state.parameterMatrixConsistency}
+                objectMatrixConsistencies={state.objectMatrixConsistencies}
+                parameterNames={state.parameterNames}
                 error={
-                    (!areObjectNamesFilled() ||
-                        !areParameterNamesFilled() ||
-                        areObjectNamesDuplicated() ||
-                        areParameterNamesDuplicated()) &&
+                    (!operations.areObjectNamesFilled() ||
+                        !operations.areParameterNamesFilled() ||
+                        operations.areObjectNamesDuplicated() ||
+                        operations.areParameterNamesDuplicated()) &&
                     t('home.consistency.popup-error')
                 }
             />
             <SaveButton
                 error={
-                    (!question ||
-                        !description ||
-                        !areParameterNamesFilled() ||
-                        !areObjectNamesFilled() ||
-                        areObjectNamesDuplicated() ||
-                        areParameterNamesDuplicated()) &&
+                    (!state.question ||
+                        !state.description ||
+                        !operations.areParameterNamesFilled() ||
+                        !operations.areObjectNamesFilled() ||
+                        operations.areObjectNamesDuplicated() ||
+                        operations.areParameterNamesDuplicated()) &&
                     t('home.save-button.popup-error')
                 }
                 onClick={onSaveButtonClick}
             />
-            {areParameterNamesFilled() &&
-                areObjectNamesFilled() &&
-                isSynchronized && <SolutionIsSavedLabel />}
+            {operations.areParameterNamesFilled() &&
+                operations.areObjectNamesFilled() &&
+                state.isSynchronized && <SolutionIsSavedLabel />}
         </PageContainer>
     );
 };
