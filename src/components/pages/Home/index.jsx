@@ -11,7 +11,7 @@ import SaveButton from './components/SaveButton';
 import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
 import {saveAsFile} from 'utils/saving/file';
 import useBeforeUnload from 'utils/useBeforeUnload';
-import {useEffect, useRef, useContext} from 'preact/hooks';
+import {useEffect, useContext} from 'preact/hooks';
 import {useSolution} from 'utils/useSolution';
 import PageHeader from 'components/common/PageHeader';
 import {EntityNameInputs} from './components/EntityNameInputs';
@@ -21,7 +21,6 @@ import usePageSynchronizationBlock from 'utils/usePageSynchronizationBlock';
 import {BEFORE_UNLOAD_MESSAGE} from 'constants/messages';
 
 const Home = (props) => {
-    const ref = useRef();
     const {state, operations} = useSolution();
 
     const onSaveButtonClick = () => {
@@ -56,25 +55,18 @@ const Home = (props) => {
             return;
         }
 
-        const loadedSolution = locationState.solution;
-
-        operations.setSolutionState(loadedSolution);
+        operations.setSolutionState(locationState.solution);
         props.history.location.state = null;
     }, [props.history.location.state]);
 
     useEffect(() => {
-        if (!ref.firstLoaded) {
-            ref.firstLoaded = true;
-            props.history.location.state = null;
-            return;
-        }
-
         const locationState = props.history.location.state;
+
         if (locationState && locationState.action === MENU_ACTIONS.NEW) {
             props.history.location.state = null;
             operations.resetSolutionState();
         }
-    }, [props]);
+    }, [props.history.location.state]);
 
     const {t} = useContext(TranslationContext);
 
