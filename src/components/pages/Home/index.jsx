@@ -16,6 +16,7 @@ import {useSolution} from 'utils/useSolution';
 import PageHeader from 'components/common/PageHeader';
 import {EntityNameInputs} from './components/EntityNameInputs';
 import {TranslationContext} from 'utils/useTranslation';
+import {MENU_ACTIONS} from 'constants/actions';
 
 const Home = (props) => {
     const ref = useRef();
@@ -98,7 +99,7 @@ const Home = (props) => {
     useEffect(() => {
         const locationState = props.history.location.state;
 
-        if (!locationState || locationState.action !== 'load') {
+        if (!locationState || locationState.action !== MENU_ACTIONS.LOAD) {
             return;
         }
 
@@ -116,7 +117,7 @@ const Home = (props) => {
         }
 
         const locationState = props.history.location.state;
-        if (locationState && locationState.action === 'new') {
+        if (locationState && locationState.action === MENU_ACTIONS.NEW) {
             props.history.location.state = null;
             resetSolutionState();
         }

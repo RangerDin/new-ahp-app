@@ -11,6 +11,7 @@ import {LanguageToggler} from './components/LanguageToggler';
 import {TranslationContext} from 'utils/useTranslation';
 import {useContext} from 'preact/hooks';
 import cn from 'utils/classnames';
+import {MENU_ACTIONS} from 'constants/actions';
 
 const Menu = ({isOpen, history, theme, toggleTheme}) => {
     const {t} = useContext(TranslationContext);
@@ -30,7 +31,7 @@ const Menu = ({isOpen, history, theme, toggleTheme}) => {
 
                 const location = {
                     state: {
-                        action: 'load',
+                        action: MENU_ACTIONS.LOAD,
                         solution: loadedSolution,
                     },
                     pathname: '/',
@@ -49,7 +50,7 @@ const Menu = ({isOpen, history, theme, toggleTheme}) => {
                 history={history}
                 href='/'
                 state={{
-                    action: 'new',
+                    action: MENU_ACTIONS.NEW,
                 }}
                 isAlwaysActive
             >

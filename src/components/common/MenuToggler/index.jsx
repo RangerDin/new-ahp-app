@@ -8,6 +8,7 @@ import {TranslationContext} from 'utils/useTranslation';
 
 const MenuToggle = ({isOpen, onClick}) => {
     const {t} = useContext(TranslationContext);
+
     return (
         <Button onClick={onClick} className={style['menu-toggler']}>
             {isOpen ? t('menu.close') : t('menu.title')}
