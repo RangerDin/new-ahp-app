@@ -7,8 +7,18 @@ const onFileChange = (onLoad) => (event) => {
 
     const reader = new FileReader();
 
-    reader.onload = (e) => {
-        onLoad(e.target.result);
+    reader.onload = (event) => {
+        let solution;
+
+        try {
+            const solutionAsJSON = JSON.parse(event.target.result);
+
+            solution = checkFileFormat(solutionAsJSON) ? solutionAsJSON : null;
+        } catch (error) {
+            solution = null;
+        }
+
+        onLoad(solution);
     };
     reader.readAsText(file);
 };
@@ -81,12 +91,7 @@ export const checkFileFormat = (solution) => {
 
     const numberOfParameters = solution['parameterNames'].length;
     const parameterComparisons = solution['parameterComparisons'];
-    if (
-        !checkComparisons(
-            parameterComparisons,
-            numberOfParameters
-        )
-    ) {
+    if (!checkComparisons(parameterComparisons, numberOfParameters)) {
         return false;
     }
 

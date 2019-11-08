@@ -4,7 +4,7 @@ import {LinkToPage} from './components/LinkToPage';
 import {ActionButton} from './components/ActionButton';
 import {LinkToLegal} from './components/LinkToLegal';
 import style from './style.scss';
-import {loadSolutionFromFile, checkFileFormat} from 'utils/loading/file';
+import {loadSolutionFromFile} from 'utils/loading/file';
 import {ThemeToggler} from './components/ThemeToggler';
 import {Copyright} from './components/Copyright';
 import {LanguageToggler} from './components/LanguageToggler';
@@ -15,32 +15,25 @@ import {MENU_ACTIONS} from 'constants/actions';
 
 const Menu = ({isOpen, history, theme, toggleTheme}) => {
     const {t} = useContext(TranslationContext);
+    const wrongFormatAlert = () => {
+        alert('Wrong file format!');
+    };
     const onLoadSolutionClick = () => {
-        const wrongFormatAlert = () => {
-            alert('Wrong file format!');
-        };
-
-        loadSolutionFromFile((fileContentAsText) => {
-            try {
-                const loadedSolution = JSON.parse(fileContentAsText);
-
-                if (!checkFileFormat(loadedSolution)) {
-                    wrongFormatAlert();
-                    return;
-                }
-
-                const location = {
-                    state: {
-                        action: MENU_ACTIONS.LOAD,
-                        solution: loadedSolution,
-                    },
-                    pathname: '/',
-                };
-
-                history.push(location);
-            } catch (e) {
+        loadSolutionFromFile((solution) => {
+            if (!solution) {
                 wrongFormatAlert();
+                return;
             }
+
+            const location = {
+                state: {
+                    action: MENU_ACTIONS.LOAD,
+                    solution,
+                },
+                pathname: '/',
+            };
+
+            history.push(location);
         });
     };
 
