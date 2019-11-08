@@ -9,7 +9,7 @@ import ResultPriorityTable from './components/ResultPriorityTable';
 import ConsistencyTable from './components/ConsistencyTable';
 import SaveButton from './components/SaveButton';
 import SolutionIsSavedLabel from './components/SolutionIsSavedLabel';
-import {saveAsFile} from 'utils/saving/file';
+import {saveToFile} from 'utils/saving/file';
 import useBeforeUnload from 'utils/useBeforeUnload';
 import {useEffect, useContext} from 'preact/hooks';
 import {useSolution} from 'utils/useSolution';
@@ -24,14 +24,7 @@ const Home = (props) => {
     const {state, operations} = useSolution();
 
     const onSaveButtonClick = () => {
-        saveAsFile({
-            question: state.question,
-            description: state.description,
-            parameterNames: state.parameterNames,
-            parameterComparisons: state.parameterComparisons,
-            objectNames: state.objectNames,
-            objectComparisons: state.objectComparisons,
-        });
+        saveToFile(state);
         operations.setSynchronized();
     };
 

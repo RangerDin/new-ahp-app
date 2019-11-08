@@ -1,11 +1,18 @@
 import {saveAs} from 'file-saver';
 
-export function saveAsFile(solution) {
-    const solutionAsString = JSON.stringify(solution);
+export function saveToFile(solutionState) {
+    const solutionAsString = JSON.stringify({
+        question: solutionState.question,
+        description: solutionState.description,
+        parameterNames: solutionState.parameterNames,
+        parameterComparisons: solutionState.parameterComparisons,
+        objectNames: solutionState.objectNames,
+        objectComparisons: solutionState.objectComparisons,
+    });
     const file = new Blob([solutionAsString], {
         type: 'application/json;charset=utf-8',
     });
-    const fileName = `${solution.question}.json`;
+    const fileName = `${solutionState.question}.json`;
 
     saveAs(file, fileName);
 }
