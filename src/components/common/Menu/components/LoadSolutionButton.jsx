@@ -3,6 +3,7 @@ import {ActionButton} from './ActionButton';
 import {TranslationContext} from 'utils/useTranslation';
 import {useCallback, useContext} from 'preact/hooks';
 import {loadSolutionFromFile} from 'utils/loading/file';
+import {MENU_ACTIONS} from 'constants/actions';
 
 const wrongFormatAlert = () => {
     alert('Wrong file format!');
