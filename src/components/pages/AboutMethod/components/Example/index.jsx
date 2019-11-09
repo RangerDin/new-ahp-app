@@ -17,35 +17,9 @@ import {solution} from './solution';
 
 export const Example = () => {
     const {
-        state: {
-            question,
-            description,
-            parameterNames,
-            parameterComparisons,
-            objectNames,
-            objectComparisons,
-            parameterMatrixConsistency,
-            objectMatrixConsistencies,
-            overallRanking,
-        },
-        operations: {
-            setQuestion,
-            setDescription,
-            changeParameterName,
-            changeObjectName,
-            deleteParameterName,
-            deleteObjectName,
-            addParameterName,
-            addObjectName,
-            setParameterComparison,
-            setObjectComparison,
-            areObjectNamesFilled,
-            areParameterNamesFilled,
-            isObjectNameDuplicated,
-            isParameterNameDuplicated,
-            areObjectNamesDuplicated,
-            areParameterNamesDuplicated,
-        },
+        state,
+        errors,
+        operations,
     } = useSolution(solution);
     const {t} = useContext(TranslationContext);
 
@@ -57,42 +31,40 @@ export const Example = () => {
             <Paragraph>{t('about.example.preface')}</Paragraph>
             <Paragraph>{t('about.example.story')}</Paragraph>
             <Paragraph>{t('about.example.goal')}</Paragraph>
-            <Question value={question} setValue={setQuestion} />
+            <Question value={state.question} setValue={operations.setQuestion} />
             <Paragraph>{t('about.example.description')}</Paragraph>
-            <Description value={description} setValue={setDescription} />
+            <Description value={state.description} setValue={operations.setDescription} />
             <Paragraph>{t('about.example.criteria')}</Paragraph>
             <EntityNameInputs
-                objectNames={objectNames}
-                changeObjectName={changeObjectName}
-                deleteObjectName={deleteObjectName}
-                addObjectName={addObjectName}
-                parameterNames={parameterNames}
-                changeParameterName={changeParameterName}
-                deleteParameterName={deleteParameterName}
-                addParameterName={addParameterName}
-                isObjectNameDuplicated={isObjectNameDuplicated}
-                isParameterNameDuplicated={isParameterNameDuplicated}
+                objectNames={state.objectNames}
+                changeObjectName={operations.changeObjectName}
+                deleteObjectName={operations.deleteObjectName}
+                addObjectName={operations.addObjectName}
+                parameterNames={state.parameterNames}
+                changeParameterName={operations.changeParameterName}
+                deleteParameterName={operations.deleteParameterName}
+                addParameterName={operations.addParameterName}
+                isObjectNameDuplicated={errors.isObjectNameDuplicated}
+                isParameterNameDuplicated={errors.isParameterNameDuplicated}
             />{' '}
             <Paragraph>{t('about.example.object-comparisons')}</Paragraph>
             <Paragraph>{t('about.example.comparison-control')}</Paragraph>
             <Paragraph>{t('about.example.comparison-matrix')}</Paragraph>
             <Comparisons
-                names={parameterNames}
-                comparisons={parameterComparisons}
-                setComparisons={setParameterComparison}
+                names={state.parameterNames}
+                comparisons={state.parameterComparisons}
+                setComparisons={operations.setParameterComparison}
                 label={t('about.example.parameters-comparison-matrix-label')}
                 errorText={t('home.parameters.comparisons.popup-error')}
-                isErrorVisible={
-                    !areParameterNamesFilled() || areParameterNamesDuplicated()
-                }
+                isErrorVisible={errors.parameterComparisons}
             />
             <Paragraph>{t('about.example.pairwise-comparisons')}</Paragraph>
-            {parameterNames.map((parameterName, parameterIndex) => (
+            {state.parameterNames.map((parameterName, parameterIndex) => (
                 <Comparisons
-                    names={objectNames}
-                    comparisons={objectComparisons[parameterIndex]}
+                    names={state.objectNames}
+                    comparisons={state.objectComparisons[parameterIndex]}
                     setComparisons={(index1, index2, value) =>
-                        setObjectComparison(
+                        operations.setObjectComparison(
                             parameterIndex,
                             index1,
                             index2,
@@ -103,39 +75,23 @@ export const Example = () => {
                         'about.example.comparison-of-objects-label'
                     )} ${parameterName}`}
                     errorText={t('home.objects.comparisons.popup-error')}
-                    isErrorVisible={
-                        !areObjectNamesFilled() ||
-                        !areParameterNamesFilled() ||
-                        areObjectNamesDuplicated()
-                    }
+                    isErrorVisible={errors.objectComparisons}
                 />
             ))}
             <Paragraph>
                 {t('about.example.comparison-of-objects-matrix')}
             </Paragraph>
             <ResultPriorityTable
-                overallRanking={overallRanking}
-                objectNames={objectNames}
-                error={
-                    (!areObjectNamesFilled() ||
-                        !areParameterNamesFilled() ||
-                        areObjectNamesDuplicated() ||
-                        areParameterNamesDuplicated()) &&
-                    t('home.result.popup-error')
-                }
+                overallRanking={state.overallRanking}
+                objectNames={state.objectNames}
+                error={errors.result && t('home.result.popup-error')}
             />
             <Paragraph>{t('about.example.consistency-ratio')}</Paragraph>
             <ConsistencyTable
-                parameterMatrixConsistency={parameterMatrixConsistency}
-                objectMatrixConsistencies={objectMatrixConsistencies}
-                parameterNames={parameterNames}
-                error={
-                    (!areObjectNamesFilled() ||
-                        !areParameterNamesFilled() ||
-                        areObjectNamesDuplicated() ||
-                        areParameterNamesDuplicated()) &&
-                    t('home.consistency.popup-error')
-                }
+                parameterMatrixConsistency={state.parameterMatrixConsistency}
+                objectMatrixConsistencies={state.objectMatrixConsistencies}
+                parameterNames={state.parameterNames}
+                error={errors.consistency && t('home.consistency.popup-error')}
             />
             <Paragraph>{t('about.example.inconsistency-example')}</Paragraph>
             <UL>
