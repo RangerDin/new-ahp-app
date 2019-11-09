@@ -1,4 +1,4 @@
-import {useState, useEffect, useMemo} from 'preact/hooks';
+import {useState, useEffect, useMemo, useCallback} from 'preact/hooks';
 
 import {COMPARISON_VALUES} from 'constants/comparisons';
 import convertToBig from 'utils/structures/convertToBig';
@@ -18,23 +18,19 @@ const arrayNameToMap = (names) =>
         return map;
     }, {});
 
-const useAreNameDuplicatedFunctions = (names) => (
-    useMemo(() => {
-        const namesMap = arrayNameToMap(names);
+const getAreNameDuplicatedFunctions = (names) => {
+    const namesMap = useMemo(() => arrayNameToMap(names), [names]);
+    const isNameDuplicated = useCallback((name) => namesMap[name] > 1, [
+        namesMap,
+    ]);
 
-        const isNameDuplicated = (name) => namesMap[name] > 1;
-        const _areNamesDuplicated = names.some(isNameDuplicated);
-        const areNamesDuplicated = () => _areNamesDuplicated;
-
-        return {
-            isNameDuplicated,
-            areNamesDuplicated,
-        };
-    }, [
-        names,
-    ])
-);
-
+    return {
+        isNameDuplicated,
+        areNamesDuplicated: useMemo(() => names.some(isNameDuplicated), [
+            namesMap,
+        ]),
+    };
+};
 
 const defaultState = {
     isSynchronized: true,
@@ -73,15 +69,208 @@ const convertStateToInnerFormat = (state) => ({
     overallRanking: null,
 });
 
+const getErrors = (state) => {
+    const areObjectNamesFilled = useMemo(
+        () => state.objectNames.every(Boolean),
+        [state.objectNames]
+    );
+    const areParameterNamesFilled = useMemo(
+        () => state.parameterNames.every(Boolean),
+        [state.parameterNames]
+    );
+    const {
+        isNameDuplicated: isObjectNameDuplicated,
+        areNamesDuplicated: areObjectNamesDuplicated,
+    } = getAreNameDuplicatedFunctions(state.objectNames);
+    const {
+        isNameDuplicated: isParameterNameDuplicated,
+        areNamesDuplicated: areParameterNamesDuplicated,
+    } = getAreNameDuplicatedFunctions(state.parameterNames);
+    const hasParameterNamesError = useMemo(
+        () => !areParameterNamesFilled || areParameterNamesDuplicated,
+        [areParameterNamesFilled, areParameterNamesDuplicated]
+    );
+    const hasObjectNamesError = useMemo(
+        () => !areObjectNamesFilled || areObjectNamesDuplicated,
+        [areObjectNamesFilled, areObjectNamesDuplicated]
+    );
+    const hasNamesError = useMemo(
+        () => hasParameterNamesError || hasObjectNamesError,
+        [hasParameterNamesError, hasObjectNamesError]
+    );
+    const hasAllFieldsError = useMemo(
+        () => !state.question || !state.description || hasNamesError,
+        [state.question, state.description, hasNamesError]
+    );
+
+    return {
+        parameterComparisons: hasParameterNamesError,
+        objectComparisons: hasObjectNamesError,
+        result: hasNamesError,
+        consistency: hasNamesError,
+        save: hasAllFieldsError,
+        isObjectNameDuplicated: isObjectNameDuplicated,
+        isParameterNameDuplicated: isParameterNameDuplicated,
+    };
+};
+
+const getOperations = (state, setState) => {
+    const setName = useCallback(
+        (nameListProperty) => (index, newName) => {
+            setState({
+                ...state,
+                ...AHP.setName(
+                    nameListProperty,
+                    state[nameListProperty],
+                    index,
+                    newName
+                ),
+                isSynchronized: false,
+            });
+        },
+        [state, setState]
+    );
+    const setQuestion = useCallback(
+        (value) => {
+            setState({
+                ...state,
+                question: value,
+                isSynchronized: false,
+            });
+        },
+        [state, setState]
+    );
+    const setDescription = useCallback(
+        (value) => {
+            setState({
+                ...state,
+                description: value,
+                isSynchronized: false,
+            });
+        },
+        [state, setState]
+    );
+    const addParameterName = useCallback(() => {
+        setState({
+            ...state,
+            ...AHP.addParameterName(
+                state.parameterNames,
+                state.parameterComparisons,
+                state.objectComparisons
+            ),
+            isSynchronized: false,
+        });
+    }, [state, setState]);
+    const deleteParameterName = useCallback(
+        (index) => {
+            setState({
+                ...state,
+                ...AHP.deleteParameterName(
+                    state.parameterNames,
+                    state.parameterComparisons,
+                    state.objectComparisons,
+                    index
+                ),
+                isSynchronized: false,
+            });
+        },
+        [state, setState]
+    );
+    const addObjectName = useCallback(() => {
+        setState({
+            ...state,
+            ...AHP.addObjectName(state.objectNames, state.objectComparisons),
+            isSynchronized: false,
+        });
+    }, [state, setState]);
+    const deleteObjectName = useCallback(
+        (index) => {
+            setState({
+                ...state,
+                ...AHP.deleteObjectName(
+                    state.objectNames,
+                    state.objectComparisons,
+                    index
+                ),
+                isSynchronized: false,
+            });
+        },
+        [state, setState]
+    );
+    const setParameterComparison = useCallback(
+        (index1, index2, value) => {
+            setState({
+                ...state,
+                ...AHP.setParameterComparison(
+                    state.parameterComparisons,
+                    index1,
+                    index2,
+                    value
+                ),
+                isSynchronized: false,
+            });
+        },
+        [state, setState]
+    );
+    const setObjectComparison = useCallback(
+        (parameterIndex, objectIndex1, objectIndex2, value) => {
+            setState({
+                ...state,
+                ...AHP.setObjectComparison(
+                    state.objectComparisons,
+                    parameterIndex,
+                    objectIndex1,
+                    objectIndex2,
+                    value
+                ),
+                isSynchronized: false,
+            });
+        },
+        [state, setState]
+    );
+    const setSynchronized = useCallback(() => {
+        setState({
+            ...state,
+            isSynchronized: true,
+        });
+    }, [state, setState]);
+    const setSolutionState = useCallback(
+        (newState) => {
+            setState({
+                ...convertStateToInnerFormat(newState),
+                isSynchronized: true,
+            });
+        },
+        [state, useState]
+    );
+    const resetSolutionState = useCallback(() => {
+        setSolutionState(defaultState);
+    }, [state, setState]);
+
+    return {
+        setQuestion,
+        setDescription,
+        addParameterName,
+        deleteParameterName,
+        changeObjectName: setName('objectNames'),
+        changeParameterName: setName('parameterNames'),
+        addObjectName,
+        deleteObjectName,
+        setParameterComparison,
+        setObjectComparison,
+        setSynchronized,
+        setSolutionState,
+        resetSolutionState,
+    };
+};
+
 let resultCalculationTimeout = null;
 let resultCalculationId = 0;
 let childTaskTimeoutIds = [];
 
-export const useSolution = (initialState = defaultState) => {
-    const [state, setState] = useState(convertStateToInnerFormat(initialState));
-
-    const calculateResult = (resultId) => {
-        if (!areObjectNamesFilled() || !areParameterNamesFilled()) {
+const useResultCalculation = (state, errors, setState) => {
+    const calculateResult = useCallback((resultId) => {
+        if (errors.result) {
             return;
         }
 
@@ -121,9 +310,8 @@ export const useSolution = (initialState = defaultState) => {
                 });
             }
         );
-    };
-
-    const scheduleResultCalculation = () => {
+    }, [state, setState, errors.result]);
+    const scheduleResultCalculation = useCallback(() => {
         if (resultCalculationTimeout) {
             clearTimeout(resultCalculationTimeout);
             resultCalculationTimeout = null;
@@ -137,178 +325,25 @@ export const useSolution = (initialState = defaultState) => {
             100,
             resultCalculationId
         );
-    };
+    }, [calculateResult]);
 
-    const setName = (nameListProperty) => (index, newName) => {
-        setState({
-            ...state,
-            ...AHP.setName(
-                nameListProperty,
-                state[nameListProperty],
-                index,
-                newName
-            ),
-            isSynchronized: false,
-        });
-    };
-
-    const setQuestion = (value) => {
-        setState({
-            ...state,
-            question: value,
-            isSynchronized: false,
-        });
-    };
-
-    const setDescription = (value) => {
-        setState({
-            ...state,
-            description: value,
-            isSynchronized: false,
-        });
-    };
-
-    const addParameterName = () => {
-        setState({
-            ...state,
-            ...AHP.addParameterName(
-                state.parameterNames,
-                state.parameterComparisons,
-                state.objectComparisons
-            ),
-            isSynchronized: false,
-        });
-    };
-
-    const deleteParameterName = (index) => {
-        setState({
-            ...state,
-            ...AHP.deleteParameterName(
-                state.parameterNames,
-                state.parameterComparisons,
-                state.objectComparisons,
-                index
-            ),
-            isSynchronized: false,
-        });
-    };
-
-    const addObjectName = () => {
-        setState({
-            ...state,
-            ...AHP.addObjectName(state.objectNames, state.objectComparisons),
-            isSynchronized: false,
-        });
-    };
-
-    const deleteObjectName = (index) => {
-        setState({
-            ...state,
-            ...AHP.deleteObjectName(
-                state.objectNames,
-                state.objectComparisons,
-                index
-            ),
-            isSynchronized: false,
-        });
-    };
-
-    const setParameterComparison = (index1, index2, value) => {
-        setState({
-            ...state,
-            ...AHP.setParameterComparison(
-                state.parameterComparisons,
-                index1,
-                index2,
-                value
-            ),
-            isSynchronized: false,
-        });
-    };
-
-    const setObjectComparison = (
-        parameterIndex,
-        objectIndex1,
-        objectIndex2,
-        value
-    ) => {
-        setState({
-            ...state,
-            ...AHP.setObjectComparison(
-                state.objectComparisons,
-                parameterIndex,
-                objectIndex1,
-                objectIndex2,
-                value
-            ),
-            isSynchronized: false,
-        });
-    };
-
-    const setSynchronized = () => {
-        setState({
-            ...state,
-            isSynchronized: true,
-        });
-    };
-
-    const setSolutionState = (newState) => {
-        setState({
-            ...convertStateToInnerFormat(newState),
-            isSynchronized: true,
-        });
-    };
-
-    const resetSolutionState = () => {
-        setSolutionState(defaultState);
-    };
-
-    const areObjectNamesFilled = () => state.objectNames.every(Boolean);
-
-    const areParameterNamesFilled = () => state.parameterNames.every(Boolean);
-
-    const {
-        isNameDuplicated: isObjectNameDuplicated,
-        areNamesDuplicated: areObjectNamesDuplicated,
-    } = useAreNameDuplicatedFunctions(state.objectNames);
-
-    const {
-        isNameDuplicated: isParameterNameDuplicated,
-        areNamesDuplicated: areParameterNamesDuplicated,
-    } = useAreNameDuplicatedFunctions(state.parameterNames);
-
-    useEffect(() => {
-        scheduleResultCalculation();
-    }, [
-        state.parameterNames,
-        state.parameterComparisons,
+    useEffect(scheduleResultCalculation, [
         state.objectNames,
         state.objectComparisons,
+        state.parameterNames,
+        state.parameterComparisons,
     ]);
+};
+
+export const useSolution = (initialState = defaultState) => {
+    const [state, setState] = useState(convertStateToInnerFormat(initialState));
+    const errors = getErrors(state);
+
+    useResultCalculation(state, errors, setState);
 
     return {
         state,
-        operations: {
-            setQuestion,
-            setDescription,
-            addParameterName,
-            deleteParameterName,
-            changeObjectName: setName('objectNames'),
-            changeParameterName: setName('parameterNames'),
-            addObjectName,
-            deleteObjectName,
-            setParameterComparison,
-            setObjectComparison,
-            setSynchronized,
-            setSolutionState,
-            resetSolutionState,
-            areObjectNamesFilled,
-            areParameterNamesFilled,
-            scheduleResultCalculation,
-            isObjectNameDuplicated,
-            isParameterNameDuplicated,
-            areObjectNamesDuplicated,
-            areParameterNamesDuplicated,
-        },
+        errors,
+        operations: getOperations(state, setState),
     };
 };

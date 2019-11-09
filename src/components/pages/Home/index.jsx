@@ -21,7 +21,7 @@ import usePageSynchronizationBlock from 'utils/usePageSynchronizationBlock';
 import {BEFORE_UNLOAD_MESSAGE} from 'constants/messages';
 
 const Home = (props) => {
-    const {state, operations} = useSolution();
+    const {state, operations, errors} = useSolution();
 
     const onSaveButtonClick = () => {
         saveToFile(state);
@@ -78,8 +78,8 @@ const Home = (props) => {
                 changeParameterName={operations.changeParameterName}
                 deleteParameterName={operations.deleteParameterName}
                 addParameterName={operations.addParameterName}
-                isObjectNameDuplicated={operations.isObjectNameDuplicated}
-                isParameterNameDuplicated={operations.isParameterNameDuplicated}
+                isObjectNameDuplicated={errors.isObjectNameDuplicated}
+                isParameterNameDuplicated={errors.isParameterNameDuplicated}
             />
             <Comparisons
                 names={state.parameterNames}
@@ -87,10 +87,7 @@ const Home = (props) => {
                 setComparisons={operations.setParameterComparison}
                 label={t('home.parameters.comparisons.label')}
                 errorText={t('home.parameters.comparisons.popup-error')}
-                isErrorVisible={
-                    !operations.areParameterNamesFilled() ||
-                    operations.areParameterNamesDuplicated()
-                }
+                isErrorVisible={errors.parameterComparisons}
             />
             {state.parameterNames.map((parameterName, parameterIndex) => (
                 <Comparisons
@@ -108,50 +105,25 @@ const Home = (props) => {
                         'home.objects.comparisons.label'
                     )} ${parameterName}`}
                     errorText={t('home.objects.comparisons.popup-error')}
-                    isErrorVisible={
-                        !operations.areObjectNamesFilled() ||
-                        !operations.areParameterNamesFilled() ||
-                        operations.areObjectNamesDuplicated()
-                    }
+                    isErrorVisible={errors.objectComparisons}
                 />
             ))}
             <ResultPriorityTable
                 overallRanking={state.overallRanking}
                 objectNames={state.objectNames}
-                error={
-                    (!operations.areObjectNamesFilled() ||
-                        !operations.areParameterNamesFilled() ||
-                        operations.areObjectNamesDuplicated() ||
-                        operations.areParameterNamesDuplicated()) &&
-                    t('home.result.popup-error')
-                }
+                error={errors.result && t('home.result.popup-error')}
             />
             <ConsistencyTable
                 parameterMatrixConsistency={state.parameterMatrixConsistency}
                 objectMatrixConsistencies={state.objectMatrixConsistencies}
                 parameterNames={state.parameterNames}
-                error={
-                    (!operations.areObjectNamesFilled() ||
-                        !operations.areParameterNamesFilled() ||
-                        operations.areObjectNamesDuplicated() ||
-                        operations.areParameterNamesDuplicated()) &&
-                    t('home.consistency.popup-error')
-                }
+                error={errors.consistency && t('home.consistency.popup-error')}
             />
             <SaveButton
-                error={
-                    (!state.question ||
-                        !state.description ||
-                        !operations.areParameterNamesFilled() ||
-                        !operations.areObjectNamesFilled() ||
-                        operations.areObjectNamesDuplicated() ||
-                        operations.areParameterNamesDuplicated()) &&
-                    t('home.save-button.popup-error')
-                }
+                error={errors.save && t('home.save-button.popup-error')}
                 onClick={onSaveButtonClick}
             />
-            {operations.areParameterNamesFilled() &&
-                operations.areObjectNamesFilled() &&
+            {!errors.save &&
                 state.isSynchronized && <SolutionIsSavedLabel />}
         </PageContainer>
     );
