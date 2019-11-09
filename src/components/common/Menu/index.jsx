@@ -9,16 +9,17 @@ import {ThemeToggler} from './components/ThemeToggler';
 import {Copyright} from './components/Copyright';
 import {LanguageToggler} from './components/LanguageToggler';
 import {TranslationContext} from 'utils/useTranslation';
-import {useContext} from 'preact/hooks';
+import {useContext, useCallback} from 'preact/hooks';
 import cn from 'utils/classnames';
 import {MENU_ACTIONS} from 'constants/actions';
 
+const wrongFormatAlert = () => {
+    alert('Wrong file format!');
+};
+
 const Menu = ({isOpen, history, theme, toggleTheme}) => {
     const {t} = useContext(TranslationContext);
-    const wrongFormatAlert = () => {
-        alert('Wrong file format!');
-    };
-    const onLoadSolutionClick = () => {
+    const onLoadSolutionClick = useCallback(() => {
         loadSolutionFromFile((solution) => {
             if (!solution) {
                 wrongFormatAlert();
@@ -35,7 +36,7 @@ const Menu = ({isOpen, history, theme, toggleTheme}) => {
 
             history.push(location);
         });
-    };
+    }, [history]);
 
     return (
         <div className={cn(style['menu'], !isOpen && style['menu_hidden'])}>
