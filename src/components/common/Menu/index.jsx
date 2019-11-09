@@ -1,42 +1,19 @@
 import {h} from 'preact';
 
 import {LinkToPage} from './components/LinkToPage';
-import {ActionButton} from './components/ActionButton';
 import {LinkToLegal} from './components/LinkToLegal';
 import style from './style.scss';
-import {loadSolutionFromFile} from 'utils/loading/file';
 import {ThemeToggler} from './components/ThemeToggler';
 import {Copyright} from './components/Copyright';
 import {LanguageToggler} from './components/LanguageToggler';
 import {TranslationContext} from 'utils/useTranslation';
-import {useContext, useCallback} from 'preact/hooks';
+import {useContext} from 'preact/hooks';
 import cn from 'utils/classnames';
 import {MENU_ACTIONS} from 'constants/actions';
-
-const wrongFormatAlert = () => {
-    alert('Wrong file format!');
-};
+import {LoadSolutionButton} from './components/LoadSolutionButton';
 
 const Menu = ({isOpen, history, theme, toggleTheme}) => {
     const {t} = useContext(TranslationContext);
-    const onLoadSolutionClick = useCallback(() => {
-        loadSolutionFromFile((solution) => {
-            if (!solution) {
-                wrongFormatAlert();
-                return;
-            }
-
-            const location = {
-                state: {
-                    action: MENU_ACTIONS.LOAD,
-                    solution,
-                },
-                pathname: '/',
-            };
-
-            history.push(location);
-        });
-    }, [history]);
 
     return (
         <div className={cn(style['menu'], !isOpen && style['menu_hidden'])}>
@@ -53,9 +30,7 @@ const Menu = ({isOpen, history, theme, toggleTheme}) => {
             <LinkToPage history={history} href='/about'>
                 {t('menu.about-method')}
             </LinkToPage>
-            <ActionButton onClick={onLoadSolutionClick}>
-                {t('menu.load-solution')}
-            </ActionButton>
+            <LoadSolutionButton history={history} />
             <ThemeToggler theme={theme} onToggleTheme={toggleTheme} />
             <LanguageToggler />
             <LinkToLegal
