@@ -21,6 +21,12 @@ const RotatedTh = ({className, children}) => (
     </th>
 );
 
+const ThRight = ({className, children}) => (
+    <th className={cn(style['table__th_right'], className)}>
+        {children}
+    </th>
+);
+
 const Caption = ({className, children}) => (
     <caption className={cn(style['table__caption'], className)}>
         {children}
@@ -48,5 +54,6 @@ Table.Td = Td;
 Table.Th = Th;
 Table.Caption = Caption;
 Table.RotatedTh = RotatedTh;
+Table.ThRight = ThRight;
 Table.THead = THead;
 Table.TBody = TBody;

@@ -12,36 +12,20 @@
 }
 
 .table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    color: $color-paragraph;
-    font-size: $font-xs;
-
     &__cell {
-        box-sizing: border-box;
         height: 35px;
         padding: 0;
         white-space: nowrap;
         width: 35px;
 
         &_top-header {
-            position: relative;
-
-            & div {
-                overflow: hidden;
-                padding-left: 5px;
-                position: absolute;
-                text-overflow: ellipsis;
-                top: 0;
-                transform: rotate(-30deg);
-                width: 70px;
-            }
+            height: 40px;
         }
 
         &_right-header {
             max-width: 70px;
             overflow: hidden;
-            padding-right: 5px;
+            padding-right: 10px;
             text-align: right;
             text-overflow: ellipsis;
         }
