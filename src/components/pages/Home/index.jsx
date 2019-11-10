@@ -4,7 +4,6 @@ import PageContainer from 'components/common/PageContainer';
 import MethodDescription from './components/MethodDescription';
 import Question from '../../common/Question';
 import Description from '../../common/Description';
-import Comparisons from '../../common/Comparisons';
 import ResultPriorityTable from './components/ResultPriorityTable';
 import ConsistencyTable from './components/ConsistencyTable';
 import SaveButton from './components/SaveButton';
@@ -19,6 +18,8 @@ import {TranslationContext} from 'utils/useTranslation';
 import {MENU_ACTIONS} from 'constants/actions';
 import usePageSynchronizationBlock from 'utils/usePageSynchronizationBlock';
 import {BEFORE_UNLOAD_MESSAGE} from 'constants/messages';
+import {ParameterComparisons} from 'components/common/ParameterComparisons';
+import {ObjectComparisons} from 'components/common/ObjectComparisons';
 
 const Home = (props) => {
     const {state, operations, errors} = useSolution();
@@ -81,33 +82,19 @@ const Home = (props) => {
                 isObjectNameDuplicated={errors.isObjectNameDuplicated}
                 isParameterNameDuplicated={errors.isParameterNameDuplicated}
             />
-            <Comparisons
+            <ParameterComparisons
                 names={state.parameterNames}
                 comparisons={state.parameterComparisons}
                 setComparisons={operations.setParameterComparison}
-                label={t('home.parameters.comparisons.label')}
-                errorText={t('home.parameters.comparisons.popup-error')}
                 isErrorVisible={errors.parameterComparisons}
             />
-            {state.parameterNames.map((parameterName, parameterIndex) => (
-                <Comparisons
-                    names={state.objectNames}
-                    comparisons={state.objectComparisons[parameterIndex]}
-                    setComparisons={(index1, index2, value) =>
-                        operations.setObjectComparison(
-                            parameterIndex,
-                            index1,
-                            index2,
-                            value
-                        )
-                    }
-                    label={`${t(
-                        'home.objects.comparisons.label'
-                    )} ${parameterName}`}
-                    errorText={t('home.objects.comparisons.popup-error')}
-                    isErrorVisible={errors.objectComparisons}
-                />
-            ))}
+            <ObjectComparisons
+                parameterNames={state.parameterNames}
+                objectNames={state.objectNames}
+                objectComparisons={state.objectComparisons}
+                setObjectComparison={operations.setObjectComparison}
+                isErrorVisible={errors.objectComparisons}
+            />
             <ResultPriorityTable
                 overallRanking={state.overallRanking}
                 objectNames={state.objectNames}

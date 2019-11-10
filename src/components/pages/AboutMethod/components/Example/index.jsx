@@ -6,7 +6,6 @@ import {useSolution} from 'utils/useSolution';
 import Description from 'components/common/Description';
 import Question from 'components/common/Question';
 import {EntityNameInputs} from 'components/pages/Home/components/EntityNameInputs';
-import Comparisons from 'components/common/Comparisons';
 import ResultPriorityTable from 'components/pages/Home/components/ResultPriorityTable';
 import ConsistencyTable from 'components/pages/Home/components/ConsistencyTable';
 import {LI} from '../LI';
@@ -14,6 +13,8 @@ import {UL} from '../UL';
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/useTranslation';
 import {solution} from './solution';
+import {ObjectComparisons} from 'components/common/ObjectComparisons';
+import {ParameterComparisons} from 'components/common/ParameterComparisons';
 
 export const Example = () => {
     const {
@@ -50,34 +51,20 @@ export const Example = () => {
             <Paragraph>{t('about.example.object-comparisons')}</Paragraph>
             <Paragraph>{t('about.example.comparison-control')}</Paragraph>
             <Paragraph>{t('about.example.comparison-matrix')}</Paragraph>
-            <Comparisons
+            <ParameterComparisons
                 names={state.parameterNames}
                 comparisons={state.parameterComparisons}
                 setComparisons={operations.setParameterComparison}
-                label={t('about.example.parameters-comparison-matrix-label')}
-                errorText={t('home.parameters.comparisons.popup-error')}
                 isErrorVisible={errors.parameterComparisons}
             />
             <Paragraph>{t('about.example.pairwise-comparisons')}</Paragraph>
-            {state.parameterNames.map((parameterName, parameterIndex) => (
-                <Comparisons
-                    names={state.objectNames}
-                    comparisons={state.objectComparisons[parameterIndex]}
-                    setComparisons={(index1, index2, value) =>
-                        operations.setObjectComparison(
-                            parameterIndex,
-                            index1,
-                            index2,
-                            value
-                        )
-                    }
-                    label={`${t(
-                        'about.example.comparison-of-objects-label'
-                    )} ${parameterName}`}
-                    errorText={t('home.objects.comparisons.popup-error')}
-                    isErrorVisible={errors.objectComparisons}
-                />
-            ))}
+            <ObjectComparisons
+                parameterNames={state.parameterNames}
+                objectNames={state.objectNames}
+                objectComparisons={state.objectComparisons}
+                setObjectComparison={operations.setObjectComparison}
+                isErrorVisible={errors.objectComparisons}
+            />
             <Paragraph>
                 {t('about.example.comparison-of-objects-matrix')}
             </Paragraph>
