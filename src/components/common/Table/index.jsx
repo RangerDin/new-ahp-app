@@ -28,9 +28,15 @@ const Caption = ({className, children}) => (
 );
 
 const THead = ({className, children}) => (
-    <thead className={cn(style['table__thead'], className)}>
+    <thead className={className}>
         {children}
     </thead>
+);
+
+const TBody = ({className, children}) => (
+    <tbody className={className}>
+        {children}
+    </tbody>
 );
 
 export const Table = ({className, children}) => (
@@ -43,3 +49,4 @@ Table.Th = Th;
 Table.Caption = Caption;
 Table.RotatedTh = RotatedTh;
 Table.THead = THead;
+Table.TBody = TBody;

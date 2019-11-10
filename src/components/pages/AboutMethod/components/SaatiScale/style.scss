@@ -1,5 +1,13 @@
 .saati-scale {
+    margin: 15px auto;
+
     &__value {
         text-align: center;
+    }
+
+    &__title,
+    &__value,
+    &__description {
+        padding: 5px 10px;
     }
 }

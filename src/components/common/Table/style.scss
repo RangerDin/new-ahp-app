@@ -5,7 +5,6 @@
     border-collapse: collapse;
     font-size: $font-xs;
     margin-top: 15px;
-    width: 100%;
 
     &__caption {
         font-weight: bold;
@@ -15,7 +14,6 @@
 
     &__td {
         border: 1px solid $color-cell-border;
-        padding: 5px 10px;
     }
 
     &__th {

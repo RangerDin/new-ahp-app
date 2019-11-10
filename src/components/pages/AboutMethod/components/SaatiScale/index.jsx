@@ -33,19 +33,31 @@ export const SaatiScale = () => {
 
     return (
         <Table className={style['saati-scale']}>
-            <Table.Caption>{t('about.description.saati-scale-title')}</Table.Caption>
+            <Table.Caption>
+                {t('about.description.saati-scale-title')}
+            </Table.Caption>
             <Table.THead>
                 <Table.Tr>
-                    <Table.Th>{t('about.description.saati-scale-value')}</Table.Th>
-                    <Table.Th>{t('about.description.saati-scale-description')}</Table.Th>
+                    <Table.Th className={style['saati-scale__title']}>
+                        {t('about.description.saati-scale-value')}
+                    </Table.Th>
+                    <Table.Th className={style['saati-scale__title']}>
+                        {t('about.description.saati-scale-description')}
+                    </Table.Th>
                 </Table.Tr>
+            </Table.THead>
+            <Table.TBody>
                 {SAATI_VALUES.map(({value, description}) => (
                     <Table.Tr>
-                        <Table.Td className={style['saati-scale__value']}>{value}</Table.Td>
-                        <Table.Td>{t(description)}</Table.Td>
+                        <Table.Td className={style['saati-scale__value']}>
+                            {value}
+                        </Table.Td>
+                        <Table.Td className={style['saati-scale__description']}>
+                            {t(description)}
+                        </Table.Td>
                     </Table.Tr>
                 ))}
-            </Table.THead>
+            </Table.TBody>
         </Table>
     );
 };
