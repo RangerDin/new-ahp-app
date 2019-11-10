@@ -8,11 +8,11 @@ import {NAME_PLACEHOLDER} from 'constants/name';
 import {ErrorPopup} from 'components/common/ErrorPopup';
 
 const ResultPriorityTable = ({overallRanking, objectNames, error}) => {
+    const {t} = useContext(TranslationContext);
+
     if (!overallRanking) {
         return null;
     }
-
-    const {t} = useContext(TranslationContext);
 
     return (
         <div className={style.result}>
