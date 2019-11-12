@@ -1,5 +1,4 @@
-import convertToBig from './convertToBig';
-import {COMPARISON_VALUES} from 'constants/comparisons';
+import {COMPARISON_INDEX} from 'constants/comparisons';
 import {setElement, deleteElement, pushElement} from './immutableArray';
 
 export default class AHP {
@@ -17,7 +16,7 @@ export default class AHP {
                 objectComparisons
             ),
         };
-    };
+    }
 
     static deleteParameterName(
         parameterNames,
@@ -26,7 +25,10 @@ export default class AHP {
         index
     ) {
         return {
-            parameterNames: AHP.getNameListWithDeletedName(parameterNames, index),
+            parameterNames: AHP.getNameListWithDeletedName(
+                parameterNames,
+                index
+            ),
             parameterComparisons: AHP.getComparisonMatrixWithDeletedName(
                 parameterComparisons,
                 index
@@ -36,14 +38,16 @@ export default class AHP {
                 index
             ),
         };
-    };
+    }
 
     static addObjectName(objectNames, objectComparisons) {
         return {
             objectNames: AHP.getNameListWithAddedName(objectNames),
-            objectComparisons: objectComparisons.map(AHP.getComparisonMatrixWithAddedName),
+            objectComparisons: objectComparisons.map(
+                AHP.getComparisonMatrixWithAddedName
+            ),
         };
-    };
+    }
 
     static deleteObjectName(objectNames, objectComparisons, index) {
         return {
@@ -52,20 +56,15 @@ export default class AHP {
                 AHP.getComparisonMatrixWithDeletedName(comparisons, index)
             ),
         };
-    };
+    }
 
-    static setParameterComparison(
-        parameterComparisons,
-        index1,
-        index2,
-        value
-    ) {
+    static setParameterComparison(parameterComparisons, index1, index2, value) {
         return {
             parameterComparisons: AHP.setElementInComparisonMatrix(
                 parameterComparisons,
                 index1,
                 index2,
-                convertToBig(value)
+                value
             ),
         };
     }
@@ -85,7 +84,7 @@ export default class AHP {
                     objectComparisons[parameterIndex],
                     objectIndex1,
                     objectIndex2,
-                    convertToBig(value)
+                    value
                 )
             ),
         };
@@ -100,18 +99,13 @@ export default class AHP {
 
         return pushElement(
             comparisons.map((row) =>
-                pushElement(
-                    row,
-                    convertToBig(COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE)
-                )
+                pushElement(row, COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE)
             ),
-            convertToBig(
-                new Array(newRowLength).fill(
-                    COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE
-                )
+            new Array(newRowLength).fill(
+                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE
             )
         );
-    };
+    }
 
     static getObjectComparisonsWithAddedParameterName(comparisons) {
         const nRows = comparisons[0].length;
@@ -119,15 +113,13 @@ export default class AHP {
 
         return [
             ...comparisons,
-            convertToBig(
-                AHP.create2dArray(
-                    nRows,
-                    nColumns,
-                    COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE
-                )
+            AHP.create2dArray(
+                nRows,
+                nColumns,
+                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE
             ),
         ];
-    };
+    }
 
     static create2dArray(nRows, nColumns, elementToFill) {
         return new Array(nRows)
@@ -143,6 +135,10 @@ export default class AHP {
         return deleteElement(comparisons, index).map((row) =>
             deleteElement(row, index)
         );
+    }
+
+    static getReversedValue(comparisonValue) {
+        return COMPARISON_INDEX.ABSOLUTELY_SUPERIOR - comparisonValue + 1;
     };
 
     static getObjectComparisonsWithDeletedParameterName(
@@ -158,9 +154,11 @@ export default class AHP {
         index2,
         value
     ) {
-        const [minIndex, maxIndex] = index1 < index2 ? [index1, index2] : [index2, index1];
-        const reverseValue = convertToBig(1).div(value);
-        const [minIndexValue, maxIndexValue] = index1 < index2 ? [value, reverseValue] : [reverseValue, value];
+        const [minIndex, maxIndex] =
+            index1 < index2 ? [index1, index2] : [index2, index1];
+        const reverseValue = AHP.getReversedValue(value);
+        const [minIndexValue, maxIndexValue] =
+            index1 < index2 ? [value, reverseValue] : [reverseValue, value];
 
         return [
             ...comparisonMatrix.slice(0, minIndex),
@@ -169,22 +167,11 @@ export default class AHP {
             setElement(comparisonMatrix[maxIndex], minIndex, maxIndexValue),
             ...comparisonMatrix.slice(maxIndex + 1),
         ];
-    };
-
-    static convertStateToInnerFormat(parameterComparisons, objectComparisons) {
-        return {
-            parameterComparisons: convertToBig(parameterComparisons),
-            objectComparisons: convertToBig(objectComparisons),
-        };
-    };
+    }
 
     static setName(nameListProperty, list, index, newName) {
         return {
-            [nameListProperty]: setElement(
-                list,
-                index,
-                newName
-            ),
+            [nameListProperty]: setElement(list, index, newName),
         };
-    };
+    }
 }

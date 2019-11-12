@@ -6,7 +6,7 @@ import {LI} from '../LI';
 import {ComparisonMatrix} from 'components/common/ComparisonMatrix';
 import {SaatiScale} from '../SaatiScale';
 import {UL} from '../UL';
-import {COMPARISON_VALUES} from 'constants/comparisons';
+import {COMPARISON_INDEX} from 'constants/comparisons';
 import {CONTENT_ANCHOR} from '../../constants/contents';
 import {BibliographyLink} from '../BibliographyLink';
 import {
@@ -20,19 +20,19 @@ const EXAMPLE_OBJECT_NAME = ['Object 1', 'Object 2', 'Object 3'];
 
 const EXAMPLE_MATRIX_OF_PAIRWISE_COMPARISONS = [
     [
-        COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
-        COMPARISON_VALUES.SLIGHTLY_PREFERABLE,
-        COMPARISON_VALUES.ABSOLUTELY_SUPERIOR,
+        COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
+        COMPARISON_INDEX.SLIGHTLY_PREFERABLE,
+        COMPARISON_INDEX.ABSOLUTELY_SUPERIOR,
     ],
     [
-        COMPARISON_VALUES.SLIGHTLY_LESS_PREFERABLE,
-        COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
-        COMPARISON_VALUES.MUCH_LESS_PREFERABLE,
+        COMPARISON_INDEX.SLIGHTLY_LESS_PREFERABLE,
+        COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
+        COMPARISON_INDEX.MUCH_LESS_PREFERABLE,
     ],
     [
-        COMPARISON_VALUES.ABSOLUTELY_INFERIOR,
-        COMPARISON_VALUES.MUCH_PREFERABLE,
-        COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
+        COMPARISON_INDEX.ABSOLUTELY_INFERIOR,
+        COMPARISON_INDEX.MUCH_PREFERABLE,
+        COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
     ],
 ];
 
@@ -84,8 +84,7 @@ export const Description = () => {
                         <LI>{t('about.description.procedure-of-pairwise-comparisons-conclusion-1')}</LI>
                         <LI>{t('about.description.procedure-of-pairwise-comparisons-conclusion-2')}</LI>
                         <LI>{t('about.description.procedure-of-pairwise-comparisons-conclusion-3')}</LI>
-                    </UL>
-                </LI>
+                    </UL> </LI>
                 <LI>
                     {t('about.description.vectors-of-priorities-title')}
                     <Paragraph>

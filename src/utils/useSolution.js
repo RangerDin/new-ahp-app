@@ -1,7 +1,6 @@
 import {useState, useEffect, useMemo, useCallback} from 'preact/hooks';
 
-import {COMPARISON_VALUES} from 'constants/comparisons';
-import convertToBig from 'utils/structures/convertToBig';
+import {COMPARISON_INDEX} from 'constants/comparisons';
 import AHP from 'utils/structures/ahp';
 import {
     getPriorityVector,
@@ -11,6 +10,7 @@ import {
     getNormalizedOverallRankingByPriorities,
 } from './math/ahp';
 import {useRef} from 'react';
+import convertToBig from './structures/convertToBig';
 
 const arrayNameToMap = (names) =>
     names.reduce((map, name) => {
@@ -40,16 +40,16 @@ const defaultState = {
     description: '',
     parameterNames: [''],
     objectNames: ['', ''],
-    parameterComparisons: [[COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE]],
+    parameterComparisons: [[COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE]],
     objectComparisons: [
         [
             [
-                COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
-                COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
+                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
+                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
             ],
             [
-                COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
-                COMPARISON_VALUES.SAME_DEGREE_OF_PREFERENCE,
+                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
+                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
             ],
         ],
     ],
@@ -62,8 +62,6 @@ const defaultState = {
 
 const convertStateToInnerFormat = (state) => ({
     ...state,
-    parameterComparisons: convertToBig(state.parameterComparisons),
-    objectComparisons: convertToBig(state.objectComparisons),
     parameterPriorityVector: null,
     parameterMatrixConsistency: null,
     objectPriorityMatrix: null,
@@ -273,9 +271,12 @@ const useResultCalculation = (state, errors, setState, resultTasksState) => {
                 return;
             }
 
+            const objectComparisonsAsBigIntegers = convertToBig(state.objectComparisons);
+            const parameterComparisonsAsBigIntegers = convertToBig(state.parameterComparisons);
+
             Promise.all([
-                getPriorityVector(state.parameterComparisons),
-                getPriorityMatrix(state.objectComparisons),
+                getPriorityVector(parameterComparisonsAsBigIntegers),
+                getPriorityMatrix(objectComparisonsAsBigIntegers),
             ]).then(
                 ([
                     [parameterPriorityVector, parameterTimeoutIds],
@@ -293,16 +294,17 @@ const useResultCalculation = (state, errors, setState, resultTasksState) => {
                         ...objectTimeoutIds,
                     ];
 
+
                     setState({
                         ...state,
                         parameterPriorityVector,
                         parameterMatrixConsistency: getCoherenceRelation(
-                            state.parameterComparisons,
+                            parameterComparisonsAsBigIntegers,
                             parameterPriorityVector
                         ),
                         objectPriorityMatrix,
                         objectMatrixConsistencies: getObjectCoherenceRelations(
-                            state.objectComparisons,
+                            objectComparisonsAsBigIntegers,
                             objectPriorityMatrix
                         ),
                         overallRanking: getNormalizedOverallRankingByPriorities(

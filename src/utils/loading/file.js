@@ -41,13 +41,13 @@ const TOP_SOLUTION_PROPERTIES = {
     parameterNames: 1,
 };
 
-const isArrayString = (array) =>
-    Array.isArray(array) && array.every((element) => typeof element === 'string');
+const isArrayOfType = (array, type) =>
+    Array.isArray(array) && array.every((element) => typeof element === type);
 
 const checkComparisons = (comparisons, length) =>
     Array.isArray(comparisons) &&
     comparisons.length === length &&
-    comparisons.every((comparison) => isArrayString(comparison));
+    comparisons.every((comparison) => isArrayOfType(comparison, 'number'));
 
 const checkCollectionOfComparisons = (
     collectionOfComparisons,
@@ -83,8 +83,8 @@ export const checkFileFormat = (solution) => {
     }
 
     if (
-        !isArrayString(solution['parameterNames']) ||
-        !isArrayString(solution['objectNames'])
+        !isArrayOfType(solution['parameterNames'], 'string') ||
+        !isArrayOfType(solution['objectNames'], 'string')
     ) {
         return false;
     }
