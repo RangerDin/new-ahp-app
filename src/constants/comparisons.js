@@ -38,7 +38,7 @@ export const COMPARISON_INDEX_TO_LABEL = {
     [COMPARISON_INDEX.CLEARLY_PREFERABLE]: 'comparisons.clearly-preferable',
     [COMPARISON_INDEX.ABSOLUTELY_SUPERIOR]: 'comparisons.absolutely-superior',
 };
-export const SHORT_COMPARISON_PRECISION = 2;
+export const COMPARISON_RESULT_PRECISION = 5;
 
 export const COMPARISON_INDEX_TO_STRING = {
     [COMPARISON_INDEX.ABSOLUTELY_INFERIOR]: '1/9',

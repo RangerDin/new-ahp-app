@@ -2,7 +2,7 @@ import {h} from 'preact';
 
 import Label from 'components/common/Label';
 import style from './style.scss';
-import {SHORT_COMPARISON_PRECISION} from 'constants/comparisons';
+import {COMPARISON_RESULT_PRECISION} from 'constants/comparisons';
 import {useContext} from 'preact/hooks';
 import {TranslationContext} from 'utils/useTranslation';
 import {NAME_PLACEHOLDER} from 'constants/name';
@@ -44,7 +44,7 @@ const ConsistencyTable = ({
                     </td>
                     <td>
                         {parameterMatrixConsistency.toFixed(
-                            SHORT_COMPARISON_PRECISION
+                            COMPARISON_RESULT_PRECISION
                         )}
                     </td>
                 </tr>
@@ -69,7 +69,7 @@ const ConsistencyTable = ({
                                     style['consistency__consistency-value']
                                 }
                             >
-                                {value.toFixed(SHORT_COMPARISON_PRECISION)}
+                                {value.toFixed(COMPARISON_RESULT_PRECISION)}
                             </td>
                         </tr>
                     );
