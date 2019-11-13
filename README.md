@@ -1,6 +1,6 @@
 # Analytic Hierarchy Process application
 
-Application for [Analytic Hierarchy Process](https://en.wikipedia.org/wiki/Analytic_hierarchy_process) done with [Webpack](https://github.com/webpack/webpack), [Preact](https://github.com/developit/preact).
+Application for decision making using the [Analytic Hierarchy Process](https://en.wikipedia.org/wiki/Analytic_hierarchy_process).
 
 Screenshot:
 
