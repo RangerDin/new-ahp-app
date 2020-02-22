@@ -50,12 +50,12 @@ export const solution = {
             ],
             [
                 COMPARISON_INDEX.CLEARLY_LESS_PREFERABLE,
-                COMPARISON_INDEX.SLIGHTLY_PREFERABLE,
+                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
                 COMPARISON_INDEX.SLIGHTLY_PREFERABLE,
             ],
             [
                 COMPARISON_INDEX.CLEARLY_LESS_PREFERABLE,
-                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
+                COMPARISON_INDEX.SLIGHTLY_LESS_PREFERABLE,
                 COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
             ],
         ],
@@ -67,12 +67,12 @@ export const solution = {
             ],
             [
                 COMPARISON_INDEX.CLEARLY_LESS_PREFERABLE,
-                COMPARISON_INDEX.SLIGHTLY_PREFERABLE,
+                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
                 COMPARISON_INDEX.SLIGHTLY_PREFERABLE,
             ],
             [
                 COMPARISON_INDEX.CLEARLY_LESS_PREFERABLE,
-                COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
+                COMPARISON_INDEX.SLIGHTLY_LESS_PREFERABLE,
                 COMPARISON_INDEX.SAME_DEGREE_OF_PREFERENCE,
             ],
         ],
