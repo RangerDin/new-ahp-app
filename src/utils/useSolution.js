@@ -11,6 +11,7 @@ import {
 } from './math/ahp';
 import {useRef} from 'react';
 import convertToBig from './structures/convertToBig';
+import convertComparisonIndexToValue from './structures/convertComparisonIndexToValue';
 
 const arrayNameToMap = (names) =>
     names.reduce((map, name) => {
@@ -271,8 +272,10 @@ const useResultCalculation = (state, errors, setState, resultTasksState) => {
                 return;
             }
 
-            const objectComparisonsAsBigIntegers = convertToBig(state.objectComparisons);
-            const parameterComparisonsAsBigIntegers = convertToBig(state.parameterComparisons);
+            const objectComparisonsAsValues = convertComparisonIndexToValue(state.objectComparisons);
+            const objectComparisonsAsBigIntegers = convertToBig(objectComparisonsAsValues);
+            const parameterComparisonsAsValues = convertComparisonIndexToValue(state.parameterComparisons);
+            const parameterComparisonsAsBigIntegers = convertToBig(parameterComparisonsAsValues);
 
             Promise.all([
                 getPriorityVector(parameterComparisonsAsBigIntegers),
