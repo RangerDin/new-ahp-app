@@ -8,5 +8,8 @@
         "moduleResolution": "node"
     },
     "include": ["src"],
-    "exclude": ["./node_modules", "./design"]
+    "exclude": ["./node_modules", "./design"],
+    "typeAcquisition": {
+        "include": ["jest"]
+    }
 }
