@@ -75,10 +75,6 @@ export const size = function(matrix) {
     return [matrix.length, matrix[0].length];
 };
 
-export const divideMatrixToNumber = function(vector, num) {
-    return vector.map((element) => element.div(num));
-};
-
 export const dotDivide = function(matrix1, matrix2) {
     return matrix1.map((row, i) =>
         row.map((_, j) => matrix1[i][j].div(matrix2[i][j]))

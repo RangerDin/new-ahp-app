@@ -2,16 +2,18 @@ import {useState, useEffect, useMemo, useCallback} from 'preact/hooks';
 
 import {COMPARISON_INDEX} from 'constants/comparisons';
 import AHP from 'utils/structures/ahp';
+
 import {
-    getPriorityVector,
     getPriorityMatrix,
+    getPriorityVector,
     getCoherenceRelation,
     getObjectCoherenceRelations,
     getNormalizedOverallRankingByPriorities,
-} from './math/ahp';
+} from './math/newAhp';
 import {useRef} from 'react';
 import convertToBig from './structures/convertToBig';
 import convertComparisonIndexToValue from './structures/convertComparisonIndexToValue';
+import {debounce} from './functionWrappers';
 
 const arrayNameToMap = (names) =>
     names.reduce((map, name) => {
@@ -265,92 +267,88 @@ const getOperations = (state, setState) => {
     };
 };
 
-const useResultCalculation = (state, errors, setState, resultTasksState) => {
-    const calculateResult = useCallback(
-        (resultId) => {
-            if (errors.result) {
-                return;
-            }
+const calculateSolutionResult = (objectComparisons, parameterComparisons, errors, setState, resultTasksState) => {
+    if (errors.result) {
+        return;
+    }
 
-            const objectComparisonsAsValues = convertComparisonIndexToValue(state.objectComparisons);
-            const objectComparisonsAsBigIntegers = convertToBig(objectComparisonsAsValues);
-            const parameterComparisonsAsValues = convertComparisonIndexToValue(state.parameterComparisons);
-            const parameterComparisonsAsBigIntegers = convertToBig(parameterComparisonsAsValues);
+    const objectComparisonsAsValues = convertComparisonIndexToValue(objectComparisons);
+    const objectComparisonsAsBigIntegers = convertToBig(objectComparisonsAsValues);
+    const parameterComparisonsAsValues = convertComparisonIndexToValue(parameterComparisons);
+    const parameterComparisonsAsBigIntegers = convertToBig(parameterComparisonsAsValues);
+    const {
+        promise: priorityVectorCalculationPromise,
+        cancel: priorityVectorCalculationCancel,
+    } = getPriorityVector(parameterComparisonsAsBigIntegers);
+    const {
+        promise: objectComparisonsCalculationPromise,
+        cancel: objectComparisonsCalculationCancel,
+    } = getPriorityMatrix(objectComparisonsAsBigIntegers);
 
-            Promise.all([
-                getPriorityVector(parameterComparisonsAsBigIntegers),
-                getPriorityMatrix(objectComparisonsAsBigIntegers),
-            ]).then(
-                ([
-                    [parameterPriorityVector, parameterTimeoutIds],
-                    [objectPriorityMatrix, objectTimeoutIds],
-                ]) => {
-                    if (
-                        resultTasksState.current.resultCalculationId !==
-                        resultId
-                    ) {
-                        return;
-                    }
+    if (resultTasksState.current.cancel) {
+        resultTasksState.current.cancel();
+        resultTasksState.current.cancel = null;
+    }
 
-                    resultTasksState.current.childTaskTimeoutIds = [
-                        ...parameterTimeoutIds,
-                        ...objectTimeoutIds,
-                    ];
+    resultTasksState.current.cancel = () => {
+        priorityVectorCalculationCancel();
+        objectComparisonsCalculationCancel();
+    };
 
-
-                    setState({
-                        ...state,
-                        parameterPriorityVector,
-                        parameterMatrixConsistency: getCoherenceRelation(
-                            parameterComparisonsAsBigIntegers,
-                            parameterPriorityVector
-                        ),
-                        objectPriorityMatrix,
-                        objectMatrixConsistencies: getObjectCoherenceRelations(
-                            objectComparisonsAsBigIntegers,
-                            objectPriorityMatrix
-                        ),
-                        overallRanking: getNormalizedOverallRankingByPriorities(
-                            parameterPriorityVector,
-                            objectPriorityMatrix
-                        ),
-                    });
-                }
-            );
-        },
-        [state, setState, errors.result]
-    );
-    const scheduleResultCalculation = useCallback(() => {
-        if (resultTasksState.current.resultCalculationTimeout) {
-            clearTimeout(resultTasksState.current.resultCalculationTimeout);
-            resultTasksState.current.resultCalculationTimeout = null;
-            resultTasksState.current.childTaskTimeoutIds.forEach((timeoutId) =>
-                clearTimeout(timeoutId)
-            );
-            resultTasksState.current.childTaskTimeoutIds = [];
+    Promise.all([
+        priorityVectorCalculationPromise,
+        objectComparisonsCalculationPromise,
+    ]).then(
+        ([
+            parameterPriorityVector,
+            objectPriorityMatrix,
+        ]) => {
+            setState((state) => ({
+                ...state,
+                parameterPriorityVector,
+                parameterMatrixConsistency: getCoherenceRelation(
+                    parameterComparisonsAsBigIntegers,
+                    parameterPriorityVector
+                ),
+                objectPriorityMatrix,
+                objectMatrixConsistencies: getObjectCoherenceRelations(
+                    objectComparisonsAsBigIntegers,
+                    objectPriorityMatrix
+                ),
+                overallRanking: getNormalizedOverallRankingByPriorities(
+                    parameterPriorityVector,
+                    objectPriorityMatrix
+                ),
+            }));
         }
+    ).catch(() => void 0);
+};
 
-        resultTasksState.current.resultCalculationId++;
-        resultTasksState.current.resultCalculationTimeout = setTimeout(
-            calculateResult,
-            100,
-            resultTasksState.current.resultCalculationId
+const debouncedCalculateResult = debounce(calculateSolutionResult);
+
+
+const useResultCalculation = (state, errors, setState, resultTasksState) => {
+    useEffect(() => {
+        debouncedCalculateResult(
+            state.objectComparisons,
+            state.parameterComparisons,
+            errors,
+            setState,
+            resultTasksState
         );
-    }, [calculateResult]);
-
-    useEffect(scheduleResultCalculation, [
-        state.objectNames,
+    }, [
         state.objectComparisons,
-        state.parameterNames,
         state.parameterComparisons,
+        state.objectNames.length,
+        state.parameterNames.length,
+        errors.result,
+        setState,
     ]);
 };
 
 export const useSolution = (initialState = defaultState) => {
     const resultTasksState = useRef({
-        resultCalculationTimeout: null,
-        resultCalculationId: 0,
-        childTaskTimeoutIds: [],
+        cancel: null,
     });
 
     const [state, setState] = useState(convertStateToInnerFormat(initialState));
