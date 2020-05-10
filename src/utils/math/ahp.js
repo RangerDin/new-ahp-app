@@ -1,55 +1,84 @@
+
+import {COMPARISON_RESULT_PRECISION, RANDOM_COHERENCE_INDEXES} from 'constants/comparisons';
 import {
-    pow,
-    divideMatrixToNumber,
-    sumOfElements,
-    transponse,
+    getVectorOfRowSums,
+    sumOfAllElements,
+    asyncPow,
+    divideVectorToNumber,
     multiply,
+    meanOfAllElements,
     dotDivide,
-    mean,
-    vectorToMatrix,
-} from './matrix';
-import {COMPARISON_RESULT_PRECISION} from 'constants/comparisons';
+} from './bigMatrix';
+import {createMatrixFromVector, transponse} from './matrix';
 
 export const MATRIX_POWER = 50;
 
-const getVectorOfRowSums = (matrix) =>
-    matrix.map((row) => row.reduce((sum, element) => sum.add(element)));
-
 export const getPriorityVector = (matrix) => {
-    return pow(matrix, MATRIX_POWER).then(([poweredMatrix, timeoutIds]) => {
-        const vectorOfRowSums = getVectorOfRowSums(poweredMatrix);
-        const matrixSum = sumOfElements(poweredMatrix);
-        const priorityVector = divideMatrixToNumber(vectorOfRowSums, matrixSum);
+    let cancelled = false;
+    const {promise, cancel} = asyncPow(matrix, MATRIX_POWER);
 
-        return [priorityVector, timeoutIds];
+    const newCancel = () => {
+        cancel();
+        cancelled = true;
+    };
+
+    const newPromise = promise.then((poweredMatrix) => {
+        if (cancelled) {
+            throw new Error('Cancelled');
+        };
+
+        const vectorOfRowSums = getVectorOfRowSums(poweredMatrix);
+        const sumOfElements = sumOfAllElements(poweredMatrix);
+        const priorityVector = divideVectorToNumber(vectorOfRowSums, sumOfElements);
+
+        return priorityVector;
     });
+
+    return {
+        promise: newPromise,
+        cancel: newCancel,
+    };
 };
 
 export const getPriorityMatrix = (comparisonMatrixes) => {
-    return Promise.all(
-        comparisonMatrixes.map((comparisonMatrix) =>
-            getPriorityVector(comparisonMatrix)
-        )
-    ).then((priorityAndTimeoutVectors) => {
-        const priorityVectors = priorityAndTimeoutVectors.map(
-            ([priorityVector]) => priorityVector
-        );
-        const allTimeoutIds = priorityAndTimeoutVectors.reduce(
-            (allIds, [_, timeoutIds]) => [...timeoutIds, ...allIds],
-            []
-        );
+    const promises = [];
+    const cancels = [];
+    let cancelled = false;
+
+    comparisonMatrixes.map(getPriorityVector).forEach(({promise, cancel}) => {
+        promises.push(promise);
+        cancels.push(cancel);
+    });
+
+    const newPromise = Promise.all(
+        promises
+    ).then((priorityVectors) => {
+        if (cancelled) {
+            throw new Error('Cancelled');
+        }
 
         const transponsedPriorityVectors = transponse(priorityVectors);
 
-        return [transponsedPriorityVectors, allTimeoutIds];
+        return transponsedPriorityVectors;
     });
+
+    const newCancel = () => {
+        cancelled = true;
+
+        cancels.forEach((cancel) => cancel());
+    };
+
+    return {
+        promise: newPromise,
+        cancel: newCancel,
+    };
 };
 
 export const getOverallRankingByPriorities = (
     parameterPriorityVector,
     objectPriorityMatrix
 ) => {
-    const priorityVectorAsMatrix = vectorToMatrix(parameterPriorityVector);
+    const priorityVectorAsMatrix = createMatrixFromVector(parameterPriorityVector);
 
     return multiply(objectPriorityMatrix, priorityVectorAsMatrix);
 };
@@ -76,23 +105,6 @@ export const getNormalizedOverallRankingByPriorities = (
     return normalizedOverallRanking;
 };
 
-const RANDOM_COHERENCE_INDEXES = {
-    1: 0.0,
-    2: 0.0,
-    3: 0.58,
-    4: 0.9,
-    5: 1.12,
-    6: 1.24,
-    7: 1.32,
-    8: 1.41,
-    9: 1.45,
-    10: 1.49,
-    11: 1.51,
-    12: 1.48,
-    13: 1.56,
-    14: 1.57,
-    15: 1.59,
-};
 
 export const getRandomCoherenceIndex = (rank) => {
     if (rank in RANDOM_COHERENCE_INDEXES) {
@@ -104,7 +116,7 @@ export const getRandomCoherenceIndex = (rank) => {
 
 export const getCoherenceRelation = (comparisonMatrix, priorityVector) => {
     const rank = priorityVector.length;
-    const priorityMatrix = vectorToMatrix(priorityVector);
+    const priorityMatrix = createMatrixFromVector(priorityVector);
 
     if (rank < 1 || !(rank in RANDOM_COHERENCE_INDEXES)) {
         return null;
@@ -113,7 +125,7 @@ export const getCoherenceRelation = (comparisonMatrix, priorityVector) => {
         return 0;
     }
 
-    const principalEigenvalue = mean(
+    const principalEigenvalue = meanOfAllElements(
         dotDivide(multiply(comparisonMatrix, priorityMatrix), priorityMatrix)
     );
 

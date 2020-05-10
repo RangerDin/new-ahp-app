@@ -4,7 +4,7 @@ import {
     getPriorityMatrix,
     getNormalizedOverallRankingByPriorities,
     getObjectCoherenceRelations,
-} from '../src/utils/math/newAhp';
+} from '../src/utils/math/ahp';
 
 describe('AHP', () => {
     const PRIORITY_COMPARISONS = [[1]];

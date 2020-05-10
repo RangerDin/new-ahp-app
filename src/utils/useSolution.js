@@ -9,7 +9,7 @@ import {
     getCoherenceRelation,
     getObjectCoherenceRelations,
     getNormalizedOverallRankingByPriorities,
-} from './math/newAhp';
+} from './math/ahp';
 import {useRef} from 'react';
 import convertToBig from './structures/convertToBig';
 import convertComparisonIndexToValue from './structures/convertComparisonIndexToValue';

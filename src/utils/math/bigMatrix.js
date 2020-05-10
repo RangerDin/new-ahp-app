@@ -1,5 +1,5 @@
 import Big from 'big.js';
-import {createEmptyMatrix, getMatrixSize} from './newMatrix';
+import {createEmptyMatrix, getMatrixSize} from './matrix';
 import {createAsyncFunction} from 'utils/async';
 
 export const multiply = (matrix1, matrix2) => {
